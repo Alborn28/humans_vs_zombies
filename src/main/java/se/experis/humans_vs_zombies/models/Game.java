@@ -1,9 +1,12 @@
 package se.experis.humans_vs_zombies.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import se.experis.humans_vs_zombies.models.enumerators.GameState;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Game {
@@ -43,13 +46,14 @@ public class Game {
     private List<Mission> missions;
 
     @OneToMany(mappedBy = "game")
-    private List<Chat> chats;
+    private List<Chat> chats = new ArrayList<Chat>();
 
     @OneToMany(mappedBy = "game")
     private List<SquadMember> squadMembers;
 
     @OneToMany(mappedBy = "game")
     private List<SquadCheckin> squadCheckins;
+
 
     public Long getId() {
         return id;
