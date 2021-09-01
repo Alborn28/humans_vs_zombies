@@ -42,8 +42,8 @@ public class Kill {
 
     @JsonGetter("killer")
     public String killer() {
-        if(killer != null){
-            return "/api/v1/game/"+game.getId()+"/player/" + killer.getId();
+        if(killer != null && game != null){
+            return "/api/v1/game/" + game.getId() + "/player/" + killer.getId();
         }else{
             return null;
         }
@@ -55,8 +55,8 @@ public class Kill {
 
     @JsonGetter("victim")
     public String victim() {
-        if(victim != null){
-            return "/api/v1/game/"+game.getId()+"/player/" + victim.getId();
+        if(victim != null && game != null){
+            return "/api/v1/game/" + game.getId() + "/player/" + victim.getId();
         }else{
             return null;
         }

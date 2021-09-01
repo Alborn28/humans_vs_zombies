@@ -1,7 +1,10 @@
 package se.experis.humans_vs_zombies.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Squad {
@@ -19,8 +22,25 @@ public class Squad {
     @JoinColumn(name = "gameId")
     private Game game;
 
+    @JsonGetter("game")
+    public String game() {
+        if(game != null){
+            return "/api/v1/game/" + game.getId();
+        }else{
+            return null;
+        }
+    }
+
     @OneToMany(mappedBy = "squad")
     private List<Chat> chats;
+
+    @JsonGetter("chats")
+    public List<String> chats() {
+        return chats.stream()
+                .map(chat -> {
+                    return "/api/v1/game/" + game.getId() + "/chat/" + chat.getId();
+                }).collect(Collectors.toList());
+    }
 
     @OneToMany(mappedBy = "squad")
     private List<SquadMember> squadMembers;

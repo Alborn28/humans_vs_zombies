@@ -1,5 +1,7 @@
 package se.experis.humans_vs_zombies.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -30,6 +32,15 @@ public class Mission {
     @ManyToOne
     @JoinColumn(name = "gameId")
     private Game game;
+
+    @JsonGetter("game")
+    public String game() {
+        if(game != null){
+            return "/api/v1/game/" + game.getId();
+        }else{
+            return null;
+        }
+    }
 
     public Long getId() {
         return id;
