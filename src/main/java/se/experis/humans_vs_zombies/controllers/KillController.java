@@ -3,6 +3,7 @@ package se.experis.humans_vs_zombies.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import se.experis.humans_vs_zombies.models.Kill;
 import se.experis.humans_vs_zombies.models.Player;
@@ -25,6 +26,7 @@ public class KillController {
     private GameRepository gameRepository;
 
     @GetMapping
+    @PreAuthorize("hasRole('Administrator')")
     public ResponseEntity<List<Kill>> getAllKills(@PathVariable Long gameId){
         HttpStatus status;
 
@@ -73,6 +75,7 @@ public class KillController {
         return new ResponseEntity<>(status);
     }
     @PutMapping("/{killId}")
+
     public ResponseEntity<Kill> updateKill(@RequestBody Kill kill, @PathVariable Long gameId, @PathVariable Long killId){
         HttpStatus status;
 

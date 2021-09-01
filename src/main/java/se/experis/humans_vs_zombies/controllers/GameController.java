@@ -61,6 +61,7 @@ public class GameController {
         status=HttpStatus.NO_CONTENT;
         return new ResponseEntity<>(returnGame,status);
     }
+
     @DeleteMapping("/{gameId}")
     public ResponseEntity<Game> deleteGame(@PathVariable Long gameId){
         HttpStatus status=null;
