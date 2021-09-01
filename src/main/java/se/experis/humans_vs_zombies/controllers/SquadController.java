@@ -169,7 +169,7 @@ public class SquadController {
     }
 
     @PostMapping("/{squadId}/check-in")
-    public ResponseEntity<SquadCheckin> addMessage(@PathVariable Long gameId, @PathVariable Long squadId, @RequestBody SquadCheckin squadCheckin) {
+    public ResponseEntity<SquadCheckin> addCheckin(@PathVariable Long gameId, @PathVariable Long squadId, @RequestBody SquadCheckin squadCheckin) {
         SquadCheckin returnSquadCheckin = new SquadCheckin();
         HttpStatus status;
 
