@@ -1,5 +1,7 @@
 package se.experis.humans_vs_zombies.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -25,9 +27,27 @@ public class SquadCheckin {
     @JoinColumn(name = "gameId")
     private Game game;
 
+    @JsonGetter("game")
+    public String game() {
+        if(game != null){
+            return "/api/v1/game/" + game.getId();
+        }else{
+            return null;
+        }
+    }
+
     @ManyToOne
     @JoinColumn(name = "squadId")
     private Squad squad;
+
+    @JsonGetter("squad")
+    public String squad() {
+        if(squad != null && game != null){
+            return "/api/v1/game/" + game.getId() + "/squad/" + squad.getId();
+        }else{
+            return null;
+        }
+    }
 
     @OneToOne
     @JoinColumn(name = "squadMemberId")

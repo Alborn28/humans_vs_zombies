@@ -45,9 +45,27 @@ public class Chat {
     @JoinColumn(name = "playerId")
     private Player player;
 
+    @JsonGetter("player")
+    public String player() {
+        if(player != null && game != null){
+            return "/api/v1/game/" + game.getId() + "/player/" + player.getId();
+        }else{
+            return null;
+        }
+    }
+
     @ManyToOne
     @JoinColumn(name = "squadId")
     private Squad squad;
+
+    @JsonGetter("squad")
+    public String squad() {
+        if(squad != null && game != null){
+            return "/api/v1/game/" + game.getId() + "/squad/" + squad.getId();
+        }else{
+            return null;
+        }
+    }
 
     public Long getId() {
         return id;

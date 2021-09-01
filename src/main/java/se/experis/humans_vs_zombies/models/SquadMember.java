@@ -1,5 +1,6 @@
 package se.experis.humans_vs_zombies.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import se.experis.humans_vs_zombies.models.enumerators.Rank;
 
 import javax.persistence.*;
@@ -18,13 +19,40 @@ public class SquadMember {
     @JoinColumn(name = "gameId")
     private Game game;
 
+    @JsonGetter("game")
+    public String game() {
+        if(game != null){
+            return "/api/v1/game/" + game.getId();
+        }else{
+            return null;
+        }
+    }
+
     @ManyToOne
     @JoinColumn(name = "squadId")
     private Squad squad;
 
+    @JsonGetter("squad")
+    public String squad() {
+        if(squad != null && game != null){
+            return "/api/v1/game/" + game.getId() + "/squad/" + squad.getId();
+        }else{
+            return null;
+        }
+    }
+
     @OneToOne
     @JoinColumn(name = "playerId")
     private Player player;
+
+    @JsonGetter("player")
+    public String player() {
+        if(player != null && game != null){
+            return "/api/v1/game/" + game.getId() + "/player/" + player.getId();
+        }else{
+            return null;
+        }
+    }
 
     @OneToOne(mappedBy = "squadMember")
     private SquadCheckin squadCheckin;
