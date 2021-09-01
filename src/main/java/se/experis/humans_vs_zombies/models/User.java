@@ -11,6 +11,9 @@ public class User {
     private Long id;
 
     @Column(length = 64, nullable = false)
+    private String email;
+
+    @Column(length = 64, nullable = false)
     private String firstName;
 
     @Column(length = 64, nullable = false)
@@ -21,6 +24,14 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getFirstName() {
