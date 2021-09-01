@@ -26,7 +26,6 @@ public class KillController {
     private GameRepository gameRepository;
 
     @GetMapping
-    @PreAuthorize("hasRole('Administrator')")
     public ResponseEntity<List<Kill>> getAllKills(@PathVariable Long gameId){
         HttpStatus status;
 

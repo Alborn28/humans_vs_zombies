@@ -22,14 +22,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/v1/game/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/game**").hasRole("Administrator")
-                .antMatchers(HttpMethod.PUT, "/api/v1/game**").hasRole("Administrator")
-                .antMatchers(HttpMethod.DELETE, "/api/v1/game**").hasRole("Administrator")
 
                 .antMatchers(HttpMethod.POST, "/api/v1/game/{gameId}/chat").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/game/{gameId}/squad**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/game/{gameId}/squad").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/game/{gameId}/squad/{squadId}/chat").permitAll()
                 .antMatchers(HttpMethod.PUT, "/api/v1/game/{gameId}/kill/{killId}").permitAll()
+
+                .antMatchers(HttpMethod.POST, "/api/v1/game/**").hasRole("Administrator")
+                .antMatchers(HttpMethod.PUT, "/api/v1/game/**").hasRole("Administrator")
+                .antMatchers(HttpMethod.DELETE, "/api/v1/game/**").hasRole("Administrator")
+
                 .anyRequest()
                 .authenticated()
                 .and()
