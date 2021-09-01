@@ -53,13 +53,13 @@ public class GameController {
         Game returnGame=new Game();
         HttpStatus status;
 
-        if (!gameRepository.existsById(id)){
-            status=HttpStatus.NOT_FOUND;
+        if (id != game.getId()){
+            status=HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(returnGame, status);
         }
         returnGame=gameRepository.save(game);
         status=HttpStatus.NO_CONTENT;
-        return  new ResponseEntity<>(returnGame,status);
+        return new ResponseEntity<>(returnGame,status);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Game> deleteGame(@PathVariable Long id){

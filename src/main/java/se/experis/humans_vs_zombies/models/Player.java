@@ -1,5 +1,7 @@
 package se.experis.humans_vs_zombies.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -26,16 +28,25 @@ public class Player {
     @JoinColumn(name = "gameId")
     private Game game;
 
-    @OneToMany(mappedBy = "killer")
+    @JsonGetter("game")
+    public String game() {
+        if(game != null){
+            return "/api/v1/game/" + game.getId();
+        }else{
+            return null;
+        }
+    }
+
+    @OneToMany(mappedBy = "killer", cascade=CascadeType.ALL)
     private List<Kill> kills;
 
-    @OneToOne(mappedBy = "victim")
+    @OneToOne(mappedBy = "victim", cascade=CascadeType.ALL)
     private Kill death;
 
-    @OneToMany(mappedBy = "player")
+    @OneToMany(mappedBy = "player", cascade=CascadeType.ALL)
     private List<Chat> chats;
 
-    @OneToOne(mappedBy = "player")
+    @OneToOne(mappedBy = "player", cascade=CascadeType.ALL)
     private SquadMember squadMember;
 
     public Long getId() {

@@ -33,25 +33,25 @@ public class Game {
     @Column
     private String seLng;
 
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", cascade=CascadeType.ALL)
     private List<Player> players;
 
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", cascade=CascadeType.ALL)
     private List<Kill> kills;
 
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", cascade=CascadeType.ALL)
     private List<Squad> squads;
 
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", cascade=CascadeType.ALL)
     private List<Mission> missions;
 
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", cascade=CascadeType.ALL)
     private List<Chat> chats = new ArrayList<Chat>();
 
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", cascade=CascadeType.ALL)
     private List<SquadMember> squadMembers;
 
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", cascade=CascadeType.ALL)
     private List<SquadCheckin> squadCheckins;
 
 
