@@ -19,84 +19,80 @@ import java.util.List;
 @RequestMapping("/api/v1/game/{gameId}/kill")
 public class KillController {
 
-
     @Autowired
     private KillRepository killRepository;
+
     @Autowired
     private GameRepository gameRepository;
 
     @GetMapping
-    @PreAuthorize("hasRole('Administrator')")
-    public ResponseEntity<List<Kill>> getAllKills(@PathVariable Long gameId){
-        HttpStatus status;
-
-        List<Kill> returnKills= new ArrayList<>();
-
-        if (!gameRepository.existsById(gameId)){
-            status=HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(status);
-        }
-
-        returnKills=killRepository.getByGameId(gameId);
-        status=HttpStatus.OK;
-        return new ResponseEntity<>(returnKills,status);
+    public ResponseEntity<List<Kill>> getAllKills(@PathVariable Long gameId) {
+        List<Kill> returnKills = killRepository.getByGameId(gameId);
+        HttpStatus status = HttpStatus.OK;
+        return new ResponseEntity<>(returnKills, status);
     }
 
     @GetMapping("/{killId}")
-    public ResponseEntity<Kill> getSpecificKill(@PathVariable Long gameId, @PathVariable Long killId){
+    public ResponseEntity<Kill> getSpecificKill(@PathVariable Long gameId, @PathVariable Long killId) {
         Kill returnKill = new Kill();
         HttpStatus status;
 
-        if (!killRepository.existsById(killId)){
+        if (!killRepository.existsById(killId)) {
             status = HttpStatus.NOT_FOUND;
-            return new ResponseEntity<>(returnKill,status);
+            return new ResponseEntity<>(returnKill, status);
         }
-        status = HttpStatus.OK;
+
         returnKill = killRepository.findById(killId).get();
 
-        if(returnKill.getGame().getId() != gameId) {
+        if (returnKill.getGame().getId() != gameId) {
             status = HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(status);
+            return new ResponseEntity<>(returnKill, status);
         }
-        return  new ResponseEntity<>(returnKill,status);
+
+        status = HttpStatus.OK;
+        return new ResponseEntity<>(returnKill, status);
     }
 
     @PostMapping
-    public ResponseEntity <Kill> addKill(@PathVariable Long gameId, @RequestBody Kill kill){
-        HttpStatus status=null;
-
-        if (!gameRepository.existsById(gameId)){
-            status=HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(status);
-        }
-
-        killRepository.save(kill);
-        status=HttpStatus.OK;
-        return new ResponseEntity<>(status);
-    }
-    @PutMapping("/{killId}")
-
-    public ResponseEntity<Kill> updateKill(@RequestBody Kill kill, @PathVariable Long gameId, @PathVariable Long killId){
+    public ResponseEntity<Kill> addKill(@PathVariable Long gameId, @RequestBody Kill kill) {
+        Kill returnKill = new Kill();
         HttpStatus status;
 
-        if (killId != kill.getId() || (killRepository.getById(killId).getGame().getId() != gameId)){
-            status=HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(status);
+        if (!gameRepository.existsById(gameId) || kill.getGame().getId() != gameId) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnKill, status);
         }
 
-        killRepository.save(kill);
-        status=HttpStatus.NO_CONTENT;
-        return new ResponseEntity<>(status);
+        returnKill = killRepository.save(kill);
+        status = HttpStatus.OK;
+        return new ResponseEntity<>(returnKill, status);
     }
-    @DeleteMapping("/{killId}")
-    public ResponseEntity<Kill> deleteKill(@PathVariable Long gameId, @PathVariable Long killId){
-        HttpStatus status=null;
 
-        if (!killRepository.existsById(killId) || (killRepository.getById(killId).getGame().getId() != gameId)){
-            status=HttpStatus.BAD_REQUEST;
+    @PutMapping("/{killId}")
+    public ResponseEntity<Kill> updateKill(@RequestBody Kill kill, @PathVariable Long gameId, @PathVariable Long killId) {
+        Kill returnKill = new Kill();
+        HttpStatus status;
+
+        if (killId != kill.getId() || (killRepository.getById(killId).getGame().getId() != gameId)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnKill, status);
+        }
+
+        returnKill = killRepository.save(kill);
+        status = HttpStatus.OK;
+        return new ResponseEntity<>(returnKill, status);
+    }
+
+    @DeleteMapping("/{killId}")
+    public ResponseEntity<Kill> deleteKill(@PathVariable Long gameId, @PathVariable Long killId) {
+        HttpStatus status = null;
+
+        if (!killRepository.existsById(killId) || (killRepository.getById(killId).getGame().getId() != gameId)) {
+            status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(status);
         }
-        status=HttpStatus.OK;
+
+        status = HttpStatus.OK;
         killRepository.deleteById(killId);
         return new ResponseEntity<>(status);
     }

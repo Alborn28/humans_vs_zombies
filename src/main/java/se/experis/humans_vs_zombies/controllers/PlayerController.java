@@ -15,6 +15,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/game/{gameId}/player")
 public class PlayerController {
+
     @Autowired
     private PlayerRepository playerRepository;
 
@@ -22,64 +23,73 @@ public class PlayerController {
     private GameRepository gameRepository;
 
     @GetMapping()
-    public ResponseEntity<List<Player>> getAllPlayers(@PathVariable Long gameId){
+    public ResponseEntity<List<Player>> getAllPlayers(@PathVariable Long gameId) {
         List<Player> players = playerRepository.getByGameId(gameId);
-        HttpStatus status= HttpStatus.OK;
+        HttpStatus status = HttpStatus.OK;
         return new ResponseEntity<>(players, status);
     }
 
     @GetMapping("/{playerId}")
-    public ResponseEntity<Player> getSpecificPlayer(@PathVariable Long gameId, @PathVariable Long playerId){
+    public ResponseEntity<Player> getSpecificPlayer(@PathVariable Long gameId, @PathVariable Long playerId) {
         Player returnPlayer = new Player();
         HttpStatus status;
 
-        if (!playerRepository.existsById(playerId)){
+        if (!playerRepository.existsById(playerId)) {
             status = HttpStatus.NOT_FOUND;
-            return new ResponseEntity<>(returnPlayer,status);
+            return new ResponseEntity<>(returnPlayer, status);
         }
-        status = HttpStatus.OK;
-        returnPlayer = playerRepository.findById(playerId).get();
 
-        if(returnPlayer.getGame().getId() != gameId) {
+        returnPlayer = playerRepository.getById(playerId);
+
+        if (returnPlayer.getGame().getId() != gameId) {
             status = HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(status);
+            return new ResponseEntity<>(returnPlayer, status);
         }
-        return  new ResponseEntity<>(returnPlayer,status);
+
+        status = HttpStatus.OK;
+        return new ResponseEntity<>(returnPlayer, status);
     }
 
     @PostMapping
-    public ResponseEntity<Player> createPlayer(@PathVariable Long gameId, @RequestBody Player player){
-        HttpStatus status = HttpStatus.CREATED;
-        if(!gameRepository.existsById(gameId)) {
+    public ResponseEntity<Player> createPlayer(@PathVariable Long gameId, @RequestBody Player player) {
+        Player returnPlayer = new Player();
+        HttpStatus status;
+
+        if (!gameRepository.existsById(gameId) || player.getGame().getId() != gameId) {
             status = HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(status);
+            return new ResponseEntity<>(returnPlayer, status);
         }
-        Player newPlayer = playerRepository.save(player);
-        return new ResponseEntity<>(newPlayer, status);
+
+        returnPlayer = playerRepository.save(player);
+        status = HttpStatus.CREATED;
+        return new ResponseEntity<>(returnPlayer, status);
     }
 
     @PutMapping("/{playerId}")
-    public ResponseEntity<Player> updatePlayer(@RequestBody Player player,@PathVariable Long gameId, @PathVariable Long playerId){
+    public ResponseEntity<Player> updatePlayer(@RequestBody Player player, @PathVariable Long gameId, @PathVariable Long playerId) {
+        Player returnPlayer = new Player();
         HttpStatus status;
 
-        if (playerId != player.getId() || (playerRepository.getById(playerId).getGame().getId() != gameId)){
-            status=HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(status);
+        if (playerId != player.getId() || (playerRepository.getById(playerId).getGame().getId() != gameId)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnPlayer, status);
         }
-        playerRepository.save(player);
-        status=HttpStatus.NO_CONTENT;
-        return new ResponseEntity<>(status);
+
+        returnPlayer = playerRepository.save(player);
+        status = HttpStatus.OK;
+        return new ResponseEntity<>(returnPlayer, status);
     }
 
     @DeleteMapping("/{playerId}")
-    public ResponseEntity<Player> deletePlayer(@PathVariable Long gameId, @PathVariable Long playerId){
-        HttpStatus status=null;
+    public ResponseEntity<Player> deletePlayer(@PathVariable Long gameId, @PathVariable Long playerId) {
+        HttpStatus status = null;
 
-        if (!playerRepository.existsById(playerId) || (playerRepository.getById(playerId).getGame().getId() != gameId)){
-            status=HttpStatus.BAD_REQUEST;
+        if (!playerRepository.existsById(playerId) || (playerRepository.getById(playerId).getGame().getId() != gameId)) {
+            status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(status);
         }
-        status=HttpStatus.OK;
+
+        status = HttpStatus.OK;
         playerRepository.deleteById(playerId);
         return new ResponseEntity<>(status);
     }
