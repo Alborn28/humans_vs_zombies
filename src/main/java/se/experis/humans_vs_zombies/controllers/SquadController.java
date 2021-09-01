@@ -5,10 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.experis.humans_vs_zombies.models.*;
-import se.experis.humans_vs_zombies.repositories.GameRepository;
-import se.experis.humans_vs_zombies.repositories.PlayerRepository;
-import se.experis.humans_vs_zombies.repositories.SquadMemberRepository;
-import se.experis.humans_vs_zombies.repositories.SquadRepository;
+import se.experis.humans_vs_zombies.repositories.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +23,12 @@ public class SquadController {
 
     @Autowired
     private SquadMemberRepository squadMemberRepository;
+
+    @Autowired
+    private ChatRepository chatRepository;
+
+    @Autowired
+    private SquadCheckinRepository squadCheckinRepository;
 
     @GetMapping
     public ResponseEntity<List<Squad>> getAllSquads(@PathVariable Long gameId) {
@@ -113,5 +116,75 @@ public class SquadController {
         squadRepository.deleteById(squadId);
         status = HttpStatus.OK;
         return new ResponseEntity<>(status);
+    }
+
+    @GetMapping("/{squadId}/chat")
+    public ResponseEntity<List<Chat>> getChatMessages(@PathVariable Long gameId, @PathVariable Long squadId) {
+        List<Chat> returnChat = new ArrayList<>();
+        HttpStatus status;
+
+        if (!squadRepository.existsById(squadId) || (squadRepository.getById(squadId).getGame().getId() != gameId)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnChat, status);
+        }
+
+        status = HttpStatus.OK;
+        returnChat = chatRepository.getByGameIdAndSquadId(gameId, squadId);
+        return new ResponseEntity<>(returnChat, status);
+    }
+
+    @PostMapping("/{squadId}/chat")
+    public ResponseEntity<Chat> addMessage(@PathVariable Long gameId, @PathVariable Long squadId, @RequestBody Chat chat) {
+        Chat returnChat = new Chat();
+        HttpStatus status;
+
+        if (!squadRepository.existsById(squadId)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnChat, status);
+        }
+
+        if (chat.getGame().getId() != gameId || chat.getSquad().getId() != squadId) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnChat, status);
+        }
+
+        status = HttpStatus.CREATED;
+        returnChat = chatRepository.save(chat);
+        return new ResponseEntity<>(returnChat, status);
+    }
+
+    @GetMapping("/{squadId}/check-in")
+    public ResponseEntity<List<SquadCheckin>> getAllCheckins(@PathVariable Long gameId, @PathVariable Long squadId) {
+        List<SquadCheckin> returnCheckins = new ArrayList<>();
+        HttpStatus status;
+
+        if (!squadRepository.existsById(squadId) || (squadRepository.getById(squadId).getGame().getId() != gameId)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnCheckins, status);
+        }
+
+        status = HttpStatus.OK;
+        returnCheckins = squadCheckinRepository.getByGameIdAndSquadId(gameId, squadId);
+        return new ResponseEntity<>(returnCheckins, status);
+    }
+
+    @PostMapping("/{squadId}/check-in")
+    public ResponseEntity<SquadCheckin> addMessage(@PathVariable Long gameId, @PathVariable Long squadId, @RequestBody SquadCheckin squadCheckin) {
+        SquadCheckin returnSquadCheckin = new SquadCheckin();
+        HttpStatus status;
+
+        if (!squadRepository.existsById(squadId)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnSquadCheckin, status);
+        }
+
+        if (squadCheckin.getGame().getId() != gameId || squadCheckin.getSquad().getId() != squadId) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnSquadCheckin, status);
+        }
+
+        status = HttpStatus.CREATED;
+        returnSquadCheckin = squadCheckinRepository.save(squadCheckin);
+        return new ResponseEntity<>(returnSquadCheckin, status);
     }
 }

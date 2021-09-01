@@ -99,20 +99,21 @@ public class GameController {
 
     @PostMapping("/{gameId}/chat")
     public ResponseEntity<Chat> addMessage(@PathVariable Long gameId, @RequestBody Chat chat) {
+        Chat returnChat = new Chat();
         HttpStatus status;
 
         if (!gameRepository.existsById(gameId)) {
             status = HttpStatus.NOT_FOUND;
-            return new ResponseEntity<>(status);
+            return new ResponseEntity<>(returnChat, status);
         }
 
         if (chat.getGame().getId() != gameId) {
             status = HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(status);
+            return new ResponseEntity<>(returnChat, status);
         }
 
         status = HttpStatus.CREATED;
-        Chat returnChat = chatRepository.save(chat);
+        returnChat = chatRepository.save(chat);
         return new ResponseEntity<>(returnChat, status);
     }
 }

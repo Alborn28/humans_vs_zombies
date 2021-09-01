@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ChatRepository extends JpaRepository<Chat, Long> {
     List<Chat> getByGameId(Long gameId);
+    List<Chat> getByGameIdAndSquadId(Long gameId, Long squadId);
 }
