@@ -30,16 +30,16 @@ public class GameController {
         HttpStatus status= HttpStatus.OK;
         return new ResponseEntity<>(games, status);
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<Game> getSpecificGame(@PathVariable Long id){
+    @GetMapping("/{gameId}")
+    public ResponseEntity<Game> getSpecificGame(@PathVariable Long gameId){
         Game returnGame = new Game();
         HttpStatus status;
-        if (!gameRepository.existsById(id)){
+        if (!gameRepository.existsById(gameId)){
             status = HttpStatus.NOT_FOUND;
             return new ResponseEntity<>(returnGame,status);
         }
         status = HttpStatus.OK;
-        returnGame=gameRepository.findById(id).get();
+        returnGame=gameRepository.findById(gameId).get();
         return  new ResponseEntity<>(returnGame,status);
     }
     @PostMapping
@@ -48,12 +48,12 @@ public class GameController {
         HttpStatus status=HttpStatus.CREATED;
         return new ResponseEntity<>(newGame,status);
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<Game> updateGame(@RequestBody Game game,@PathVariable Long id){
+    @PutMapping("/{gameId}")
+    public ResponseEntity<Game> updateGame(@RequestBody Game game,@PathVariable Long gameId){
         Game returnGame=new Game();
         HttpStatus status;
 
-        if (id != game.getId()){
+        if (gameId != game.getId()){
             status=HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(returnGame, status);
         }
@@ -61,42 +61,42 @@ public class GameController {
         status=HttpStatus.NO_CONTENT;
         return new ResponseEntity<>(returnGame,status);
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Game> deleteGame(@PathVariable Long id){
+    @DeleteMapping("/{gameId}")
+    public ResponseEntity<Game> deleteGame(@PathVariable Long gameId){
         HttpStatus status=null;
 
-        if (!gameRepository.existsById(id)){
+        if (!gameRepository.existsById(gameId)){
             status=HttpStatus.NOT_FOUND;
             return new ResponseEntity<>(status);
         }
         status = HttpStatus.OK;
-        gameRepository.deleteById(id);
+        gameRepository.deleteById(gameId);
         return new ResponseEntity<>(status);
     }
-    @GetMapping("/{id}/chat")
-    public ResponseEntity<Chat> getChatMessages(@PathVariable Long id){
+    @GetMapping("/{gameId}/chat")
+    public ResponseEntity<Chat> getChatMessages(@PathVariable Long gameId){
         // date syntax "2008-03-02T23:00:00.000+00:00" || "'2008-03-03'"
         Chat returnChat = new Chat();
         HttpStatus status;
-        if (!chatRepository.existsById(id)){
+        if (!chatRepository.existsById(gameId)){
             status = HttpStatus.NOT_FOUND;
             return new ResponseEntity<>(returnChat,status);
         }
         status = HttpStatus.OK;
-        returnChat=chatRepository.findById(id).get();
+        returnChat=chatRepository.findById(gameId).get();
         return  new ResponseEntity<>(returnChat,status);
     }
 
-    @PostMapping("/{id}/chat")
-    public ResponseEntity<Chat> addMessage(@PathVariable Long id, @RequestBody Chat chat){
+    @PostMapping("/{gameId}/chat")
+    public ResponseEntity<Chat> addMessage(@PathVariable Long gameId, @RequestBody Chat chat){
         HttpStatus status;
 
-        if (!gameRepository.existsById(id)){
+        if (!gameRepository.existsById(gameId)){
             status=HttpStatus.NOT_FOUND;
             return new ResponseEntity<>(status);
         }
 
-        chat.setGame(gameRepository.getById(id));
+        chat.setGame(gameRepository.getById(gameId));
         Chat returnChat= chatRepository.save(chat);
         status=HttpStatus.CREATED;
         return new ResponseEntity<>(returnChat,status);

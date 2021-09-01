@@ -1,5 +1,7 @@
 package se.experis.humans_vs_zombies.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -25,13 +27,40 @@ public class Kill {
     @JoinColumn(name = "gameId")
     private Game game;
 
+    @JsonGetter("game")
+    public String game() {
+        if(game != null){
+            return "/api/v1/game/" + game.getId();
+        }else{
+            return null;
+        }
+    }
+
     @ManyToOne
     @JoinColumn(name = "killerId")
     private Player killer;
 
+    @JsonGetter("killer")
+    public String killer() {
+        if(killer != null){
+            return "/api/v1/game/"+game.getId()+"/player/" + killer.getId();
+        }else{
+            return null;
+        }
+    }
+
     @OneToOne
     @JoinColumn(name = "victimId")
     private Player victim;
+
+    @JsonGetter("victim")
+    public String victim() {
+        if(victim != null){
+            return "/api/v1/game/"+game.getId()+"/player/" + victim.getId();
+        }else{
+            return null;
+        }
+    }
 
     public Long getId() {
         return id;
