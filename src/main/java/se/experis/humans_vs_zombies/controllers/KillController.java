@@ -73,7 +73,7 @@ public class KillController {
         Kill returnKill = new Kill();
         HttpStatus status;
 
-        if (killId != kill.getId() || (killRepository.findById(killId).get().getGame().getId() != gameId)) {
+        if (killId != kill.getId() || (killRepository.findById(killId).get().getGame().getId() != gameId) || kill.getGame()==null) {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(returnKill, status);
         }

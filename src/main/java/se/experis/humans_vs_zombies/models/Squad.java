@@ -3,6 +3,7 @@ package se.experis.humans_vs_zombies.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +33,7 @@ public class Squad {
     }
 
     @OneToMany(mappedBy = "squad")
-    private List<Chat> chats;
+    private List<Chat> chats= new ArrayList<>();
 
     @JsonGetter("chats")
     public List<String> chats() {

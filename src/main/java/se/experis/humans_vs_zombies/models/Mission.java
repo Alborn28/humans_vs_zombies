@@ -31,7 +31,7 @@ public class Mission {
 
     @ManyToOne
     @JoinColumn(name = "gameId")
-    private Game game;
+    private Game game= new Game();
 
     @JsonGetter("game")
     public String game() {

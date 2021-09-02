@@ -47,7 +47,7 @@ public class SquadController {
             return new ResponseEntity<>(returnSquad, status);
         }
 
-        returnSquad = squadRepository.getById(squadId);
+        returnSquad = squadRepository.findById(squadId).get();
 
         if (returnSquad.getGame().getId() != gameId) {
             status = HttpStatus.BAD_REQUEST;
@@ -91,10 +91,11 @@ public class SquadController {
 
     @PutMapping("/{squadId}")
     public ResponseEntity<Squad> updateSquad(@PathVariable Long gameId, @PathVariable Long squadId, @RequestBody Squad squad) {
+        //Cascading kan ta bort koppling till Game, går inte att lägga till kopplingen i efterhand
         Squad returnSquad = new Squad();
         HttpStatus status;
 
-        if (squadId != squad.getId() || (squadRepository.getById(squadId).getGame().getId() != gameId)) {
+        if (squadId != squad.getId() || (squadRepository.getById(squadId).getGame().getId() != gameId) || squad.getGame()==null) {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(returnSquad, status);
         }

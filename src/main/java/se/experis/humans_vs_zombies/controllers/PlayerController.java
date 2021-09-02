@@ -70,7 +70,7 @@ public class PlayerController {
         Player returnPlayer = new Player();
         HttpStatus status;
 
-        if (playerId != player.getId() || (playerRepository.findById(playerId).get().getGame().getId() != gameId)) {
+        if (playerId != player.getId() || (playerRepository.findById(playerId).get().getGame().getId() != gameId) || player.getGame()==null) {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(returnPlayer, status);
         }

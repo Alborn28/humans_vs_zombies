@@ -70,7 +70,7 @@ public class MissionController {
         Mission returnMission = new Mission();
         HttpStatus status;
 
-        if (missionId != mission.getId() || (missionRepository.getById(missionId).getGame().getId() != gameId)) {
+        if (missionId != mission.getId() || (missionRepository.findById(missionId).get().getGame().getId() != gameId) || mission.getGame()==null) {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(returnMission, status);
         }
