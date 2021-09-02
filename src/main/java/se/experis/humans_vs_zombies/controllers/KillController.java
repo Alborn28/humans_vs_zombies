@@ -46,7 +46,7 @@ public class KillController {
 
         if (returnKill.getGame().getId() != gameId) {
             status = HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(returnKill, status);
+            return new ResponseEntity<>(status);
         }
 
         status = HttpStatus.OK;
@@ -73,7 +73,7 @@ public class KillController {
         Kill returnKill = new Kill();
         HttpStatus status;
 
-        if (killId != kill.getId() || (killRepository.getById(killId).getGame().getId() != gameId)) {
+        if (killId != kill.getId() || (killRepository.findById(killId).get().getGame().getId() != gameId)) {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(returnKill, status);
         }
@@ -87,7 +87,7 @@ public class KillController {
     public ResponseEntity<Kill> deleteKill(@PathVariable Long gameId, @PathVariable Long killId) {
         HttpStatus status = null;
 
-        if (!killRepository.existsById(killId) || (killRepository.getById(killId).getGame().getId() != gameId)) {
+        if (!killRepository.existsById(killId) || (killRepository.findById(killId).get().getGame().getId() != gameId)) {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(status);
         }

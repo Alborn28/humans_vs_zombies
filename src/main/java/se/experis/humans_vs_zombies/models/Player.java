@@ -12,6 +12,9 @@ public class Player {
     private Long id;
 
     @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
     private boolean isHuman;
 
     @Column(nullable = false)
@@ -27,27 +30,23 @@ public class Player {
     @ManyToOne
     @JoinColumn(name = "gameId")
     private Game game;
+    @OneToMany(mappedBy = "killer", cascade = CascadeType.ALL)
+    private List<Kill> kills;
+    @OneToOne(mappedBy = "victim", cascade = CascadeType.ALL)
+    private Kill death;
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+    private List<Chat> chats;
+    @OneToOne(mappedBy = "player", cascade = CascadeType.ALL)
+    private SquadMember squadMember;
 
     @JsonGetter("game")
     public String game() {
-        if(game != null){
+        if (game != null) {
             return "/api/v1/game/" + game.getId();
-        }else{
+        } else {
             return null;
         }
     }
-
-    @OneToMany(mappedBy = "killer", cascade=CascadeType.ALL)
-    private List<Kill> kills;
-
-    @OneToOne(mappedBy = "victim", cascade=CascadeType.ALL)
-    private Kill death;
-
-    @OneToMany(mappedBy = "player", cascade=CascadeType.ALL)
-    private List<Chat> chats;
-
-    @OneToOne(mappedBy = "player", cascade=CascadeType.ALL)
-    private SquadMember squadMember;
 
     public Long getId() {
         return id;
@@ -123,5 +122,13 @@ public class Player {
 
     public void setSquadMember(SquadMember squadMember) {
         this.squadMember = squadMember;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

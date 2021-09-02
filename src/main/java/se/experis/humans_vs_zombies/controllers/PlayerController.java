@@ -39,11 +39,11 @@ public class PlayerController {
             return new ResponseEntity<>(returnPlayer, status);
         }
 
-        returnPlayer = playerRepository.getById(playerId);
+        returnPlayer = playerRepository.findById(playerId).get();
 
         if (returnPlayer.getGame().getId() != gameId) {
             status = HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(returnPlayer, status);
+            return new ResponseEntity<>(status);
         }
 
         status = HttpStatus.OK;
@@ -70,7 +70,7 @@ public class PlayerController {
         Player returnPlayer = new Player();
         HttpStatus status;
 
-        if (playerId != player.getId() || (playerRepository.getById(playerId).getGame().getId() != gameId)) {
+        if (playerId != player.getId() || (playerRepository.findById(playerId).get().getGame().getId() != gameId)) {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(returnPlayer, status);
         }

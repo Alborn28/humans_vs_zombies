@@ -42,7 +42,7 @@ public class GameController {
         }
 
         status = HttpStatus.OK;
-        returnGame = gameRepository.getById(gameId);
+        returnGame = gameRepository.findById(gameId).get();
         return new ResponseEntity<>(returnGame, status);
     }
 
