@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http.cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/v1/game/**").permitAll()
+                .antMatchers(HttpMethod.GET, "**").permitAll()
 
                 .antMatchers(HttpMethod.POST, "/api/v1/game/{gameId}/chat").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/game/{gameId}/squad").permitAll()
