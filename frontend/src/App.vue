@@ -1,19 +1,19 @@
 <template>
 <div>
   <Navbar />
-  <LandingPage />
+  <CreateGame />
 </div>
 </template>
 
 <script>
 import Navbar from './components/Navbar/Navbar.vue'
-import LandingPage from './pages/LandingPage.vue'
+import CreateGame from './pages/CreateGame.vue'
 
 export default {
   name: 'App',
   components: {
     Navbar,
-    LandingPage
+    CreateGame
   }
 }
 </script>
