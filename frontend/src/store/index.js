@@ -10,12 +10,9 @@ export default new Vuex.Store({
         keycloak: {},
         token: "",
         authenticated: false,
-
-        players:[]
-
+        players:[],
         apiUrl: "https://hvz-experis-api.herokuapp.com/api/v1",
         games: []
-
     },
     mutations: {
         setKeycloak: (state, payload) => {
@@ -30,14 +27,13 @@ export default new Vuex.Store({
 
         setPlayers:(state, payload)=>{
             state.players=payload;
-
+        },
+        
         setGames: (state, payload) => {
             state.games = payload;
-
         }
     },
     actions: {
-
         async fetchPlayers ({commit},id){
             const respons= await fetch(`https://hvz-experis-api.herokuapp.com/api/v1/game/${id}/player`)
             const data = await respons.json()
