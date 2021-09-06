@@ -50,6 +50,11 @@ export default new Vuex.Store({
             }
         },
 
+        async register({ state }) {
+            if(!state.authenticated) {
+                await state.keycloak.register();
+        },
+              
         async fetchGames({ state, commit }) {
             const response = await fetch(state.apiUrl + "/game");
             const data = await response.json();
