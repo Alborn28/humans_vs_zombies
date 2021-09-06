@@ -76,7 +76,7 @@ export default {
             fetch(this.apiUrl + "/game", {
                 method: "POST",
                 headers: {
-                    "Authorization": "Bearer " + this.token, 
+                    //"Authorization": "Bearer " + this.token, 
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
@@ -84,11 +84,19 @@ export default {
                     gameState: "REGISTRATION"
                 })
             })
-            .then(() => alert("Game created successfully!"))
-            .catch((error) => {
-                alert("Failed to create the game...")
-                console.log(error);
-            });
+            .then(response => {
+                if(response.status >= 200 && response.status <= 299) {
+                    alert("Game created successfully!");
+                }
+
+                else if(response.status === 401 || response.status === 403) {
+                    alert("You need to be an admin to create a game");
+                }
+
+                else {
+                    alert("Failed to create the game...")
+                }
+            })
         }
     }
 }
