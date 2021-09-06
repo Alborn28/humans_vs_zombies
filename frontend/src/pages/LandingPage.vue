@@ -1,14 +1,23 @@
 <template>
-    <Navbar />
+  <div>
+      <GameList />
+      <CreateGameButton />
+  </div>
 </template>
 
 <script>
-import Navbar from '../components/Navbar/Navbar.vue'
+import GameList from '../components/LandingPage/GameList.vue'
+import CreateGameButton from '../components/LandingPage/CreateGameButton.vue'
 
 export default {
-    name: 'LandingPage',
+    name: "LandingPage",
     components: {
-        Navbar
+        GameList,
+        CreateGameButton
     }
 }
 </script>
+
+<style>
+    
+</style>
