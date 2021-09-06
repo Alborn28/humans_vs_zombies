@@ -1,23 +1,23 @@
 <template>
-<div>
-  <Navbar />
-  <GameDetails/>
-  </div>
+    <div class="app">
+        <Navbar />
+        <router-view />
+    </div>
 </template>
 
 <script>
-import Navbar from './components/Navbar/Navbar.vue'
-import GameDetails from './pages/GameDetails.vue'
-
+import Navbar from '../src/components/Navbar/Navbar.vue'
 export default {
-  name: 'App',
-  components: {
-    Navbar,
-    GameDetails
-  }
+    name: 'App',
+      components: {
+          Navbar
+    },
 }
 </script>
 
 <style>
-
+    * {
+        margin: 0;
+        padding: 0;
+    }
 </style>

@@ -10,7 +10,12 @@ export default new Vuex.Store({
         keycloak: {},
         token: "",
         authenticated: false,
+
         players:[]
+
+        apiUrl: "https://hvz-experis-api.herokuapp.com/api/v1",
+        games: []
+
     },
     mutations: {
         setKeycloak: (state, payload) => {
@@ -22,8 +27,13 @@ export default new Vuex.Store({
         setAuthenticated: (state, payload) => {
             state.authenticated = payload;
         },
+
         setPlayers:(state, payload)=>{
             state.players=payload;
+
+        setGames: (state, payload) => {
+            state.games = payload;
+
         }
     },
     actions: {
@@ -37,7 +47,7 @@ export default new Vuex.Store({
         async init({ commit }) {
             const kc = Keycloak('keycloak.json');
 
-            await kc.init({ onLoad: 'check-sso' })
+            await kc.init({ onLoad: 'check-sso' });
 
             commit('setKeycloak', kc);
             commit('setToken', kc.token);
@@ -54,7 +64,37 @@ export default new Vuex.Store({
             if(state.authenticated) {
                 await state.keycloak.logout();
             }
+        },
+
+        async register({ state }) {
+            if(!state.authenticated) {
+                await state.keycloak.register();
+            }
+        },
+              
+        async fetchGames({ state, commit }) {
+            const response = await fetch(state.apiUrl + "/game");
+            const data = await response.json();
+            commit('setGames', data);
         }
     },
-    getters: {}
+    getters: {
+        decodedToken: (state) => {
+            const base64Url = state.token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+        
+            return JSON.parse(jsonPayload);
+        },
+
+        isAdmin: (state, getters) => {
+            if(!state.authenticated) {
+                return false;
+            }
+            
+            return getters.decodedToken.roles.includes("Administrator");
+        }
+    }
 })
