@@ -1,5 +1,5 @@
 <template>
-  <div class="game">
+  <div class="game" @click="$emit('gameClicked', game.id)">
     <p>Name: {{game.name}}</p>
     <p>Game state: {{game.gameState}}</p>
     <p>Registered players: {{game.players.length}}</p>

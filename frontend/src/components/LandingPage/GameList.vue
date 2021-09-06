@@ -1,7 +1,7 @@
 <template>
     <ul v-if="gamesLoaded" class="gameList">
         <li v-for="(game, index) of games" v-bind:key="index">
-            <GameListItem :game="game"/>
+            <GameListItem :game="game" @gameClicked="handleGameClicked"/>
         </li>
     </ul>
 </template>
@@ -28,11 +28,23 @@ export default {
     },
 
     computed: {
-        ...mapState(['games'])
+        ...mapState(['games', 'authenticated'])
     },
 
     methods: {
         ...mapActions(['fetchGames']),
+
+        handleGameClicked(id) {
+            console.log("Game clicked with id: " + id);
+            
+            if(!this.authenticated) {
+                alert("You must be logged in to access game details!");
+            }
+
+            else {
+                //Route to game details for that game!
+            }
+        }
     }
 }
 </script>
