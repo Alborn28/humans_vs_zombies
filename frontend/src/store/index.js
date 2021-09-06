@@ -26,7 +26,7 @@ export default new Vuex.Store({
         async init({ commit }) {
             const kc = Keycloak('keycloak.json');
 
-            await kc.init({ onLoad: 'check-sso' })
+            await kc.init({ onLoad: 'check-sso' });
 
             commit('setKeycloak', kc);
             commit('setToken', kc.token);
@@ -42,6 +42,12 @@ export default new Vuex.Store({
         async logout({ state }) {
             if(state.authenticated) {
                 await state.keycloak.logout();
+            }
+        },
+
+        async register({ state }) {
+            if(!state.authenticated) {
+                await state.keycloak.register();
             }
         }
     },
