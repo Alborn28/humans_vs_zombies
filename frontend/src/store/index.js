@@ -53,7 +53,6 @@ export default new Vuex.Store({
         async fetchGames({ state, commit }) {
             const response = await fetch(state.apiUrl + "/game");
             const data = await response.json();
-            console.log(data);
             commit('setGames', data);
         }
     },

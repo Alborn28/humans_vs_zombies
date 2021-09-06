@@ -1,23 +1,21 @@
 <template>
-  <div>
-      <ul v-if="gamesLoaded">
-          <li v-for="(game, index) of games" v-bind:key="index">
-              <div class="game">
-                  <p>Name: {{game.name}}</p>
-                  <p>Game state: {{game.gameState}}</p>
-                  <p>Registered players: {{game.players.length}}</p>
-                  <p>Start date: </p>
-                  <p>End date: </p>
-              </div>
-          </li>
-      </ul>
-  </div>
+    <ul v-if="gamesLoaded" class="gameList">
+        <li v-for="(game, index) of games" v-bind:key="index">
+            <GameListItem :game="game"/>
+        </li>
+    </ul>
 </template>
 
 <script>
+import GameListItem from './GameListItem.vue'
 import { mapState, mapActions } from 'vuex';
+
 export default {
     name: "GameList",
+    components: {
+        GameListItem
+    },
+
     data() {
         return {
             gamesLoaded: false
@@ -40,8 +38,10 @@ export default {
 </script>
 
 <style>
-    .game {
-        border: 1px solid black;
-        padding: 5px;
+    .gameList {
+        list-style-type: none;
+        width: 70%;
+        margin: auto;
+        margin-top: 50px;
     }
 </style>
