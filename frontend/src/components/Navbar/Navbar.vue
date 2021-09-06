@@ -18,6 +18,9 @@ import LogoutButton from './LogoutButton.vue'
 import RegisterButton from './RegisterButton.vue'
 import { mapState } from 'vuex'
 
+
+
+
 export default {
     name: "Navbar",
     components: {
