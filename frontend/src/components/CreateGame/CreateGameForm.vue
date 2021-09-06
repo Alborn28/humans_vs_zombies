@@ -22,22 +22,22 @@
 
       <div>
           <label for="nwLat">Northwest latitude: </label>
-          <input required id="nwLat" type="text" v-model="nwLat">
+          <input id="nwLat" type="text" v-model="nwLat">
       </div>
 
       <div>
           <label for="nwLng">Northwest longitude: </label>
-          <input required id="nwLng" type="text" v-model="nwLng">
+          <input id="nwLng" type="text" v-model="nwLng">
       </div>
 
       <div>
           <label for="seLat">Southeast latitude: </label>
-          <input required id="seLat" type="text" v-model="seLat">
+          <input id="seLat" type="text" v-model="seLat">
       </div>
 
       <div>
           <label for="seLng">Southeast longitude: </label>
-          <input required id="seLng" type="text" v-model="seLng">
+          <input id="seLng" type="text" v-model="seLng">
       </div>
       
       <div>
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
     name: "CreateGameForm",
     data() {
@@ -62,9 +63,32 @@ export default {
         }
     },
 
+    computed: {
+        ...mapState(['apiUrl', 'token'])
+    },
+
     methods: {
         handleSubmit(event) {
             event.preventDefault();
+
+            //TODO - Fyll på body i fetch-requesten med resterande parametrar
+
+            fetch(this.apiUrl + "/game", {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + this.token, 
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: this.name,
+                    gameState: "REGISTRATION"
+                })
+            })
+            .then(() => alert("Game created successfully!"))
+            .catch((error) => {
+                alert("Failed to create the game...")
+                console.log(error);
+            });
         }
     }
 }
