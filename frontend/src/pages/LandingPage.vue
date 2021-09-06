@@ -1,19 +1,19 @@
 <template>
   <div>
       <GameList />
-      <CreateGame />
+      <CreateGameButton />
   </div>
 </template>
 
 <script>
 import GameList from '../components/LandingPage/GameList.vue'
-import CreateGame from '../components/LandingPage/CreateGame.vue'
+import CreateGameButton from '../components/LandingPage/CreateGameButton.vue'
 
 export default {
     name: "LandingPage",
     components: {
         GameList,
-        CreateGame
+        CreateGameButton
     }
 }
 </script>

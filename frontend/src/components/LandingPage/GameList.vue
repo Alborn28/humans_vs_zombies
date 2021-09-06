@@ -51,7 +51,7 @@ export default {
 
 <style>
     .gameList {
-        list-style-type: none;
+        list-style: none;
         width: 70%;
         margin: auto;
         margin-top: 50px;

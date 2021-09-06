@@ -24,4 +24,8 @@ export default {
         margin: auto;
         margin-bottom: 10px;
     }
+
+    .game:hover {
+        background-color: rgb(233, 233, 233);
+    }
 </style>
