@@ -7,6 +7,9 @@
 <script>
 import LoginButton from './LoginButton.vue'
 
+
+
+
 export default {
     name: "Navbar",
     components: {

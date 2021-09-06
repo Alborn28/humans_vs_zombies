@@ -1,0 +1,41 @@
+<template>
+    <div class="gamedetails">
+    <GameInfo/>
+    <GameMap/>
+    <PlayerList/>
+    <RegisterButton/>
+    <Chat/>
+    <PlayerStats/>
+    <PlayerInfo/>
+    
+</div>
+</template>
+
+<script>
+import GameInfo from '../components/GameDetails/GameInfo.vue'
+import GameMap from '../components/GameDetails/GameMap.vue'
+import PlayerList from '../components/GameDetails/PlayerList.vue'
+import RegisterButton from '../components/GameDetails/RegisterButton.vue'
+import Chat from '../components/GameDetails/Chat.vue'
+import PlayerStats from '../components/GameDetails/PlayerStats.vue'
+import PlayerInfo from '../components/GameDetails/PlayerInfo.vue'
+
+
+export default {
+    name: "GameDetails",
+    components: {
+        GameInfo, 
+        GameMap,
+        PlayerList,
+        RegisterButton,
+        Chat,
+        PlayerStats,
+        PlayerInfo
+    }
+
+}
+</script>
+
+<style>
+
+</style>
