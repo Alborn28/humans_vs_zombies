@@ -1,20 +1,19 @@
 <template>
-<div>
+  <div class="player-stats">
     <ul>
-        <li v-for="(player, index) in players" v-bind:key="index" >
-                {{player.email}}
-        </li>
+      <li v-for="(player, index) in players" v-bind:key="index">
+        {{ player.email }}
+      </li>
     </ul>
-</div>
+  </div>
 </template>
 
 <script>
 import { mapActions, mapState } from "vuex";
 export default {
-  
-    computed:{
-        ...mapState(["players"])
-    },
+  computed: {
+    ...mapState(["players"]),
+  },
 
   created() {
       this.fetchPlayers();
@@ -27,4 +26,15 @@ export default {
 </script>
 
 <style>
+.player-stats {
+  border: 1px solid black;
+  padding: 5px;
+  margin-right: 400px;
+  margin-left: 400px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.player-stats ul{
+    list-style: none;
+}
 </style>

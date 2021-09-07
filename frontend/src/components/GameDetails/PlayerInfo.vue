@@ -1,35 +1,33 @@
 <template>
-
-        <div>
-            <ul>
-                <li>
-                    <h4>
-                        {{player.biteCode}}
-                    </h4>
-                </li>
-            </ul>
-        </div>
+  <div class="player-info">
+    <ul>
+      <li>
+        <h4>
+          {{ player.biteCode }}
+        </h4>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 export default {
-
-    data(){
-        return{
-            player:{
-                "biteCode":"",
-                "email":""
-            }
-        }
-    },
+  data() {
+    return {
+      player: {
+        biteCode: "",
+        email: "",
+      },
+    };
+  },
   async created() {
       //Plocka ut spelaren baserat på email istället, måste läggas till i API:et
 
     await fetch(`https://hvz-experis-api.herokuapp.com/api/v1/game/${this.gameId}/player/14`)
       .then((respons) => {
         respons.json().then((data) => {
-            this.player=data
+          this.player = data;
         });
       })
       .catch(function (err) {
@@ -42,4 +40,11 @@ export default {
 </script>
 
 <style>
+.player-info {
+  border: 1px solid black;
+}
+
+.player-info ul{
+    list-style: none;
+}
 </style>
