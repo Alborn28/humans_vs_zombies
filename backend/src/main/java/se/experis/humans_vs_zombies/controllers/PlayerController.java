@@ -50,11 +50,10 @@ public class PlayerController {
         return new ResponseEntity<>(returnPlayer, status);
     }
 
-    @GetMapping("/email")
-    public ResponseEntity<Player> getSpecificPlayerByEmail(@PathVariable Long gameId, @RequestBody String email) {
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Player> getSpecificPlayerByEmail(@PathVariable Long gameId, @PathVariable String email) {
         Player returnPlayer = new Player();
         HttpStatus status;
-        email = email.replaceAll("\"", "");
 
         if (!playerRepository.existsByEmailAndGameId(email, gameId)) {
             status = HttpStatus.NOT_FOUND;
