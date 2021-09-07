@@ -12,7 +12,8 @@ export default new Vuex.Store({
         authenticated: false,
         players:[],
         apiUrl: "https://hvz-experis-api.herokuapp.com/api/v1",
-        games: []
+        games: [],
+        gameId: 0
     },
     mutations: {
         setKeycloak: (state, payload) => {
@@ -31,11 +32,15 @@ export default new Vuex.Store({
         
         setGames: (state, payload) => {
             state.games = payload;
+        },
+
+        setGameId: (state, payload) => {
+            state.gameId = payload;
         }
     },
     actions: {
-        async fetchPlayers ({commit},id){
-            const respons= await fetch(`https://hvz-experis-api.herokuapp.com/api/v1/game/${id}/player`)
+        async fetchPlayers ({ state, commit }){
+            const respons = await fetch(state.apiUrl + `/game/${state.gameId}/player`)
             const data = await respons.json()
             commit('setPlayers', data)
         },
