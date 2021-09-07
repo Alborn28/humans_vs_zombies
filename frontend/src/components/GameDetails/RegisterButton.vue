@@ -1,18 +1,40 @@
 <template>
   <div>
-      <button class="reg-btn" type="button" @click="ordentligt()">Registration button</button>
+      <button class="reg-btn" type="button" @click="registrate()">Registration button</button>
   </div>
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex'
 export default {
 
     methods:{
 
-        ordentligt(){
-            console.log("vad ordentligt");
+        async registrate(){
+            await fetch(this.apiUrl + `/game/${this.gameId}/player`,{
+              method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + this.token, 
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: this.decodedToken.email,
+                    username: this.decodedToken.preferred_username,
+                    human: true,
+                    patientZero: false,
+                    biteCode: "123123123",
+                    game : {
+                      id: this.gameId
+                    }
+                })
+            });
+            
         }
 
+    },
+    computed:{
+      ...mapState(['apiUrl', 'gameId', 'token']),
+      ...mapGetters(['decodedToken'])
     }
 
 }
