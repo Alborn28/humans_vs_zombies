@@ -3,6 +3,9 @@ import Start from '../pages/LandingPage.vue'
 import Game from '../pages/GameDetails.vue'
 import CreateGame from '../pages/CreateGame.vue'
 
+/**
+ * Sets up the routes for the application
+ */
 const routes = [
     {
         path: '/',

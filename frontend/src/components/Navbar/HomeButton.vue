@@ -10,11 +10,12 @@ export default {
     name: "HomeButton",
  
     methods: {
+        /**
+         * Re-directs the user to the landing page
+         */
         handleClick(){
             this.$router.push("/");
         }
-
-        
     }
 }
 </script>

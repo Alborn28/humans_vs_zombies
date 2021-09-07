@@ -12,6 +12,9 @@ export default {
 
     methods: {
         ...mapActions(['logout']),
+        /**
+         * When a user clicks on the logout button, the logout keycloak method gets called from the store.
+         */
         async handleLogout() {
             this.logout();
         }

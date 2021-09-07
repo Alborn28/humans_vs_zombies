@@ -12,6 +12,9 @@ export default {
  
     methods: {
         ...mapActions(['login']),
+        /**
+         * When a user clicks on the login button, the keycloak login method gets called from the store. 
+         */
         async handleClick() {
             this.login();
         }

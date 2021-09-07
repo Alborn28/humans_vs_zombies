@@ -16,6 +16,9 @@ export default {
 
     methods: {
         ...mapActions(['register', 'init']),
+        /**
+         * When a user clicks on the register button, the keycloak register method gets called from the store. 
+         */
         async handleRegister() {
             this.register();
         }
