@@ -22,11 +22,9 @@
   </div>
 </template>
 <script>
-
-import Vue from "vue";
 import { mapState } from "vuex";
-export default {
 
+export default {
   data() {
     return {
       game: {
@@ -56,7 +54,7 @@ export default {
   computed: {
     ...mapState(['gameId'])
   }
-});
+};
 
 </script>
 <style>
