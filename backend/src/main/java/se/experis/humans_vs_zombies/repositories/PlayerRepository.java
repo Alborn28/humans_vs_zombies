@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface PlayerRepository extends JpaRepository<Player, Long> {
     List<Player> getByGameId(Long gameId);
+    Player getByEmailAndGameId(String email, Long gameId);
+    Boolean existsByEmailAndGameId(String email, Long gameId);
 }

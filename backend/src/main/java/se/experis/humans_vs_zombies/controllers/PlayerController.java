@@ -50,6 +50,27 @@ public class PlayerController {
         return new ResponseEntity<>(returnPlayer, status);
     }
 
+    @GetMapping("/{email}")
+    public ResponseEntity<Player> getSpecificPlayer(@PathVariable Long gameId, @PathVariable String email) {
+        Player returnPlayer = new Player();
+        HttpStatus status;
+
+        if (!playerRepository.existsByEmailAndGameId(email, gameId)) {
+            status = HttpStatus.NOT_FOUND;
+            return new ResponseEntity<>(returnPlayer, status);
+        }
+
+        returnPlayer = playerRepository.getByEmailAndGameId(email, gameId);
+
+        if (returnPlayer.getGame().getId() != gameId) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(status);
+        }
+
+        status = HttpStatus.OK;
+        return new ResponseEntity<>(returnPlayer, status);
+    }
+
     @PostMapping
     public ResponseEntity<Player> createPlayer(@PathVariable Long gameId, @RequestBody Player player) {
         Player returnPlayer = new Player();

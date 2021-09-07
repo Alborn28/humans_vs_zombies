@@ -5,6 +5,7 @@ import se.experis.humans_vs_zombies.models.enumerators.GameState;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,17 +22,26 @@ public class Game {
     @Enumerated(EnumType.STRING)
     private GameState gameState;
 
-    @Column
-    private String nwLat;
+    @Column(nullable = false)
+    private Date startDate;
+
+    @Column(nullable = false)
+    private Date endDate;
 
     @Column
-    private String nwLng;
+    private String description;
 
     @Column
-    private String seLat;
+    private String neLat;
 
     @Column
-    private String seLng;
+    private String neLng;
+
+    @Column
+    private String swLat;
+
+    @Column
+    private String swLng;
 
     @OneToMany(mappedBy = "game", cascade=CascadeType.ALL)
     private List<Player> players = new ArrayList<>();
@@ -130,36 +140,60 @@ public class Game {
         this.gameState = gameState;
     }
 
-    public String getNwLat() {
-        return nwLat;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setNwLat(String nwLat) {
-        this.nwLat = nwLat;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public String getNwLng() {
-        return nwLng;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setNwLng(String nwLng) {
-        this.nwLng = nwLng;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
-    public String getSeLat() {
-        return seLat;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSeLat(String seLat) {
-        this.seLat = seLat;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getSeLng() {
-        return seLng;
+    public String getNeLat() {
+        return neLat;
     }
 
-    public void setSeLng(String seLng) {
-        this.seLng = seLng;
+    public void setNeLat(String nwLat) {
+        this.neLat = nwLat;
+    }
+
+    public String getNeLng() {
+        return neLng;
+    }
+
+    public void setNeLng(String nwLng) {
+        this.neLng = nwLng;
+    }
+
+    public String getSwLat() {
+        return swLat;
+    }
+
+    public void setSwLat(String seLat) {
+        this.swLat = seLat;
+    }
+
+    public String getSwLng() {
+        return swLng;
+    }
+
+    public void setSwLng(String seLng) {
+        this.swLng = seLng;
     }
 
     public List<Player> getPlayers() {
