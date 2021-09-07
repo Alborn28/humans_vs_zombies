@@ -2,16 +2,17 @@
   <div class="player-info">
     <ul>
       <li>
-        <h4>
-          {{ player.biteCode }}
-        </h4>
+        <p>{{ player.biteCode }}</p>
+      </li>
+      <li>
+        <p>{{player.username}}</p>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters, mapState } from "vuex";
 export default {
   data() {
     return {
@@ -22,9 +23,9 @@ export default {
     };
   },
   async created() {
-      //Plocka ut spelaren baserat på email istället, måste läggas till i API:et
+    //Plocka ut spelaren baserat på email istället, måste läggas till i API:et
 
-    await fetch(`https://hvz-experis-api.herokuapp.com/api/v1/game/${this.gameId}/player/14`)
+    await fetch(`https://hvz-experis-api.herokuapp.com/api/v1/game/${this.gameId}/player/email/${this.decodedToken.email}`)
       .then((respons) => {
         respons.json().then((data) => {
           this.player = data;
@@ -35,7 +36,10 @@ export default {
       });
   },
 
-  ...mapState(['gameId'])
+  computed: {
+    ...mapState(["gameId"]),
+    ...mapGetters(["decodedToken"]),
+  },
 };
 </script>
 
@@ -44,7 +48,7 @@ export default {
   border: 1px solid black;
 }
 
-.player-info ul{
-    list-style: none;
+.player-info ul {
+  list-style: none;
 }
 </style>

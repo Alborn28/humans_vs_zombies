@@ -3,8 +3,8 @@
     <p>Name: {{game.name}}</p>
     <p>Game state: {{game.gameState}}</p>
     <p>Registered players: {{game.players.length}}</p>
-    <p>Start date: </p>
-    <p>End date: </p>
+    <p>Start date: {{game.startDate}} </p>
+    <p>End date: {{game.endDate}} </p>
   </div>
 </template>
 
