@@ -19,6 +19,9 @@ data(){
     }
 },
 
+/**
+ * Fetches all the players from a specific game
+ */
 async created() {
     await this.fetchPlayers();
     this.playersLoaded = true;

@@ -8,8 +8,13 @@
 import { mapState, mapGetters } from 'vuex'
 export default {
 
+ 
     methods:{
-
+    /**
+   * The method registeres a new player to the specific game. The game is specified with the game ID.
+   * The token is used to authentication of the user. email is fetched from the store (index.js) as a part of the decoded token object
+   * 
+   */
         async registrate(){
             await fetch(this.apiUrl + `/game/${this.gameId}/player`,{
               method: "POST",
