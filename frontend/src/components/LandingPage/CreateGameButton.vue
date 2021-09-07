@@ -12,7 +12,7 @@ export default {
 
     methods: {
         handleClick() {
-            //Route to Create Game Page
+            this.$router.push("/create-game")
         }
     }
 }

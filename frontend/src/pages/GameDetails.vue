@@ -19,6 +19,7 @@ import RegisterButton from '../components/GameDetails/RegisterButton.vue'
 import Chat from '../components/GameDetails/Chat.vue'
 import PlayerStats from '../components/GameDetails/PlayerStats.vue'
 import PlayerInfo from '../components/GameDetails/PlayerInfo.vue'
+import { mapState } from 'vuex'
 
 
 export default {
@@ -31,8 +32,17 @@ export default {
         Chat,
         PlayerStats,
         PlayerInfo
-    }
+    },
 
+    created() {
+        if(!this.authenticated || this.gameId == 0) {
+            this.$router.push("/");
+        }
+    },
+
+    computed: {
+        ...mapState(['gameId', 'authenticated'])
+    }
 }
 </script>
 

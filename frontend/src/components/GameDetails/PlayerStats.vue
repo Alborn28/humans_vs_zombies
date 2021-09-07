@@ -17,8 +17,7 @@ export default {
     },
 
   created() {
-      this.fetchPlayers(1)
-      console.log(this.players);
+      this.fetchPlayers();
   },
 
   methods: {
