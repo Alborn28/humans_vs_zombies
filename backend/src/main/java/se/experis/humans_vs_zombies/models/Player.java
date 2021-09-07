@@ -27,10 +27,6 @@ public class Player {
     private String biteCode;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
-    private User user;
-
-    @ManyToOne
     @JoinColumn(name = "gameId")
     private Game game;
     @OneToMany(mappedBy = "killer", cascade = CascadeType.ALL)
