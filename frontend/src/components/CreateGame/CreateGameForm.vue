@@ -20,9 +20,7 @@
           <input required id="endDate" type="datetime-local" v-model="endDate">
       </div>
 
-        <div>
-             <CreateGameMap @zoomUpdated="handleZoomUpdated" @boundsUpdated="handleBoundsUpdated" /> 
-        </div>
+      <CreateGameMap @zoomUpdated="handleZoomUpdated" @boundsUpdated="handleBoundsUpdated" /> 
       
       <div>
           <button type="submit">Create game</button>
@@ -33,11 +31,13 @@
 <script>
 import { mapState } from 'vuex';
 import CreateGameMap from './CreateGameMap.vue';
+
 export default {
     name: "CreateGameForm",
     components: {
         CreateGameMap
     },
+
     data() {
         return {
             name: "",
@@ -57,10 +57,11 @@ export default {
     },
 
     methods: {
+        /**
+         * Post the created game to the database
+         */
         handleSubmit(event) {
             event.preventDefault();
-
-            //TODO - Fyll på body i fetch-requesten med resterande parametrar
 
             fetch(this.apiUrl + "/game", {
                 method: "POST",
@@ -94,9 +95,11 @@ export default {
                 }
             })
         },
+
         handleZoomUpdated(zoom){
             this.zoom = zoom;
         },
+
         handleBoundsUpdated(bounds){
             this.neLat = bounds._northEast.lat;
             this.neLng = bounds._northEast.lng;

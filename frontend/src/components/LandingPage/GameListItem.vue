@@ -21,6 +21,9 @@ export default {
         }
     },
 
+    /**
+     * Format the startDate and endDate
+     */
     created() {
         let date = new Date(this.game.startDate);
         date.setHours(date.getHours() - 2);

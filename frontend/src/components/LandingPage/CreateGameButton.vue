@@ -11,6 +11,9 @@ export default {
     },
 
     methods: {
+        /**
+         * Route to the CreateGamePage
+         */
         handleClick() {
             this.$router.push("/create-game")
         }

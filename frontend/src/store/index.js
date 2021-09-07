@@ -39,12 +39,9 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        async fetchPlayers ({ state, commit }){
-            const respons = await fetch(state.apiUrl + `/game/${state.gameId}/player`)
-            const data = await respons.json()
-            commit('setPlayers', data)
-        },
-
+        /**
+         * Initialize the keycloak
+         */
         async init({ commit }) {
             const kc = Keycloak('keycloak.json');
 
@@ -73,14 +70,29 @@ export default new Vuex.Store({
                 await state.keycloak.register();
             }
         },
-              
+
+        /**
+         * Fetch a list of all the games
+         */
         async fetchGames({ state, commit }) {
             const response = await fetch(state.apiUrl + "/game");
             const data = await response.json();
             commit('setGames', data);
+        },
+
+        /**
+         * Fetch a list of all the players registered for the current game
+         */
+         async fetchPlayers ({ state, commit }){
+            const respons = await fetch(state.apiUrl + `/game/${state.gameId}/player`)
+            const data = await respons.json()
+            commit('setPlayers', data)
         }
     },
     getters: {
+        /**
+         * Decode the jwt token to json format
+         */
         decodedToken: (state) => {
             const base64Url = state.token.split('.')[1];
             const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -91,6 +103,9 @@ export default new Vuex.Store({
             return JSON.parse(jsonPayload);
         },
 
+        /**
+         * Check if the current user is an Administrator
+         */
         isAdmin: (state, getters) => {
             if(!state.authenticated) {
                 return false;
