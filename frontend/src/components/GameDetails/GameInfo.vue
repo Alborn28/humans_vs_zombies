@@ -1,4 +1,5 @@
 <template>
+
   <div>
     <div class="game-title">
       <h1>
@@ -22,32 +23,28 @@
 </template>
 <script>
 
+import Vue from "vue";
+import { mapState } from "vuex";
 export default {
+
   data() {
     return {
       game: {
-        id: null,
         name: "",
-        gameState: "",
-        players: [
-          {
-            name: "Markus",
-          },
-          {
-            name: "Aljosa",
-          },
-        ],
+        description: "",
+        gameState: ""
       },
     };
   },
 
   async created() {
-    await fetch("https://hvz-experis-api.herokuapp.com/api/v1/game/1")
+    await fetch(`https://hvz-experis-api.herokuapp.com/api/v1/game/${this.gameId}`)
       .then((respons) => {
         respons.json().then((data) => {
-          this.game.id = data.id;
           this.game.name = data.name;
           this.game.gameState = data.gameState;
+          //  this.game.description = data.description;
+
         });
       })
       .catch(function (err) {
@@ -55,8 +52,12 @@ export default {
       });
   },
 
-  methods: {},
-};
+
+  computed: {
+    ...mapState(['gameId'])
+  }
+});
+
 </script>
 <style>
 .game-info {
@@ -77,3 +78,4 @@ export default {
   list-style: none;
 }
 </style>
+

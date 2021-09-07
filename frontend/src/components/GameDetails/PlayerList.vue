@@ -1,6 +1,7 @@
 <template>
+
   <div class="player-list">
-      <ul>
+      <ul v-if="playersLoaded">
           <li v-for="(player, index) in players" v-bind:key="index" >
               {{player.email}}
           </li>
@@ -9,28 +10,27 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 export default {
 
 data(){
     return{
-        players:[{}]
+        playersLoaded: false
     }
-    
 },
 
-
 async created() {
-    await fetch("https://hvz-experis-api.herokuapp.com/api/v1/game/2/player")
-      .then((respons) => {
-        respons.json().then((data) => {
-          this.players=data
-          console.log(data);
-        });
-      })
-      .catch(function (err) {
-        console.error("Fetch Error :-S", err);
-      });
+    await this.fetchPlayers();
+    this.playersLoaded = true;
   },
+
+  computed: {
+    ...mapState(['players'])
+  },
+
+  methods: {
+    ...mapActions(['fetchPlayers'])
+  }
 }
 </script>
 

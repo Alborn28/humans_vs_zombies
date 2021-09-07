@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   data() {
     return {
@@ -40,7 +41,7 @@ export default {
   },
 
   async created() {
-    await fetch("https://hvz-experis-api.herokuapp.com/api/v1/game/1/chat")
+    await fetch(`https://hvz-experis-api.herokuapp.com/api/v1/game/${this.gameId}/chat`)
       .then((respons) => {
         respons.json().then((data) => {
           this.chats = data;
@@ -51,6 +52,10 @@ export default {
         console.error("Fetch Error :-S", err);
       });
   },
+
+  computed: {
+    ...mapState(['gameId'])
+  }
 };
 </script>
 

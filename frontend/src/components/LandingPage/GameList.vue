@@ -8,7 +8,7 @@
 
 <script>
 import GameListItem from './GameListItem.vue'
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 
 export default {
     name: "GameList",
@@ -33,6 +33,7 @@ export default {
 
     methods: {
         ...mapActions(['fetchGames']),
+        ...mapMutations(['setGameId']),
 
         handleGameClicked(id) {
             console.log("Game clicked with id: " + id);
@@ -42,7 +43,8 @@ export default {
             }
 
             else {
-                //Route to game details for that game!
+                this.setGameId(id);
+                this.$router.push("/game-details");
             }
         }
     }
