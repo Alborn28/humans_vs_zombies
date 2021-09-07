@@ -22,6 +22,9 @@ export default {
         }
     },
 
+    /**
+     * Fetch a list of all games
+     */
     async created() {
         await this.fetchGames();
         this.gamesLoaded = true;
@@ -35,6 +38,9 @@ export default {
         ...mapActions(['fetchGames']),
         ...mapMutations(['setGameId']),
 
+        /**
+         * If logged in, go to details for the clicked game
+         */
         handleGameClicked(id) {
             console.log("Game clicked with id: " + id);
             
