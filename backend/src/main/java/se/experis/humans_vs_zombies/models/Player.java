@@ -83,14 +83,6 @@ public class Player {
         this.biteCode = biteCode;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Game getGame() {
         return game;
     }
