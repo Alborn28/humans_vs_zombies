@@ -1,5 +1,6 @@
 <template>
     <div class="navbar">
+        <HomeButton />
         <span v-if="!this.authenticated">
             <LoginButton />
         </span>
@@ -16,17 +17,16 @@
 import LoginButton from './LoginButton.vue'
 import LogoutButton from './LogoutButton.vue'
 import RegisterButton from './RegisterButton.vue'
+import HomeButton from './HomeButton.vue'
 import { mapState } from 'vuex'
-
-
-
 
 export default {
     name: "Navbar",
     components: {
         LoginButton,
         LogoutButton,
-        RegisterButton
+        RegisterButton,
+        HomeButton
     },
     computed: {
         ...mapState(['authenticated'])
