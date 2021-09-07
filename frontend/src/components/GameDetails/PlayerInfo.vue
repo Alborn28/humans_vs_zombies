@@ -22,9 +22,10 @@ export default {
       },
     };
   },
+  /**
+   * Fetch player with player email.
+   */
   async created() {
-    //Plocka ut spelaren baserat på email istället, måste läggas till i API:et
-
     await fetch(`https://hvz-experis-api.herokuapp.com/api/v1/game/${this.gameId}/player/email/${this.decodedToken.email}`)
       .then((respons) => {
         respons.json().then((data) => {
@@ -32,7 +33,7 @@ export default {
         });
       })
       .catch(function (err) {
-        console.error("Fetch Error :-S", err);
+        console.error("Fetch Error: ", err);
       });
   },
 
@@ -44,11 +45,11 @@ export default {
 </script>
 
 <style>
-.player-info {
-  border: 1px solid black;
-}
+  .player-info {
+    border: 1px solid black;
+  }
 
-.player-info ul {
-  list-style: none;
-}
+  .player-info ul {
+    list-style: none;
+  }
 </style>
