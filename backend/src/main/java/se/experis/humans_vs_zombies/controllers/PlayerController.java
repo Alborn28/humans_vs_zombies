@@ -30,7 +30,7 @@ public class PlayerController {
     }
 
     @GetMapping("/{playerId}")
-    public ResponseEntity<Player> getSpecificPlayer(@PathVariable Long gameId, @PathVariable Long playerId) {
+    public ResponseEntity<Player> getSpecificPlayerById(@PathVariable Long gameId, @PathVariable Long playerId) {
         Player returnPlayer = new Player();
         HttpStatus status;
 
@@ -50,10 +50,11 @@ public class PlayerController {
         return new ResponseEntity<>(returnPlayer, status);
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<Player> getSpecificPlayer(@PathVariable Long gameId, @PathVariable String email) {
+    @GetMapping("/email")
+    public ResponseEntity<Player> getSpecificPlayerByEmail(@PathVariable Long gameId, @RequestBody String email) {
         Player returnPlayer = new Player();
         HttpStatus status;
+        email = email.replaceAll("\"", "");
 
         if (!playerRepository.existsByEmailAndGameId(email, gameId)) {
             status = HttpStatus.NOT_FOUND;
