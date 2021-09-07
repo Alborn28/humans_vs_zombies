@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="chat">
     <ul>
       <li v-for="(chat,index) in chats" v-bind:key="index">
         <h3 v-if="chat.humanGlobal===true">
@@ -55,4 +55,10 @@ export default {
 </script>
 
 <style>
+.chat{
+  border: 1px solid black;
+}
+.chat ul{
+  list-style: none;
+}
 </style>

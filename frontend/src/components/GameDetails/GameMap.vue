@@ -1,15 +1,63 @@
 <template>
-  <div>
-<img src="@/assets/logo.png" width="500px">  </div>
+<div class="map">
+  <div style="height: 350px;">
+    <div class="info" style="height: 15%">
+      <span>Center: {{ center }}</span>
+      <span>Zoom: {{ zoom }}</span>
+      <span>Bounds: {{ bounds }}</span>
+    </div>
+    <l-map
+      style="height: 80%; width: 100%"
+      :zoom="zoom"
+      :center="center"
+      @update:zoom="zoomUpdated"
+      @update:center="centerUpdated"
+      @update:bounds="boundsUpdated"
+    >
+      <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+    </l-map>
+  </div>
+  </div>
 </template>
 
 <script>
-import Vue from "vue";
-export default Vue.extend({
-
-})
+import {LMap, LTileLayer} from 'vue2-leaflet';
+import 'leaflet/dist/leaflet.css';
+export default {
+  components: {
+    LMap,
+    LTileLayer,
+  },
+  data () {
+    return {
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      attribution:
+        '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      zoom: 18,
+      center: [56.877797, 14.8071],
+      bounds: null
+    };
+  },
+  methods: {
+    zoomUpdated (zoom) {
+      this.zoom = zoom;
+    },
+    centerUpdated (center) {
+      this.center = center;
+    },
+    boundsUpdated (bounds) {
+      this.bounds = bounds;
+    }
+  }
+}
 </script>
-
 <style>
-
+  .map{
+  border: 1px solid black;
+  padding: 5px;
+  margin-right: 400px;
+  margin-left: 400px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="player-list">
       <ul>
           <li v-for="(player, index) in players" v-bind:key="index" >
               {{player.email}}
@@ -35,5 +35,16 @@ async created() {
 </script>
 
 <style>
+  .player-list{
+  border: 1px solid black;
+  padding: 5px;
+  margin-right: 400px;
+  margin-left: 400px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  }
 
+  .player-list ul{
+    list-style: none;
+  }
 </style>
