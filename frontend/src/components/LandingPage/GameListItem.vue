@@ -3,8 +3,8 @@
     <p>Name: {{game.name}}</p>
     <p>Game state: {{game.gameState}}</p>
     <p>Registered players: {{game.players.length}}</p>
-    <p>Start date: {{game.startDate}} </p>
-    <p>End date: {{game.endDate}} </p>
+    <p>Start date: {{startDate}} </p>
+    <p>End date: {{endDate}} </p>
   </div>
 </template>
 
@@ -13,6 +13,22 @@ export default {
     name: "GameListItem",
     props: {
         game: Object
+    },
+    data() {
+        return {
+            startDate: "",
+            endDate: ""
+        }
+    },
+
+    created() {
+        let date = new Date(this.game.startDate);
+        date.setHours(date.getHours() - 2);
+        this.startDate = date.toLocaleString();
+
+        date = new Date(this.game.endDate);
+        date.setHours(date.getHours() - 2);
+        this.endDate = date.toLocaleString();
     }
 }
 </script>
