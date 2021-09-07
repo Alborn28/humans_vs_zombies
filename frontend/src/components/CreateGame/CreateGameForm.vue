@@ -20,25 +20,9 @@
           <input required id="endDate" type="datetime-local" v-model="endDate">
       </div>
 
-      <div>
-          <label for="nwLat">Northwest latitude: </label>
-          <input id="nwLat" type="text" v-model="nwLat">
-      </div>
-
-      <div>
-          <label for="nwLng">Northwest longitude: </label>
-          <input id="nwLng" type="text" v-model="nwLng">
-      </div>
-
-      <div>
-          <label for="seLat">Southeast latitude: </label>
-          <input id="seLat" type="text" v-model="seLat">
-      </div>
-
-      <div>
-          <label for="seLng">Southeast longitude: </label>
-          <input id="seLng" type="text" v-model="seLng">
-      </div>
+        <div>
+             <CreateGameMap @zoomUpdated="handleZoomUpdated" @boundsUpdated="handleBoundsUpdated" /> 
+        </div>
       
       <div>
           <button type="submit">Create game</button>
@@ -48,18 +32,23 @@
 
 <script>
 import { mapState } from 'vuex';
+import CreateGameMap from './CreateGameMap.vue';
 export default {
     name: "CreateGameForm",
+    components: {
+        CreateGameMap
+    },
     data() {
         return {
             name: "",
             description: "",
             startDate: "",
             endDate: "",
-            nwLat: "",
-            nwLng: "",
-            seLat: "",
-            seLng: ""
+            neLat: "",
+            neLng: "",
+            swLat: "",
+            swLng: "",
+            zoom: 12
         }
     },
 
@@ -76,12 +65,19 @@ export default {
             fetch(this.apiUrl + "/game", {
                 method: "POST",
                 headers: {
-                    //"Authorization": "Bearer " + this.token, 
+                    "Authorization": "Bearer " + this.token, 
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     name: this.name,
-                    gameState: "REGISTRATION"
+                    gameState: "REGISTRATION",
+                    description: this.description,
+                    startDate: this.startDate,
+                    endDate: this.endDate,
+                    neLat: this.neLat,
+                    neLng: this.neLng,
+                    swLat: this.swLat,
+                    swLng: this.swLng
                 })
             })
             .then(response => {
@@ -97,6 +93,15 @@ export default {
                     alert("Failed to create the game...")
                 }
             })
+        },
+        handleZoomUpdated(zoom){
+            this.zoom = zoom;
+        },
+        handleBoundsUpdated(bounds){
+            this.neLat = bounds._northEast.lat;
+            this.neLng = bounds._northEast.lng;
+            this.swLat = bounds._southWest.lat;
+            this.swLng = bounds._southWest.lng;
         }
     }
 }
@@ -105,7 +110,7 @@ export default {
 <style>
     .createGameForm {
         margin: auto;
-        width: 70%;
+        width: 100%;
         margin-top: 50px;
     }
 </style>

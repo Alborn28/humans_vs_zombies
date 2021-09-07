@@ -53,6 +53,7 @@ export default new Vuex.Store({
             commit('setKeycloak', kc);
             commit('setToken', kc.token);
             commit('setAuthenticated', kc.authenticated);
+            //console.log(kc.token)
         },
 
         async login({ state }) {
