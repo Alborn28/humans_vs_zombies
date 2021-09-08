@@ -78,7 +78,8 @@ export default {
                     neLat: this.neLat,
                     neLng: this.neLng,
                     swLat: this.swLat,
-                    swLng: this.swLng
+                    swLng: this.swLng,
+                    zoom: this.zoom
                 })
             })
             .then(response => {
