@@ -10,6 +10,7 @@ export default new Vuex.Store({
         keycloak: {},
         token: "",
         authenticated: false,
+        role: "",
         players: [],
         apiUrl: "https://hvz-experis-api.herokuapp.com/api/v1",
         games: [],
@@ -27,6 +28,10 @@ export default new Vuex.Store({
         },
         setAuthenticated: (state, payload) => {
             state.authenticated = payload;
+        },
+
+        setRole: (state, payload) => {
+            state.role = payload;
         },
 
         setPlayers: (state, payload) => {
@@ -65,6 +70,7 @@ export default new Vuex.Store({
             commit('setKeycloak', kc);
             commit('setToken', kc.token);
             commit('setAuthenticated', kc.authenticated);
+            commit('setRole', kc.tokenParsed.roles[0]);
             //console.log(kc.token)
         },
 
@@ -157,6 +163,18 @@ export default new Vuex.Store({
 
         async startGame({ state, dispatch }) {
             await fetch(state.apiUrl + `/game/${state.gameId}/start`, {
+                method: "PUT",
+                headers: {
+                    "Authorization": "Bearer " + state.token,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({})
+            });
+            dispatch('fetchGame')
+        },
+
+        async endGame({ state, dispatch }) {
+            await fetch(state.apiUrl + `/game/${state.gameId}/end`, {
                 method: "PUT",
                 headers: {
                     "Authorization": "Bearer " + state.token,

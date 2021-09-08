@@ -5,6 +5,7 @@
     <PlayerList />
     <RegisterButton />
     <StartGameButton />
+    <EndGameButton />
     <div class="row">
       <PlayerInfo />
       <Chat />
@@ -20,6 +21,7 @@ import GameMap from '../components/GameDetails/GameMap.vue'
 import PlayerList from '../components/GameDetails/PlayerList.vue'
 import RegisterButton from '../components/GameDetails/RegisterButton.vue'
 import StartGameButton from '../components/GameDetails/StartGameButton.vue'
+import EndGameButton from '../components/GameDetails/EndGameButton.vue'
 import Chat from '../components/GameDetails/Chat.vue'
 import PlayerStats from '../components/GameDetails/PlayerStats.vue'
 import PlayerInfo from '../components/GameDetails/PlayerInfo.vue'
@@ -36,7 +38,8 @@ export default {
         StartGameButton,
         Chat,
         PlayerStats,
-        PlayerInfo
+        PlayerInfo,
+        EndGameButton
     },
 
     created() {
