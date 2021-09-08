@@ -10,10 +10,13 @@ export default new Vuex.Store({
         keycloak: {},
         token: "",
         authenticated: false,
-        players:[],
+        players: [],
         apiUrl: "https://hvz-experis-api.herokuapp.com/api/v1",
         games: [],
-        gameId: 0
+        gameId: 0,
+        game: {},
+        player: {},
+        chats: []
     },
     mutations: {
         setKeycloak: (state, payload) => {
@@ -26,16 +29,28 @@ export default new Vuex.Store({
             state.authenticated = payload;
         },
 
-        setPlayers:(state, payload)=>{
-            state.players=payload;
+        setPlayers: (state, payload) => {
+            state.players = payload;
         },
-        
+
         setGames: (state, payload) => {
             state.games = payload;
         },
 
         setGameId: (state, payload) => {
             state.gameId = payload;
+        },
+
+        setGame: (state, payload) => {
+            state.game = payload;
+        },
+
+        setPlayer: (state, payload) => {
+            state.player = payload;
+        },
+
+        setChats: (state, payload) => {
+            state.chats = payload;
         }
     },
     actions: {
@@ -50,23 +65,23 @@ export default new Vuex.Store({
             commit('setKeycloak', kc);
             commit('setToken', kc.token);
             commit('setAuthenticated', kc.authenticated);
-            console.log(kc.token)
+            //console.log(kc.token)
         },
 
         async login({ state }) {
-            if(!state.authenticated) {
+            if (!state.authenticated) {
                 await state.keycloak.login();
             }
         },
 
         async logout({ state }) {
-            if(state.authenticated) {
+            if (state.authenticated) {
                 await state.keycloak.logout();
             }
         },
 
         async register({ state }) {
-            if(!state.authenticated) {
+            if (!state.authenticated) {
                 await state.keycloak.register();
             }
         },
@@ -83,10 +98,59 @@ export default new Vuex.Store({
         /**
          * Fetch a list of all the players registered for the current game
          */
-         async fetchPlayers ({ state, commit }){
-            const respons = await fetch(state.apiUrl + `/game/${state.gameId}/player`)
-            const data = await respons.json()
+        async fetchPlayers({ state, commit }) {
+            const response = await fetch(state.apiUrl + `/game/${state.gameId}/player`)
+            const data = await response.json()
             commit('setPlayers', data)
+        },
+
+        /**
+         * Fetch the current game
+         */
+        async fetchGame({ state, commit }) {
+            const response = await fetch(state.apiUrl + `/game/${state.gameId}`);
+            const data = await response.json();
+            commit('setGame', data);
+        },
+
+        /**
+         * Register player for the current game
+         */
+        async registerPlayer({ state, getters }) {
+            await fetch(state.apiUrl + `/game/${state.gameId}/player`, {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + state.token,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: getters.decodedToken.email,
+                    username: getters.decodedToken.preferred_username,
+                    human: true,
+                    patientZero: false,
+                    game: {
+                        id: state.gameId
+                    }
+                })
+            });
+        },
+
+        /**
+         * Fetch player
+         */
+        async fetchPlayer({ state, commit, getters }) {
+            const response = await fetch(`https://hvz-experis-api.herokuapp.com/api/v1/game/${state.gameId}/player/email/${getters.decodedToken.email}`);
+            const data = await response.json();
+            commit("setPlayer", data);
+        },
+
+        /**
+         * Fetch all the chats in the current game
+         */
+        async fetchChats({ state, commit }) {
+            const response = await fetch(`https://hvz-experis-api.herokuapp.com/api/v1/game/${state.gameId}/chat`);
+            const data = await response.json();
+            commit("setChats", data);
         }
     },
     getters: {
@@ -96,10 +160,10 @@ export default new Vuex.Store({
         decodedToken: (state) => {
             const base64Url = state.token.split('.')[1];
             const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
                 return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
             }).join(''));
-        
+
             return JSON.parse(jsonPayload);
         },
 
@@ -107,10 +171,10 @@ export default new Vuex.Store({
          * Check if the current user is an Administrator
          */
         isAdmin: (state, getters) => {
-            if(!state.authenticated) {
+            if (!state.authenticated) {
                 return false;
             }
-            
+
             return getters.decodedToken.roles.includes("Administrator");
         }
     }

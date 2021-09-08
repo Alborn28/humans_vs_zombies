@@ -1,5 +1,5 @@
 <template>
-  <div class="player-stats">
+  <div class="player-stats" v-if="game.gameState === 'COMPLETE'">
     <ul>
       <li v-for="(player, index) in players" v-bind:key="index">
         {{ player.email }}
@@ -12,7 +12,7 @@
 import { mapActions, mapState } from "vuex";
 export default {
   computed: {
-    ...mapState(["players"]),
+    ...mapState(["players", "game"]),
   },
 
   /**

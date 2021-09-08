@@ -1,10 +1,5 @@
 <template>
   <div class="map">
-    <div>
-      Marker is placed at {{ marker.lat }}, {{ marker.lng }}, bounds are
-      {{ bounds }}, zoom {{ zoom }}
-      <br />
-    </div>
     <l-map
       :zoom="zoom"
       :center="center"
@@ -22,7 +17,7 @@
 import { latLngBounds, latLng } from "leaflet";
 import { LMap, LTileLayer } from "vue2-leaflet";
 import "leaflet/dist/leaflet.css";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "SetBounds",
@@ -33,25 +28,26 @@ export default {
   /**
    * Fetch coordinates for a specific game
    */
-  created() {
-    fetch(`https://hvz-experis-api.herokuapp.com/api/v1/game/${this.gameId}`)
-      .then((respons) => {
-        respons.json().then((data) => {
-          this.maxBounds = latLngBounds([
-            [data.swLat, data.swLng],
-            [data.neLat, data.neLng],
-          ]);
-          this.minZoom = data.zoom
-          this.zoom = data.zoom
-        });
-      })
-      .catch(function (err) {
-        console.error("Fetch Error: ", err);
-      });
+  async created() {
+    await this.fetchGame();
+
+    this.maxBounds = latLngBounds([
+      [this.game.swLat, this.game.swLng],
+      [this.game.neLat, this.game.neLng],
+    ]);
+    
+    this.minZoom = this.game.zoom
+    this.zoom = this.game.zoom
   },
+
   computed: {
-    ...mapState(["gameId"]),
+    ...mapState(["game"]),
   },
+
+  methods: {
+    ...mapActions(["fetchGame"])
+  },
+
   data() {
     return {
       zoom: 0,

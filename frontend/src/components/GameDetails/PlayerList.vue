@@ -1,9 +1,9 @@
 <template>
 
-  <div class="player-list">
-      <ul v-if="playersLoaded">
+  <div class="player-list" v-if="players.length > 0">
+      <ul>
           <li v-for="(player, index) in players" v-bind:key="index" >
-              {{player.email}}
+              {{player.username}}
           </li>
       </ul>
   </div>
@@ -12,19 +12,11 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 export default {
-
-data(){
-    return{
-        playersLoaded: false
-    }
-},
-
 /**
  * Fetches all the players from a specific game
  */
 async created() {
     await this.fetchPlayers();
-    this.playersLoaded = true;
   },
 
   computed: {
