@@ -44,7 +44,7 @@ public class Game {
     private String swLng;
 
     @Column
-    private int zoom;
+    private Integer zoom;
 
     @OneToMany(mappedBy = "game", cascade=CascadeType.ALL)
     private List<Player> players = new ArrayList<>();
@@ -255,11 +255,11 @@ public class Game {
         this.squadCheckins = squadCheckins;
     }
 
-    public int getZoom() {
+    public Integer getZoom() {
         return zoom;
     }
 
-    public void setZoom(int zoom) {
+    public void setZoom(Integer zoom) {
         this.zoom = zoom;
     }
 }
