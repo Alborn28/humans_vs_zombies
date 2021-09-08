@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.experis.humans_vs_zombies.models.Chat;
 import se.experis.humans_vs_zombies.models.Game;
+import se.experis.humans_vs_zombies.models.enumerators.GameState;
 import se.experis.humans_vs_zombies.repositories.ChatRepository;
 import se.experis.humans_vs_zombies.repositories.GameRepository;
 
@@ -66,6 +67,40 @@ public class GameController {
         returnGame = gameRepository.save(game);
         status = HttpStatus.OK;
         return new ResponseEntity<>(returnGame, status);
+    }
+
+    @PutMapping("/{gameId}/start")
+    public ResponseEntity<Game> startGame(@PathVariable Long gameId) {
+        Game updatedGame = new Game();
+        HttpStatus status;
+
+        if (!gameRepository.existsById(gameId)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(updatedGame, status);
+        }
+
+        updatedGame = gameRepository.findById(gameId).get();
+        updatedGame.setGameState(GameState.IN_PROGRESS);
+        updatedGame = gameRepository.save(updatedGame);
+        status = HttpStatus.OK;
+        return new ResponseEntity<>(updatedGame, status);
+    }
+
+    @PutMapping("/{gameId}/end")
+    public ResponseEntity<Game> endGame(@PathVariable Long gameId) {
+        Game updatedGame = new Game();
+        HttpStatus status;
+
+        if (!gameRepository.existsById(gameId)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(updatedGame, status);
+        }
+
+        updatedGame = gameRepository.findById(gameId).get();
+        updatedGame.setGameState(GameState.COMPLETE);
+        updatedGame = gameRepository.save(updatedGame);
+        status = HttpStatus.OK;
+        return new ResponseEntity<>(updatedGame, status);
     }
 
     @DeleteMapping("/{gameId}")
