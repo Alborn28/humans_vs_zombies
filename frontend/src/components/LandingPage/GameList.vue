@@ -42,8 +42,6 @@ export default {
          * If logged in, go to details for the clicked game
          */
         handleGameClicked(id) {
-            console.log("Game clicked with id: " + id);
-            
             if(!this.authenticated) {
                 alert("You must be logged in to access game details!");
             }

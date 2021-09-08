@@ -1,7 +1,7 @@
 <template>
-  <div v-if="role === 'Administrator' && game.gameState === 'REGISTRATION'">
-    <button class="reg-btn" type="button" @click="startGame">
-      Start Game
+  <div v-if="game.gameState === 'IN_PROGRESS' && role === 'Administrator' ">
+    <button class="reg-btn" type="button" @click="endGame">
+      End Game
     </button>
   </div>
 </template>
@@ -10,10 +10,10 @@
 import { mapActions, mapState } from "vuex";
 export default {
   computed: {
-    ...mapState(['role', 'game'])
+    ...mapState(['game', 'role'])
   },
   methods: {
-    ...mapActions(["startGame"])
+    ...mapActions(["endGame"])
   }
 };
 </script>
