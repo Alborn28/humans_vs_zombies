@@ -44,11 +44,11 @@ export default {
             description: "",
             startDate: "",
             endDate: "",
-            neLat: "",
-            neLng: "",
-            swLat: "",
-            swLng: "",
-            zoom: 12
+            neLat: 56.88983119447765,
+            neLng: 14.869823455810549,
+            swLat: 56.866381305955535,
+            swLng: 14.754467010498049,
+            zoom: 14
         }
     },
 

@@ -133,7 +133,8 @@ export default new Vuex.Store({
                     }
                 })
             });
-            dispatch('fetchPlayers')
+            dispatch('fetchPlayers');
+            dispatch('fetchPlayer');
         },
 
         /**

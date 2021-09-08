@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="game.gameState === 'REGISTRATION' && player.id === null">
     <button class="reg-btn" type="button" @click="registerPlayer()">
       Registration button
     </button>
@@ -7,8 +7,11 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
+  computed: {
+    ...mapState(['game', 'player'])
+  },
   methods: {
     /**
      * The method registeres a new player to the specific game. The game is specified with the game ID.
