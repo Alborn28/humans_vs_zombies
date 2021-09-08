@@ -116,7 +116,7 @@ export default new Vuex.Store({
         /**
          * Register player for the current game
          */
-        async registerPlayer({ state, getters }) {
+        async registerPlayer({ state, getters, dispatch }) {
             await fetch(state.apiUrl + `/game/${state.gameId}/player`, {
                 method: "POST",
                 headers: {
@@ -133,6 +133,7 @@ export default new Vuex.Store({
                     }
                 })
             });
+            dispatch('fetchPlayers')
         },
 
         /**
@@ -151,6 +152,18 @@ export default new Vuex.Store({
             const response = await fetch(`https://hvz-experis-api.herokuapp.com/api/v1/game/${state.gameId}/chat`);
             const data = await response.json();
             commit("setChats", data);
+        },
+
+        async startGame({ state, dispatch }) {
+            await fetch(state.apiUrl + `/game/${state.gameId}/start`, {
+                method: "PUT",
+                headers: {
+                    "Authorization": "Bearer " + state.token,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({})
+            });
+            dispatch('fetchGame')
         }
     },
     getters: {
@@ -174,7 +187,6 @@ export default new Vuex.Store({
             if (!state.authenticated) {
                 return false;
             }
-
             return getters.decodedToken.roles.includes("Administrator");
         }
     }
