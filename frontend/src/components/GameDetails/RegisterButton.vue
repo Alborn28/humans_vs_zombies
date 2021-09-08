@@ -27,7 +27,6 @@ export default {
                     username: this.decodedToken.preferred_username,
                     human: true,
                     patientZero: false,
-                    biteCode: "123123123",
                     game : {
                       id: this.gameId
                     }
