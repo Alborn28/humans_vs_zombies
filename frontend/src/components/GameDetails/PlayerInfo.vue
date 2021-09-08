@@ -1,52 +1,40 @@
 <template>
-  <div class="player-info">
+  <div class="player-info" v-if="player.id !== null">
     <ul>
       <li>
-        <p>{{ player.biteCode }}</p>
+        <p>Username: {{player.username}}</p>
       </li>
       <li>
-        <p>{{player.username}}</p>
+        <p>Bite code: {{ player.biteCode }}</p>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
-  data() {
-    return {
-      player: {
-        biteCode: "",
-        email: "",
-      },
-    };
-  },
   /**
    * Fetch player with player email.
    */
   async created() {
-    await fetch(`https://hvz-experis-api.herokuapp.com/api/v1/game/${this.gameId}/player/email/${this.decodedToken.email}`)
-      .then((respons) => {
-        respons.json().then((data) => {
-          this.player = data;
-        });
-      })
-      .catch(function (err) {
-        console.error("Fetch Error: ", err);
-      });
+    this.fetchPlayer();
   },
 
   computed: {
-    ...mapState(["gameId"]),
-    ...mapGetters(["decodedToken"]),
+    ...mapState(["player"])
   },
+
+  methods: {
+    ...mapActions(["fetchPlayer"])
+  }
 };
 </script>
 
 <style>
   .player-info {
     border: 1px solid black;
+    padding: 5px;
   }
 
   .player-info ul {
