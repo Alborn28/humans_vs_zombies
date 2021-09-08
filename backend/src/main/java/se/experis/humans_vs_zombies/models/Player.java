@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Random;
 
 @Entity
 public class Player {
@@ -23,8 +24,9 @@ public class Player {
     @Column(nullable = false)
     private boolean isPatientZero;
 
-    @Column(nullable = false)
+    @Column()
     private String biteCode;
+
 
     @ManyToOne
     @JoinColumn(name = "gameId")

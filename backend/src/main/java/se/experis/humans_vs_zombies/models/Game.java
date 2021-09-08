@@ -43,6 +43,9 @@ public class Game {
     @Column
     private String swLng;
 
+    @Column
+    private int zoom;
+
     @OneToMany(mappedBy = "game", cascade=CascadeType.ALL)
     private List<Player> players = new ArrayList<>();
 
@@ -250,5 +253,13 @@ public class Game {
 
     public void setSquadCheckins(List<SquadCheckin> squadCheckins) {
         this.squadCheckins = squadCheckins;
+    }
+
+    public int getZoom() {
+        return zoom;
+    }
+
+    public void setZoom(int zoom) {
+        this.zoom = zoom;
     }
 }

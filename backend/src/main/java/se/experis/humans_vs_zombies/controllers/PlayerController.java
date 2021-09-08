@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.experis.humans_vs_zombies.models.Game;
 import se.experis.humans_vs_zombies.models.Player;
+import se.experis.humans_vs_zombies.models.utils.BiteCode;
 import se.experis.humans_vs_zombies.repositories.GameRepository;
 import se.experis.humans_vs_zombies.repositories.PlayerRepository;
 
@@ -75,6 +76,12 @@ public class PlayerController {
     public ResponseEntity<Player> createPlayer(@PathVariable Long gameId, @RequestBody Player player) {
         Player returnPlayer = new Player();
         HttpStatus status;
+        BiteCode biteCode= new BiteCode();
+
+        if (player.getBiteCode()==null) {
+            biteCode.setBiteCodeValue();
+           player.setBiteCode(biteCode.getBiteCodeValue());
+        }
 
         if (!gameRepository.existsById(gameId) || player.getGame().getId() != gameId) {
             status = HttpStatus.BAD_REQUEST;
