@@ -41,7 +41,8 @@ export default {
             [data.swLat, data.swLng],
             [data.neLat, data.neLng],
           ]);
-          //this.zoom = data.zoom, ADD LATER
+          this.minZoom = data.zoom
+          this.zoom = data.zoom
         });
       })
       .catch(function (err) {
@@ -52,10 +53,9 @@ export default {
     ...mapState(["gameId"]),
   },
   data() {
-    //"_southWest": { "lat": 56.866381305955535, "lng": 14.754467010498049 }, "_northEast": { "lat": 56.88983119447765, "lng": 14.869823455810549 }
     return {
-      zoom: 12,
-      minZoom: 14,
+      zoom: 0,
+      minZoom: 0,
       center: [0, 0],
       bounds: latLngBounds([
         [56.866381305955535, 14.754467010498049],
