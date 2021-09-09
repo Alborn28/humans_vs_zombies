@@ -3,6 +3,7 @@ package se.experis.humans_vs_zombies.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -27,12 +28,11 @@ public class Player {
     @Column()
     private String biteCode;
 
-
     @ManyToOne
     @JoinColumn(name = "gameId")
     private Game game;
     @OneToMany(mappedBy = "killer", cascade = CascadeType.ALL)
-    private List<Kill> kills;
+    private List<Kill> kills = new ArrayList<>();
     @OneToOne(mappedBy = "victim", cascade = CascadeType.ALL)
     private Kill death;
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)

@@ -71,10 +71,15 @@ public class KillController {
             return new ResponseEntity<>(returnKill, status);
         }
 
-        kill.setVictim(playerRepository.getByBiteCodeAndGameId(kill.getBiteCode(), gameId));
+        Player victim = playerRepository.getByBiteCodeAndGameId(kill.getBiteCode(), gameId);
+        if(!victim.isHuman()) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnKill, status);
+        }
+
+        kill.setVictim(victim);
         returnKill = killRepository.save(kill);
 
-        Player victim = playerRepository.getByBiteCodeAndGameId(kill.getBiteCode(), gameId);
         victim.setHuman(false);
         playerRepository.save(victim);
         
