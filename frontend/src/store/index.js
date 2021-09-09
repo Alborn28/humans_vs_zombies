@@ -169,7 +169,33 @@ export default new Vuex.Store({
                     "Content-Type": "application/json"
                 }
             });
+
+            await dispatch("fetchPlayers");
+
+            const numOfPlayers = state.players.length;
+            const patientZeroIndex = Math.floor(Math.random() * numOfPlayers);
+
+            await fetch(state.apiUrl + `/game/${state.gameId}/player/${state.players[patientZeroIndex].id}`, {
+                method: "PUT",
+                headers: {
+                    "Authorization": "Bearer " + state.token,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: state.players[patientZeroIndex].id,
+                    email: state.players[patientZeroIndex].email,
+                    username: state.players[patientZeroIndex].username,
+                    human: false,
+                    patientZero: true,
+                    biteCode: state.players[patientZeroIndex].biteCode,
+                    game: {
+                        id: state.gameId
+                    }
+                })
+            })
+
             dispatch('fetchGame')
+            dispatch('fetchPlayer')
         },
 
         async endGame({ state, dispatch }) {
@@ -184,6 +210,9 @@ export default new Vuex.Store({
         },
 
         async kill({ state, dispatch }, bitecode, story) {
+            let timeOfDeath = new Date(Date.now());
+            timeOfDeath.setHours(timeOfDeath.getHours() + 2);
+
             await fetch(state.apiUrl + `/game/${state.gameId}/kill`, {
                 method: "POST",
                 headers: {
@@ -191,7 +220,7 @@ export default new Vuex.Store({
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    "timeOfDeath": Date.now(),
+                    timeOfDeath: timeOfDeath,
                     story: story,
                     biteCode: bitecode,
                     //Koordinater
