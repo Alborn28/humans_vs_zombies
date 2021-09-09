@@ -167,8 +167,7 @@ export default new Vuex.Store({
                 headers: {
                     "Authorization": "Bearer " + state.token,
                     "Content-Type": "application/json"
-                },
-                body: JSON.stringify({})
+                }
             });
             dispatch('fetchGame')
         },
@@ -179,10 +178,32 @@ export default new Vuex.Store({
                 headers: {
                     "Authorization": "Bearer " + state.token,
                     "Content-Type": "application/json"
-                },
-                body: JSON.stringify({})
+                }
             });
             dispatch('fetchGame')
+        },
+
+        async kill({ state, dispatch }, bitecode, story) {
+            await fetch(state.apiUrl + `/game/${state.gameId}/kill`, {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + state.token,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "timeOfDeath": Date.now(),
+                    story: story,
+                    biteCode: bitecode,
+                    //Koordinater
+                    game: {
+                        id: state.gameId
+                    },
+                    killer: {
+                        id: state.player.id
+                    }
+                })
+            });
+            dispatch('fetchPlayer')
         }
     },
     getters: {

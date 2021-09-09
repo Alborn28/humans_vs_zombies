@@ -13,6 +13,9 @@
       <li>
         <p>Squad om man har någon</p>
       </li>
+      <li>
+        <p>Kills: {{player.kills.length}}</p>
+      </li>
     </ul>
   </div>
 </template>
