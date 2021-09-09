@@ -1,5 +1,5 @@
 <template>
-  <div class="player-info" v-if="player.id !== null">
+  <div class="player-info" v-if="playerLoaded">
     <ul>
       <li>
         <p>Username: {{player.username}}</p>
@@ -26,13 +26,23 @@ export default {
   /**
    * Fetch player with player email.
    */
-  async created() {
-    this.fetchPlayer();
+  data(){
+    return{
+      playerLoaded:false,
+
+    }
+
   },
 
-  computed: {
+  async created() {
+    await this.fetchPlayer();
+    this.playerLoaded=true;
+  },
+
+   computed: {
     ...mapState(["player"])
   },
+  
 
   methods: {
     ...mapActions(["fetchPlayer"])

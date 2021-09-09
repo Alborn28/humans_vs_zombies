@@ -71,7 +71,7 @@ export default new Vuex.Store({
             commit('setToken', kc.token);
             commit('setAuthenticated', kc.authenticated);
             commit('setRole', kc.tokenParsed.roles[0]);
-            //console.log(kc.token)
+            console.log(kc.token)
         },
 
         async login({ state }) {

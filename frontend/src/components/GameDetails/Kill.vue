@@ -37,8 +37,5 @@ export default {
     .killWindow {
         border: 1px solid black;
         padding: 5px;
-        width: 40%;
-        margin: auto;
-        margin-bottom: 50px;
     }
 </style>

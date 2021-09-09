@@ -1,6 +1,6 @@
 <template>
 
-  <div class="player-list" v-if="players.length > 0 && game.gameState === 'Registration'">
+  <div class="player-list" v-if="players.length > 0 && game.gameState === 'REGISTRATION'">
       <ul>
           <li v-for="(player, index) in players" v-bind:key="index" >
               {{player.username}}
