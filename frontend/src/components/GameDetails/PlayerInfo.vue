@@ -7,6 +7,12 @@
       <li>
         <p>Bite code: {{ player.biteCode }}</p>
       </li>
+      <li>
+        <p>Faction: {{player.human ? "Human" : "Zombie"}}</p>
+      </li>
+      <li>
+        <p>Squad om man har någon</p>
+      </li>
     </ul>
   </div>
 </template>
