@@ -10,12 +10,8 @@ import { mapActions } from 'vuex'
 export default {
     name: "RegisterButton",
 
-    async created() {
-        this.init();
-    },
-
     methods: {
-        ...mapActions(['register', 'init']),
+        ...mapActions(['register']),
         /**
          * When a user clicks on the register button, the keycloak register method gets called from the store. 
          */

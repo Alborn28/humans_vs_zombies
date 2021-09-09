@@ -10,7 +10,6 @@ export default new Vuex.Store({
         keycloak: {},
         token: "",
         authenticated: false,
-        role: "",
         players: [],
         apiUrl: "https://hvz-experis-api.herokuapp.com/api/v1",
         games: [],
@@ -28,10 +27,6 @@ export default new Vuex.Store({
         },
         setAuthenticated: (state, payload) => {
             state.authenticated = payload;
-        },
-
-        setRole: (state, payload) => {
-            state.role = payload;
         },
 
         setPlayers: (state, payload) => {
@@ -70,8 +65,7 @@ export default new Vuex.Store({
             commit('setKeycloak', kc);
             commit('setToken', kc.token);
             commit('setAuthenticated', kc.authenticated);
-            commit('setRole', kc.tokenParsed.roles[0]);
-            console.log(kc.token)
+            //console.log(kc.token)
         },
 
         async login({ state }) {
