@@ -13,16 +13,32 @@
         <li>
           Game state: {{ game.gameState }}
         </li>
-        <li>
+        <li v-if="game.gameState === 'REGISTRATION'">
           Rules: 
         </li>
+        <div v-if="game.gameState === 'IN_PROGRESS'">
+          <li>
+            Players alive: {{playersAlive}}
+          </li>
+          <li>
+            Time left: 
+          </li>
+        </div>
+        <div v-if="game.gameState === 'COMPLETE'">
+          <li>
+            Winning faction:
+          </li>
+          <li>
+            Zombie with most kills: 
+          </li>
+        </div>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 
 export default {
   created() {
@@ -30,7 +46,8 @@ export default {
   },
 
   computed: {
-    ...mapState(['game'])
+    ...mapState(['game']),
+    ...mapGetters(['playersAlive'])
   },
 
   methods: {

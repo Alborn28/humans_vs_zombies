@@ -233,6 +233,8 @@ export default new Vuex.Store({
                 })
             });
             dispatch('fetchPlayer')
+            dispatch('fetchPlayers')
+            dispatch('fetchGame')
         }
     },
     getters: {
@@ -257,6 +259,10 @@ export default new Vuex.Store({
                 return false;
             }
             return getters.decodedToken.roles.includes("Administrator");
+        },
+
+        playersAlive: (state) => {
+            return state.players.filter(player => player.human).length;
         }
     }
 })

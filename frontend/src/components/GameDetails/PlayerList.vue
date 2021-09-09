@@ -1,6 +1,6 @@
 <template>
 
-  <div class="player-list" v-if="players.length > 0">
+  <div class="player-list" v-if="players.length > 0 && game.gameState === 'Registration'">
       <ul>
           <li v-for="(player, index) in players" v-bind:key="index" >
               {{player.username}}
@@ -20,7 +20,7 @@ async created() {
   },
 
   computed: {
-    ...mapState(['players'])
+    ...mapState(['players', 'game'])
   },
 
   methods: {
