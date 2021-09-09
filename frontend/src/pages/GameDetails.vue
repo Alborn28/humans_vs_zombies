@@ -11,6 +11,7 @@
       <Chat />
     </div>
     <PlayerStats />
+    <Kill />
   </div>
 </template>
 
@@ -25,6 +26,7 @@ import EndGameButton from '../components/GameDetails/EndGameButton.vue'
 import Chat from '../components/GameDetails/Chat.vue'
 import PlayerStats from '../components/GameDetails/PlayerStats.vue'
 import PlayerInfo from '../components/GameDetails/PlayerInfo.vue'
+import Kill from '../components/GameDetails/Kill.vue'
 import { mapState } from 'vuex'
 
 
@@ -39,7 +41,8 @@ export default {
         Chat,
         PlayerStats,
         PlayerInfo,
-        EndGameButton
+        EndGameButton,
+        Kill
     },
 
     created() {
