@@ -4,17 +4,17 @@
       <a
         v-on:click="activetab = 1"
         v-bind:class="[activetab === 1 ? 'active' : '']"
-        >Tab 1</a
+        >Player info</a
       >
       <a
         v-on:click="activetab = 2"
         v-bind:class="[activetab === 2 ? 'active' : '']"
-        >Tab 2</a
+        >Kill</a
       >
       <a
         v-on:click="activetab = 3"
         v-bind:class="[activetab === 3 ? 'active' : '']"
-        >Tab 3</a
+        >Squad info</a
       >
     </div>
 
