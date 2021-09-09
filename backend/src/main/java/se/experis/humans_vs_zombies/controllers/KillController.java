@@ -25,6 +25,9 @@ public class KillController {
     @Autowired
     private GameRepository gameRepository;
 
+    @Autowired
+    private PlayerRepository playerRepository;
+
     @GetMapping
     public ResponseEntity<List<Kill>> getAllKills(@PathVariable Long gameId) {
         List<Kill> returnKills = killRepository.getByGameId(gameId);
@@ -63,7 +66,18 @@ public class KillController {
             return new ResponseEntity<>(returnKill, status);
         }
 
+        if(!playerRepository.existsByBiteCodeAndGameId(kill.getBiteCode(), gameId)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnKill, status);
+        }
+
+        kill.setVictim(playerRepository.getByBiteCodeAndGameId(kill.getBiteCode(), gameId));
         returnKill = killRepository.save(kill);
+
+        Player victim = playerRepository.getByBiteCodeAndGameId(kill.getBiteCode(), gameId);
+        victim.setHuman(false);
+        playerRepository.save(victim);
+        
         status = HttpStatus.OK;
         return new ResponseEntity<>(returnKill, status);
     }

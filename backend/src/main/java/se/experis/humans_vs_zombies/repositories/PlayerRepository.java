@@ -9,4 +9,6 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
     List<Player> getByGameId(Long gameId);
     Player getByEmailAndGameId(String email, Long gameId);
     Boolean existsByEmailAndGameId(String email, Long gameId);
+    Player getByBiteCodeAndGameId(String biteCode, Long gameId);
+    Boolean existsByBiteCodeAndGameId(String biteCode, Long gameId);
 }
