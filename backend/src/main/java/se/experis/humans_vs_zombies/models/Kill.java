@@ -17,6 +17,9 @@ public class Kill {
     @Column
     private String story;
 
+    @Column(nullable = false)
+    private String biteCode;
+
     @Column
     private String lat;
 
@@ -120,5 +123,13 @@ public class Kill {
 
     public void setVictim(Player victim) {
         this.victim = victim;
+    }
+
+    public String getBiteCode() {
+        return biteCode;
+    }
+
+    public void setBiteCode(String biteCode) {
+        this.biteCode = biteCode;
     }
 }
