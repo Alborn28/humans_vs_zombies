@@ -135,22 +135,23 @@ export default new Vuex.Store({
 
         async fetchSquad({ state, commit }) {
             if(state.player.squadMember!==null){
-            const response = await fetch(`https://hvz-experis-api.herokuapp.com${state.player.squadMember.squad}`)
-            const data = await response.json()
-            commit('setSquad', data)
-            commit("setSquadId", data.id)
-            console.log(data);
+                const response = await fetch(`https://hvz-experis-api.herokuapp.com${state.player.squadMember.squad}`)
+                const data = await response.json()
+                commit('setSquad', data)
+                commit("setSquadId", data.id)
+            }
+
+            else {
+                commit('setSquad', {})
+                commit("setSquadId", null)
             }
         },
 
 
-        async joinSquad({state, dispatch, commit },{
-            rank, 
-            squadId
-        }){
+        async joinSquad({state, dispatch, commit },{rank, squadId}){
 
             
-          const response = await fetch(state.apiUrl + `/game/${state.gameId}/squad/${squadId}/join`,{
+            await fetch(state.apiUrl + `/game/${state.gameId}/squad/${squadId}/join`,{
             
                 method:"POST",
                 headers: {
@@ -170,9 +171,8 @@ export default new Vuex.Store({
                     }
                 })
             })
-            const data = await response.json()
-            commit("setSquadId",data.id)
-            console.log(data.id, "____",state.squadId);
+            commit("setSquadId",squadId)
+            console.log(squadId, "____",state.squadId);
             dispatch('fetchPlayer')
             dispatch('fetchSquad')
         },
