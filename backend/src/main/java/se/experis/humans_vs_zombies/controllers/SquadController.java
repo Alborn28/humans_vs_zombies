@@ -84,6 +84,12 @@ public class SquadController {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(returnSquad, status);
         }
+
+        if(squadMemberRepository.existsByPlayer(squadMember.getPlayer())) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnSquad, status);
+        }
+
         returnSquad = squadMemberRepository.save(squadMember);
         status = HttpStatus.OK;
         return new ResponseEntity<>(returnSquad, status);
