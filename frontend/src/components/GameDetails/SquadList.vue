@@ -2,7 +2,7 @@
   <div class="squad-list" v-if="squadId===null && squadsLoaded" >
       <h4>squad lists</h4>
       <ul>
-          <li v-for="(squad,index) in squads" v-bind:key="index" @click="joinSquad({rank: 'MEMBER',squadId: squad.id})">
+          <li v-for="(squad,index) in squads" v-bind:key="index" @click="joinSquad({rank: 'MEMBER', squadId: squad.id})">
               {{squad.name}}
           </li>
       </ul>

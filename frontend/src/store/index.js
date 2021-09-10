@@ -115,7 +115,6 @@ export default new Vuex.Store({
                 })
             })
 
-
             const data= await response.json()
 
             dispatch('fetchPlayer')
@@ -123,8 +122,8 @@ export default new Vuex.Store({
             dispatch('fetchSquads')
             dispatch('joinSquad',{
                 rank:"LEADER", 
-                squadId:data.id}
-                )
+                squadId:data.id
+            })
         },
 
         async fetchSquads({ state, commit }) {
@@ -148,9 +147,7 @@ export default new Vuex.Store({
         },
 
 
-        async joinSquad({state, dispatch, commit },{rank, squadId}){
-
-            
+        async joinSquad({state, dispatch, commit },{rank, squadId}){            
             await fetch(state.apiUrl + `/game/${state.gameId}/squad/${squadId}/join`,{
             
                 method:"POST",
@@ -172,7 +169,6 @@ export default new Vuex.Store({
                 })
             })
             commit("setSquadId",squadId)
-            console.log(squadId, "____",state.squadId);
             dispatch('fetchPlayer')
             dispatch('fetchSquad')
         },
