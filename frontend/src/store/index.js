@@ -18,9 +18,13 @@ export default new Vuex.Store({
         player: {},
         chats: [],
         squad:{},
-        squads:[]
+        squads:[],
+        squadId:null
     },
     mutations: {
+        setSquadId:(state, payload) =>{
+            state.squadId=payload
+        },
         setSquad:(state,payload)=>{
             state.squad=payload
         },
@@ -73,7 +77,7 @@ export default new Vuex.Store({
             commit('setKeycloak', kc);
             commit('setToken', kc.token);
             commit('setAuthenticated', kc.authenticated);
-            //console.log(kc.token)
+            console.log(kc.token)
         },
 
         async login({ state }) {
@@ -104,7 +108,7 @@ export default new Vuex.Store({
                 },
                 body: JSON.stringify({
                     name:name,
-                    isHuman:state.player.human,
+                    human:state.player.human,
                     game:{
                         id:state.gameId
                     }
@@ -112,12 +116,15 @@ export default new Vuex.Store({
             })
 
 
-            const data= await response.JSON()
+            const data= await response.json()
 
             dispatch('fetchPlayer')
             dispatch('fetchGame')
             dispatch('fetchSquads')
-            dispatch('joinSquad',("LEADER", data.id))
+            dispatch('joinSquad',{
+                rank:"LEADER", 
+                squadId:data.id}
+                )
         },
 
         async fetchSquads({ state, commit }) {
@@ -127,14 +134,24 @@ export default new Vuex.Store({
         },
 
         async fetchSquad({ state, commit }) {
-            const response = await fetch(state.apiUrl + `/game/${state.gameId}/squad/${state.player.squad.id}`)
+            if(state.player.squadMember!==null){
+            const response = await fetch(`https://hvz-experis-api.herokuapp.com${state.player.squadMember.squad}`)
             const data = await response.json()
             commit('setSquad', data)
+            commit("setSquadId", data.id)
+            console.log(data);
+            }
         },
 
 
-        async joinSquad({state, dispatch },rank, squadId){
-            await fetch(state.apiUrl + `/game/${state.gameId}/squad/${squadId}/join`,{
+        async joinSquad({state, dispatch, commit },{
+            rank, 
+            squadId
+        }){
+
+            
+          const response = await fetch(state.apiUrl + `/game/${state.gameId}/squad/${squadId}/join`,{
+            
                 method:"POST",
                 headers: {
                     "Authorization": "Bearer " + state.token,
@@ -153,6 +170,9 @@ export default new Vuex.Store({
                     }
                 })
             })
+            const data = await response.json()
+            commit("setSquadId",data.id)
+            console.log(data.id, "____",state.squadId);
             dispatch('fetchPlayer')
             dispatch('fetchSquad')
         },
