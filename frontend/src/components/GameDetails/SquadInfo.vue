@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="squadId===null && squadLoaded">
     <input type="name" v-model="name"  />
     <button @click="register_A_Squad()">register squad</button>
   </div>
@@ -7,16 +7,25 @@
 
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
   data() {
     return {
       name: "",
+      squadLoaded:false
     };
   },
 
+  computed:{
+      ...mapState(["squadId"])
+  },
+  async created(){
+    await this.fetchSquad()
+    this.squadLoaded=true
+  },
+
   methods: {
-    ...mapActions(["registerSquad"]),
+    ...mapActions(["registerSquad","fetchSquad"]),
 
     register_A_Squad() {
       this.registerSquad(this.name);
