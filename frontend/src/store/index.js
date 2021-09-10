@@ -17,9 +17,17 @@ export default new Vuex.Store({
         gameId: 0,
         game: {},
         player: {},
-        chats: []
+        chats: [],
+        squad:{},
+        squads:[]
     },
     mutations: {
+        setSquad:(state,payload)=>{
+            state.squad=payload
+        },
+        setSquads:(state,payload)=>{
+            state.squads=payload
+        },
         setKeycloak: (state, payload) => {
             state.keycloak = payload;
         },
@@ -90,6 +98,69 @@ export default new Vuex.Store({
             if (!state.authenticated) {
                 await state.keycloak.register();
             }
+        },
+
+
+        async registerSquad({state,dispatch },name){
+            const response = await fetch(state.apiUrl + `/game/${state.gameId}/squad`,{
+                method:"POST",
+                headers: {
+                    "Authorization": "Bearer " + state.token,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name:name,
+                    isHuman:state.player.human,
+                    game:{
+                        id:state.gameId
+                    }
+                })
+            })
+
+
+            const data= await response.JSON()
+
+            dispatch('fetchPlayer')
+            dispatch('fetchGame')
+            dispatch('fetchSquads')
+            dispatch('joinSquad',("LEADER", data.id))
+        },
+
+        async fetchSquads({ state, commit }) {
+            const response = await fetch(state.apiUrl + `/game/${state.gameId}/squad`)
+            const data = await response.json()
+            commit('setSquads', data)
+        },
+
+        async fetchSquad({ state, commit }) {
+            const response = await fetch(state.apiUrl + `/game/${state.gameId}/squad/${state.player.squad.id}`)
+            const data = await response.json()
+            commit('setSquad', data)
+        },
+
+
+        async joinSquad({state, dispatch },rank, squadId){
+            await fetch(state.apiUrl + `/game/${state.gameId}/squad/${squadId}/join`,{
+                method:"POST",
+                headers: {
+                    "Authorization": "Bearer " + state.token,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    rank:rank,
+                    game:{
+                        id:state.gameId
+                    },
+                    squad:{
+                        id:squadId
+                    },
+                    player:{
+                        id:state.player.id
+                    }
+                })
+            })
+            dispatch('fetchPlayer')
+            dispatch('fetchSquad')
         },
 
         /**
