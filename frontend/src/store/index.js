@@ -135,7 +135,7 @@ export default new Vuex.Store({
 
         async fetchSquad({ state, commit }) {
             if(state.player.squadMember!==null){
-            const response = await fetch(`https://hvz-experis-api.herokuapp.com${state.player.squadMember.squad}`)
+            const response = await fetch(`http://localhost:8080${state.player.squadMember.squad}`)
             const data = await response.json()
             commit('setSquad', data)
             commit("setSquadId", data.id)
@@ -232,7 +232,7 @@ export default new Vuex.Store({
          * Fetch player
          */
         async fetchPlayer({ state, commit, getters }) {
-            const response = await fetch(`https://hvz-experis-api.herokuapp.com/api/v1/game/${state.gameId}/player/email/${getters.decodedToken.email}`);
+            const response = await fetch(state.apiUrl + `/game/${state.gameId}/player/email/${getters.decodedToken.email}`);
             const data = await response.json();
             commit("setPlayer", data);
         },
@@ -241,7 +241,7 @@ export default new Vuex.Store({
          * Fetch all the chats in the current game
          */
         async fetchChats({ state, commit }) {
-            const response = await fetch(`https://hvz-experis-api.herokuapp.com/api/v1/game/${state.gameId}/chat`);
+            const response = await fetch(state.apiUrl + `/game/${state.gameId}/chat`);
             const data = await response.json();
             commit("setChats", data);
         },
