@@ -137,6 +137,7 @@ export default new Vuex.Store({
         },
 
         async fetchSquad({ state, commit, dispatch }) {
+            await dispatch("fetchPlayer");
             if (state.player.squadMember !== null) {
                 const response = await fetch(`https://hvz-experis-api.herokuapp.com${state.player.squadMember.squad}`)
                 const data = await response.json()
@@ -149,7 +150,6 @@ export default new Vuex.Store({
                 commit('setSquad', {})
                 commit("setSquadId", null)
             }
-
         },
 
 
@@ -174,11 +174,23 @@ export default new Vuex.Store({
                     }
                 })
             })
-            
-           await dispatch('fetchPlayer')
+
+            await dispatch('fetchPlayer')
             dispatch('fetchSquad')
             commit("setSquadId", squadId)
 
+        },
+        async leaveSquad({state}){
+            console.log(state.gameId)
+            console.log(state.squadId)
+            console.log(state.player.id)
+            await fetch(state.apiUrl + `/game/${state.gameId}/squad/${state.squadId}/leave/${state.player.id}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": "Bearer " + state.token,
+                    "Content-Type": "application/json"
+                }
+            })
         },
 
         /**
@@ -231,12 +243,20 @@ export default new Vuex.Store({
             dispatch('fetchPlayers');
             dispatch('fetchPlayer');
         },
-
         /**
          * Fetch player
          */
         async fetchPlayer({ state, commit, getters }) {
-            const response = await fetch(state.apiUrl + `/game/${state.gameId}/player/email/${getters.decodedToken.email}`);
+            const response = await fetch(state.apiUrl + `/game/${state.gameId}/player/email/`, {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + state.token,
+                    "Content-Type": "application/json"
+                },
+                body:
+                    getters.decodedToken.email
+            }
+            );
             const data = await response.json();
             commit("setPlayer", data);
         },

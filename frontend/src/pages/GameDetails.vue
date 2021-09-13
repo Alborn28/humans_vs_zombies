@@ -12,7 +12,6 @@
       <Chat />
     </div>
     
-    <PlayerStats />
   </div>
 </template>
 
@@ -25,7 +24,6 @@ import RegisterButton from '../components/GameDetails/RegisterButton.vue'
 import StartGameButton from '../components/GameDetails/StartGameButton.vue'
 import EndGameButton from '../components/GameDetails/EndGameButton.vue'
 import Chat from '../components/GameDetails/Chat.vue'
-import PlayerStats from '../components/GameDetails/PlayerStats.vue'
 import PlayerDetails from '../components/GameDetails/PlayerDetails.vue'
 import { mapState } from 'vuex'
 import SquadList from '../components/GameDetails/SquadList.vue'
@@ -40,7 +38,6 @@ export default {
         RegisterButton,
         StartGameButton,
         Chat,
-        PlayerStats,
         EndGameButton,
         PlayerDetails,
         SquadList

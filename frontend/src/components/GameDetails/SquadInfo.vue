@@ -11,8 +11,10 @@
         <li v-for="(member,index) in squadMembers" :key="index" >
           {{member.username}}
           {{squad.squadMembers[index].rank}}
+          {{member.human ? "Alive" : "Dead"}}
         </li>
       </ul>
+      <button class="leave-squad" @click="leaveSquad">Leave squad</button>
     </div>
   </div>
 </template>
@@ -37,7 +39,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["registerSquad", "fetchSquad"]),
+    ...mapActions(["registerSquad", "fetchSquad", "leaveSquad"]),
 
    async register_A_Squad() {
       await this.registerSquad(this.name);

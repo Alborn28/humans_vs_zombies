@@ -11,7 +11,7 @@
         <p>Faction: {{player.human ? "Human" : "Zombie"}}</p>
       </li>
       <li>
-        <p>Squad om man har någon</p>
+        <p>Squad: {{squadId === null ? "None" : squad.name}}</p>
       </li>
       <li>
         <p>Kills: {{player.kills.length}}</p>
@@ -36,16 +36,17 @@ export default {
 
   async created() {
     await this.fetchPlayer();
+    await this.fetchSquad();
     this.playerLoaded=true;
   },
 
    computed: {
-    ...mapState(["player"])
+    ...mapState(["player", "squad", "squadId"])
   },
   
 
   methods: {
-    ...mapActions(["fetchPlayer"])
+    ...mapActions(["fetchPlayer", "fetchSquad"])
   }
 };
 </script>
