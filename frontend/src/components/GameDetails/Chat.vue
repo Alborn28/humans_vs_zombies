@@ -1,35 +1,41 @@
 <template>
   <div class="chat" v-if="player.id !== null">
-    <ul>
-      <li v-for="(chat, index) in chats" v-bind:key="index">
-        <h3 v-if="chat.humanGlobal === true">
-          {{ chat.message }}
-        </h3>
-        <h3 v-if="chat.humanGlobal === false">
-          {{ chat.message }}
-        </h3>
-      </li>
-    </ul>
+    <form class="chat-form" @submit.prevent="sendMessage(msg)"> 
+      <ul>
+        <li v-for="(chat, index) in chats" :key="index">
+            {{chat}}
+        </li>
+      </ul>
+      <input v-model="msg" class="chat-msg" placeholder="Message..." />
+      <button class="send-chat-msg" type="submit">Send</button>
+    </form>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import {mapState} from 'vuex';
 export default {
-  /**
-   * Fetch all the chats for this specific game.
-   */
-  async created() {
-    this.fetchChats();
+  data(){
+    return{
+      chats: [],
+      msg: ""
+    }
   },
-
-  computed: {
-    ...mapState(["chats", "player"]),
+  computed:{
+    ...mapState(["player"])
   },
-
-  methods: {
-    ...mapActions(["fetchChats"])
+  methods:{
+    sendMessage(msg) {
+      this.$socket.emit("chatMessage", msg)
+      this.msg = ""
+    }
+  },
+  sockets:{
+    chatMessage(data){
+      this.chats.push(data)
+    }
   }
+  
 };
 </script>
 

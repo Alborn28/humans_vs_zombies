@@ -21,10 +21,10 @@ export default {
 /**
  * Fetches all the squads from a specific game
  */
-async created() {
-    await this.fetchSquads();
+async created() {  
+    await this.fetchSquads();    
     await this.fetchSquad();
-    this.squadsLoaded = true;
+    this.squadsLoaded = true;    
   },
 
   computed: {
