@@ -32,7 +32,7 @@ public class Squad {
         }
     }
 
-    @OneToMany(mappedBy = "squad")
+    @OneToMany(mappedBy = "squad", cascade = CascadeType.ALL)
     private List<Chat> chats= new ArrayList<>();
 
     @JsonGetter("chats")
@@ -43,10 +43,10 @@ public class Squad {
                 }).collect(Collectors.toList());
     }
 
-    @OneToMany(mappedBy = "squad")
+    @OneToMany(mappedBy = "squad", cascade = CascadeType.ALL)
     private List<SquadMember> squadMembers;
 
-    @OneToMany(mappedBy = "squad")
+    @OneToMany(mappedBy = "squad", cascade = CascadeType.ALL)
     private List<SquadCheckin> squadCheckins;
 
     public Long getId() {

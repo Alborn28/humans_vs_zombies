@@ -102,20 +102,24 @@ public class SquadController {
         HttpStatus status;
 
         if (!gameRepository.existsById(gameId) || !squadRepository.existsById(squadId) || !playerRepository.existsById(playerId)) {
-            status = HttpStatus.BAD_REQUEST;
+            status = HttpStatus.NOT_FOUND;
             return new ResponseEntity<>(returnSquad, status);
         }
 
         Player player = playerRepository.findById(playerId).get();
+        SquadMember squadMember = player.getSquadMember();
 
-        if(squadMemberRepository.existsByPlayer(player)) {
+        if(!squadMemberRepository.existsByPlayer(player)) {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(returnSquad, status);
         }
 
-        returnSquad = squadMemberRepository.deleteByPlayer(player);
+        player.setSquadMember(null);
+        playerRepository.save(player);
+
+        squadMemberRepository.deleteById(squadMember.getId());
         status = HttpStatus.OK;
-        return new ResponseEntity<>(returnSquad, status);
+        return new ResponseEntity<>(status);
     }
 
     @PutMapping("/{squadId}")
