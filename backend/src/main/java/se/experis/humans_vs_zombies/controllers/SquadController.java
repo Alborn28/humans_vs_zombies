@@ -19,6 +19,9 @@ public class SquadController {
     private GameRepository gameRepository;
 
     @Autowired
+    private PlayerRepository playerRepository;
+
+    @Autowired
     private SquadRepository squadRepository;
 
     @Autowired
@@ -63,12 +66,10 @@ public class SquadController {
         Squad returnSquad = new Squad();
         HttpStatus status;
 
-        if (!gameRepository.existsById(gameId)) {
+        if (!gameRepository.existsById(gameId) || squadRepository.existsByNameAndGameId(squad.getName(), gameId)) {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(returnSquad, status);
         }
-
-        //Testa ifall man kan lägga till squadmember när man skapar squad via front-end, annars här.
 
         returnSquad = squadRepository.save(squad);
         status = HttpStatus.OK;
@@ -91,6 +92,28 @@ public class SquadController {
         }
 
         returnSquad = squadMemberRepository.save(squadMember);
+        status = HttpStatus.OK;
+        return new ResponseEntity<>(returnSquad, status);
+    }
+
+    @DeleteMapping("/{squadId}/leave/{playerId}")
+    public ResponseEntity<SquadMember> deleteSquadMember(@PathVariable Long gameId, @PathVariable Long squadId, @PathVariable Long playerId) {
+        SquadMember returnSquad = new SquadMember();
+        HttpStatus status;
+
+        if (!gameRepository.existsById(gameId) || !squadRepository.existsById(squadId) || !playerRepository.existsById(playerId)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnSquad, status);
+        }
+
+        Player player = playerRepository.findById(playerId).get();
+
+        if(squadMemberRepository.existsByPlayer(player)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnSquad, status);
+        }
+
+        returnSquad = squadMemberRepository.deleteByPlayer(player);
         status = HttpStatus.OK;
         return new ResponseEntity<>(returnSquad, status);
     }

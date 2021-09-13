@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface SquadRepository extends JpaRepository<Squad, Long> {
     List<Squad> getByGameId(Long gameId);
+    boolean existsByNameAndGameId(String name, Long gameId);
 }
