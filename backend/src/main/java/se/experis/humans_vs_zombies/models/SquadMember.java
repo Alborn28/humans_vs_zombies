@@ -54,7 +54,7 @@ public class SquadMember {
         }
     }
 
-    @OneToOne(mappedBy = "squadMember")
+    @OneToOne(mappedBy = "squadMember", cascade = CascadeType.ALL)
     private SquadCheckin squadCheckin;
 
     public Long getId() {

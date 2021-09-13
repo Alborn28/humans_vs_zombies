@@ -29,7 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers(HttpMethod.PUT, "/api/v1/game/{gameId}/kill/{killId}").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/game/{gameId}/kill").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/game/{gameId}/player").permitAll()
-
+                .antMatchers(HttpMethod.POST, "api/v1/game/{gameId}/squad/{squadId}/join").permitAll()
+                .antMatchers(HttpMethod.DELETE, "api/v1/game/{gameId}/squad/{squadId}/leave").permitAll()
 
                 .antMatchers(HttpMethod.POST, "/api/v1/game/**").hasRole("Administrator")
                 .antMatchers(HttpMethod.PUT, "/api/v1/game/**").hasRole("Administrator")

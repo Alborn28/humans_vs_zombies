@@ -4,7 +4,6 @@ public class Main {
     public static void main(String[] args) {
         BiteCode biteCode= new BiteCode();
 
-
         biteCode.setBiteCodeValue();
         System.out.println(biteCode.getBiteCodeValue());
     }
