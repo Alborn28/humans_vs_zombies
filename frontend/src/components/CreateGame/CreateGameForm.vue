@@ -85,6 +85,7 @@ export default {
             .then(response => {
                 if(response.status >= 200 && response.status <= 299) {
                     alert("Game created successfully!");
+                    this.$router.push("/")
                 }
 
                 else if(response.status === 401 || response.status === 403) {
