@@ -20,9 +20,9 @@
 
     <div class="chat-container">
       <div v-if="activetab === 1" class="chat-content">
-        <form class="chat-form" @submit.prevent="sendMessage(msg)">
+        <form class="chat-form" @submit.prevent="sendGlobalMessage(msg)">
           <ul>
-            <li v-for="(chat, index) in chats" :key="index">
+            <li v-for="(chat, index) in globalChats" :key="index">
               {{ chat }}
             </li>
           </ul>
@@ -30,39 +30,89 @@
           <button class="send-chat-msg" type="submit">Send</button>
         </form>
       </div>
-      <div v-if="activetab === 2" class="chat-content"></div>
-      <div v-if="activetab === 3" class="chat-content"></div>
+      <div v-if="activetab === 2" class="chat-content">
+        <form class="chat-form" @submit.prevent="sendFactionMessage(msg)">
+          <ul>
+            <li v-for="(chat, index) in factionChats" :key="index">
+              {{ chat }}
+            </li>
+          </ul>
+          <input v-model="msg" class="chat-msg" placeholder="Message..." />
+          <button class="send-chat-msg" type="submit">Send</button>
+        </form>
+      </div>
+
+      <div v-if="activetab === 3" class="chat-content">
+        <form class="chat-form" @submit.prevent="sendSquadMessage(msg)">
+          <ul>
+            <li v-for="(chat, index) in squadChats" :key="index">
+              {{ chat }}
+            </li>
+          </ul>
+          <input v-model="msg" class="chat-msg" placeholder="Message..." />
+          <button class="send-chat-msg" type="submit">Send</button>
+        </form>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
-import socket from '../../socket/socket';
+import { mapState, mapActions } from "vuex";
+import socket from "../../socket/socket";
 export default {
   data() {
     return {
-      chats: [],
+      globalChats: [],
+      factionChats: [],
+      squadChats: [],
       msg: "",
-      activetab: 1
+      activetab: 1,
     };
   },
-  created(){
-    socket.auth = {gameId: this.gameId}
-    socket.connect()
-    socket.on("chatMessage", (msg) => {
-      this.chats.push(msg)
-    })
+  async created() {
+    await this.fetchPlayer();
+    await this.fetchSquad();
+    console.log(this.squadId)
+    socket.auth = {
+      gameId: this.gameId,
+      username: this.player.username,
+      human: this.player.human,
+      squadId: this.squadId
+    };
+    socket.connect();
+    socket.on("globalMessage", (msg) => {
+      this.globalChats.push(msg);
+    });
+    socket.on("factionMessage", (msg) => {
+      this.factionChats.push(msg);
+    });
+    socket.on("squadMessage", (msg) => {
+      this.squadChats.push(msg);
+    });
+    socket.on("connect_error", (error) => {
+      console.log(error.message)
+    });
   },
-  destroyed(){
-    socket.disconnect()
+  destroyed() {
+    socket.disconnect();
   },
   computed: {
-    ...mapState(["player", "gameId"]),
+    ...mapState(["player", "gameId", "squadId"]),
   },
   methods: {
-    sendMessage(msg) {
-      socket.emit("chatMessage", msg);
+    ...mapActions(["fetchPlayer", "fetchSquad"]),
+    sendGlobalMessage(msg) {
+      console.log(msg)
+      socket.emit("globalMessage", msg);
+      this.msg = "";
+    },
+    sendFactionMessage(msg) {
+      socket.emit("factionMessage", msg);
+      this.msg = "";
+    },
+    sendSquadMessage(msg) {
+      socket.emit("squadMessage", msg);
       this.msg = "";
     },
   },
@@ -88,7 +138,6 @@ export default {
   overflow-x: hidden;
   word-wrap: break-word;
 }
-
 
 .tabs a {
   float: left;
