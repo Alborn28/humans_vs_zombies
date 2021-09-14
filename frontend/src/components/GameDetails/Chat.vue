@@ -38,26 +38,32 @@
 
 <script>
 import { mapState } from "vuex";
+import socket from '../../socket/socket';
 export default {
   data() {
     return {
       chats: [],
       msg: "",
-      activetab: 1,
+      activetab: 1
     };
   },
+  created(){
+    socket.auth = {gameId: this.gameId}
+    socket.connect()
+    socket.on("chatMessage", (msg) => {
+      this.chats.push(msg)
+    })
+  },
+  destroyed(){
+    socket.disconnect()
+  },
   computed: {
-    ...mapState(["player"]),
+    ...mapState(["player", "gameId"]),
   },
   methods: {
     sendMessage(msg) {
-      this.$socket.emit("chatMessage", msg);
+      socket.emit("chatMessage", msg);
       this.msg = "";
-    },
-  },
-  sockets: {
-    chatMessage(data) {
-      this.chats.push(data);
     },
   },
 };
