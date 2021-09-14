@@ -7,6 +7,7 @@
         >Player info</a
       >
       <a
+      v-if="this.player.human === false"
         v-on:click="activetab = 2"
         v-bind:class="[activetab === 2 ? 'active' : '']"
         >Kill</a
