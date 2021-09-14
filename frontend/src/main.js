@@ -8,7 +8,7 @@ import VueSocketIO from "vue-socket.io";
 
 Vue.use(
   new VueSocketIO({
-    connection: io('http://localhost:3000'), // options object is Optional
+    connection: io('https://hvz-experis-chatserver.herokuapp.com/'), // options object is Optional
   })
 );
 
