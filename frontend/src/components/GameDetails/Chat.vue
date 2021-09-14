@@ -74,7 +74,6 @@ export default {
   async created() {
     await this.fetchPlayer();
     await this.fetchSquad();
-    console.log(this.squadId)
     socket.auth = {
       gameId: this.gameId,
       username: this.player.username,

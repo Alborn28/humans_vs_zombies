@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Keycloak from 'keycloak-js'
+import socket from '../socket/socket'
 
 Vue.use(Vuex);
 Vue.config.devtools = true
@@ -176,14 +177,19 @@ export default new Vuex.Store({
             })
 
             await dispatch('fetchPlayer')
-            dispatch('fetchSquad')
+            await dispatch('fetchSquad')
             commit("setSquadId", squadId)
+            socket.disconnect();
+            socket.auth = {
+              gameId: state.gameId,
+              username: state.player.username,
+              human: state.player.human,
+              squadId: state.squadId,
+            };
+            socket.connect();
 
         },
-        async leaveSquad({state}){
-            console.log(state.gameId)
-            console.log(state.squadId)
-            console.log(state.player.id)
+        async leaveSquad({state, dispatch}){
             await fetch(state.apiUrl + `/game/${state.gameId}/squad/${state.squadId}/leave/${state.player.id}`, {
                 method: "DELETE",
                 headers: {
@@ -191,6 +197,15 @@ export default new Vuex.Store({
                     "Content-Type": "application/json"
                 }
             })
+            await dispatch('fetchSquad')
+            socket.disconnect();
+            socket.auth = {
+              gameId: state.gameId,
+              username: state.player.username,
+              human: state.player.human,
+              squadId: null,
+            };
+            socket.connect();
         },
 
         /**
