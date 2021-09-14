@@ -5,7 +5,7 @@
       <span>Zoom: {{ zoom }}</span>
       <span>Bounds: {{ bounds }}</span>
     </div>
-    <l-map
+    <l-map id="mapId"
       style="height: 500px; width: 100%"
       :zoom="zoom"
       :center="center"
@@ -14,6 +14,7 @@
       @update:bounds="boundsUpdated"
     >
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+      
     </l-map>
   </div>
 </template>

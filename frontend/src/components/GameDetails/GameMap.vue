@@ -6,16 +6,23 @@
       :bounds="bounds"
       :max-bounds="maxBounds"
       :min-zoom="minZoom"
+      @click="handleMapClick"
       style="height: 500px; width: 100%"
     >
       <l-tile-layer :url="url" :attribution="attribution" />
+     <!--  <l-marker v-for="(marker, index) in markers" :key="index" :lat-lng="marker" >
+        <l-icon :iconUrl="'assets/logo.png'" />
+      </l-marker> -->
+      <l-marker v-if="currentMarker !==null" :lat-lng="currentMarker" >
+        <l-icon :iconUrl="'assets/skull.png'" />
+      </l-marker>
     </l-map>
   </div>
 </template>
 
 <script>
-import { latLngBounds, latLng } from "leaflet";
-import { LMap, LTileLayer } from "vue2-leaflet";
+import { latLngBounds } from "leaflet";
+import { LMap, LTileLayer, LMarker, LIcon } from "vue2-leaflet";
 import "leaflet/dist/leaflet.css";
 import { mapActions, mapState } from "vuex";
 
@@ -24,6 +31,8 @@ export default {
   components: {
     LMap,
     LTileLayer,
+    LMarker,
+    LIcon
   },
   /**
    * Fetch coordinates for a specific game
@@ -45,7 +54,12 @@ export default {
   },
 
   methods: {
-    ...mapActions(["fetchGame"])
+    ...mapActions(["fetchGame"]),
+    handleMapClick(event){
+      console.log(event.latlng)
+      //this.markers.push(event.latlng)
+      this.currentMarker = event.latlng;
+    }
   },
 
   data() {
@@ -64,7 +78,8 @@ export default {
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      marker: latLng(56.866381305955535, 14.754467010498049),
+      markers: [],
+      currentMarker: null
     };
   },
 };
