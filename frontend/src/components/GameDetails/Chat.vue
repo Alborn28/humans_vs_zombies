@@ -43,7 +43,7 @@
         </form>
       </div>
 
-      <div v-if="activetab === 3" class="chat-content">
+      <div v-if="activetab === 3 && this.squadId !== null" class="chat-content">
         <form class="chat-form" @submit.prevent="sendSquadMessage(msg)">
           <ul>
             <li v-for="(chat, index) in squadChats" :key="index">
@@ -96,6 +96,11 @@ export default {
   },
   destroyed() {
     socket.disconnect();
+  },
+  updated(){
+    if(this.activetab === 3 && this.squadId === null){
+      this.activetab = 1;
+    }
   },
   computed: {
     ...mapState(["player", "gameId", "squadId"]),
