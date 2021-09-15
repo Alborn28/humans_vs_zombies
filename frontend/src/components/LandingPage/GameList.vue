@@ -55,11 +55,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .gameList {
         list-style: none;
-        width: 70%;
+        /* list-style: none;
         margin: auto;
-        margin-top: 50px;
+        margin-top: 50px; */
     }
 </style>

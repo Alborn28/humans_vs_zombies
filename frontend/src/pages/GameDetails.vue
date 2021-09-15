@@ -1,5 +1,6 @@
 <template>
   <div class="game-details">
+    <Navbar />
     <GameInfo />
     <GameMap />
     <PlayerList />
@@ -16,7 +17,7 @@
 </template>
 
 <script>
-
+import Navbar from '../components/Navbar/Navbar.vue'
 import GameInfo from '../components/GameDetails/GameInfo.vue'
 import GameMap from '../components/GameDetails/GameMap.vue'
 import PlayerList from '../components/GameDetails/PlayerList.vue'
@@ -32,6 +33,7 @@ import SquadList from '../components/GameDetails/SquadList.vue'
 export default {
     name: "GameDetails",
     components: {
+        Navbar,
         GameInfo, 
         GameMap,
         PlayerList,

@@ -37,10 +37,11 @@ export default {
 <style>
     .navbar {
         width: 100%;
-        height: 70px;
+        min-height: 70px;
         background-color: #000000;
         display: flex;
         justify-content: center;
         align-items: center;
+        z-index: 10;
     }
 </style>
