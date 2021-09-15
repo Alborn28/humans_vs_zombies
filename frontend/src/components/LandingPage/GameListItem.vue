@@ -38,13 +38,20 @@ export default {
 
 <style>
     .game {
-        border: 1px solid black;
         padding: 5px;
         margin: auto;
         margin-bottom: 10px;
+        backdrop-filter: blur(25px);
+        background-color: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        z-index: 10;
+        color: lime;
+        width: 50%;
     }
 
     .game:hover {
-        background-color: rgb(233, 233, 233);
+        background-color: rgb(233, 233, 233, 0.2);
+        cursor: pointer;
     }
 </style>

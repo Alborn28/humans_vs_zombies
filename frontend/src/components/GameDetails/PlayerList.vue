@@ -29,7 +29,7 @@ async created() {
 }
 </script>
 
-<style>
+<style scoped>
   .player-list{
   border: 1px solid black;
   padding: 5px;

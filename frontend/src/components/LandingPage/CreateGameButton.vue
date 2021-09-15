@@ -23,6 +23,16 @@ export default {
 
 <style>
     .createGameButton {
-        background-color: rgba(95, 95, 255, 0.479)
+        background-color: rgba(95, 95, 255, 0.479);
+        margin-left: 50px;
+        padding: 8px;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+    .createGameButton:hover {
+        cursor: pointer;
+        background-color: rgba(132, 132, 253, 0.479);
     }
 </style>
