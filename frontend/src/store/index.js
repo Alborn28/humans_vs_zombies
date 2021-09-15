@@ -359,7 +359,7 @@ export default new Vuex.Store({
             dispatch('fetchGame')
         },
 
-        async kill({ state, dispatch }, bitecode, story) {
+        async kill({ state, dispatch }, {bitecode, story}) {
             let timeOfDeath = new Date(Date.now());
             timeOfDeath.setHours(timeOfDeath.getHours() + 2);
 
@@ -392,9 +392,20 @@ export default new Vuex.Store({
             const response = await fetch(state.apiUrl + `/game/${state.gameId}/kill`);
             const data = await response.json();
             for (let i = 0; i < data.length; i++) {
+                const res = await fetch('http://hvz-experis-api.herokuapp.com' + data[i].killer);
+                const killer = await res.json();
+
+                const resp = await fetch('http://hvz-experis-api.herokuapp.com' + data[i].victim);
+                const victim = await resp.json();
+
+                let date = new Date(data[i].timeOfDeath)
+                date.setHours(date.getHours() - 2)
                 data[i] = {
                     ...data[i],
-                    latlng: new latLng(data[i].lat, data[i].lng)
+                    latlng: new latLng(data[i].lat, data[i].lng),
+                    timeOfDeath: date.toLocaleString(),
+                    killer: killer.username,
+                    victim: victim.username
                 }
             }
             commit("setKills", data);
@@ -433,13 +444,27 @@ export default new Vuex.Store({
             const response = await fetch(state.apiUrl + `/game/${state.gameId}/squad/${state.squadId}/check-in`);
             const data = await response.json();
             for (let i = 0; i < data.length; i++) {
+                const res = await fetch('http://hvz-experis-api.herokuapp.com' + data[i].squadMember);
+                const squadMember = await res.json();
+
+                if(!squadMember.human) {
+                    data.splice(i, 1)
+                    continue;
+                }
+
+                let date = new Date(data[i].timeOfCheckIn)
+                date.setHours(date.getHours() - 2)
                 data[i] = {
                     ...data[i],
-                    latlng: new latLng(data[i].lat, data[i].lng)
+                    latlng: new latLng(data[i].lat, data[i].lng),
+                    timeOfCheckIn: date.toLocaleString(),
+                    squadMember: squadMember.username
                 }
             }
             commit("setCheckIns", data);
-        }
+        },
+
+
     },
     getters: {
         /**

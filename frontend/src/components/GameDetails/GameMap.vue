@@ -14,14 +14,26 @@
         <l-tile-layer :url="url" :attribution="attribution" />
         <l-marker v-for="(kill, index) in kills" :key="index" :lat-lng="kill.latlng" >
           <l-icon :iconUrl="'assets/skull.png'" :iconSize = "[30, 30]" />
+          <l-popup>
+            <p>Victim: {{kill.victim}}</p>
+            <p>Killer: {{kill.killer}}</p>
+            <p>Time of death: {{kill.timeOfDeath.toLocaleString()}}</p>
+            <p>Story: {{kill.story}}</p>
+          </l-popup>
         </l-marker>
         <div v-if="player.human"> 
           <l-marker v-if="currentMarker !==null" :lat-lng="currentMarker" >
             <l-icon :iconUrl="'assets/checkin.png'" :iconSize = "[30, 30]" />
-            <l-popup>hej</l-popup>
+            <l-popup>
+              {{player.username}}
+            </l-popup>
           </l-marker>
           <l-marker v-for="(checkin, index) in checkIns" :key="index" :lat-lng="checkin.latlng">
             <l-icon :iconUrl="'assets/checkin.png'" :iconSize = "[30, 30]" />
+            <l-popup>
+              <p>Player: {{checkin.squadMember}}</p>
+              <p>Time of check in: {{checkin.timeOfCheckIn}}</p>
+            </l-popup>
           </l-marker> 
         </div>
       </l-map>

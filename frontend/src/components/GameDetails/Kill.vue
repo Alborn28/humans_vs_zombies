@@ -35,7 +35,7 @@ export default {
 
     async handleSubmit(event) {
       event.preventDefault();
-      this.kill(this.biteCode, this.story);
+      this.kill({bitecode: this.biteCode, story: this.story});
     },
   },
 };
