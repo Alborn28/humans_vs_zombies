@@ -12,10 +12,7 @@ public class SquadCheckin {
     private Long id;
 
     @Column(nullable = false)
-    private Date startTime;
-
-    @Column(nullable = false)
-    private Date endTime;
+    private Date timeOfCheckIn;
 
     @Column(nullable = false)
     private String lat;
@@ -53,24 +50,25 @@ public class SquadCheckin {
     @JoinColumn(name = "squadMemberId")
     private SquadMember squadMember;
 
+    @JsonGetter("squadMember")
+    public String squadMember() {
+        if (squadMember != null && squadMember.getPlayer() != null) {
+            return "/api/v1/game/" + game.getId() + "/player/" + squadMember.getPlayer().getId();
+        } else {
+            return null;
+        }
+    }
+
     public Long getId() {
         return id;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public Date getTimeOfCheckIn() {
+        return timeOfCheckIn;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+    public void setTimeOfCheckIn(Date timeOfCheckIn) {
+        this.timeOfCheckIn = timeOfCheckIn;
     }
 
     public String getLat() {
