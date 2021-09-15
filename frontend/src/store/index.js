@@ -228,7 +228,6 @@ export default new Vuex.Store({
             const response = await fetch(state.apiUrl + `/game/${state.gameId}/player`)
             const data = await response.json()
             commit('setPlayers', data)
-            console.log('in fetch player', data)
         },
 
         /**
