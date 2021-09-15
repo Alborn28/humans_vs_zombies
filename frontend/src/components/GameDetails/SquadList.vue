@@ -1,5 +1,5 @@
 <template>
-  <div class="squad-list" v-if="squadId===null && squadsLoaded" >
+  <div class="squad-list" v-if="squadId===null && squadsLoaded && player.id !== null" >
       <h4>squad lists</h4>
       <ul>
           <li v-for="(squad,index) in squads" v-bind:key="index" @click="joinSquad({rank: 'MEMBER', squadId: squad.id})">
@@ -28,7 +28,7 @@ async created() {
   },
 
   computed: {
-    ...mapState(['squads', "squadId"])
+    ...mapState(['squads', "squadId", "player"])
   },
 
   methods: {
