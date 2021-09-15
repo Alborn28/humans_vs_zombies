@@ -23,7 +23,9 @@ export default new Vuex.Store({
         squads: [],
         squadId: null,
         squadMembers: [],
-        checkIns: []
+        checkIns: [],
+        location: null,
+        kills: []
     },
     mutations: {
         setSquadMembers: (state, payload) => {
@@ -74,6 +76,14 @@ export default new Vuex.Store({
 
         setCheckIns: (state, payload) => {
             state.checkIns = payload;
+        },
+
+        setLocation: (state, payload) => {
+            state.location = payload;
+        },
+
+        setKills: (state, payload) => {
+            state.kills = payload;
         }
     },
     actions: {
@@ -363,7 +373,8 @@ export default new Vuex.Store({
                     timeOfDeath: timeOfDeath,
                     story: story,
                     biteCode: bitecode,
-                    //Koordinater
+                    lat: state.location.lat,
+                    lng: state.location.lng,
                     game: {
                         id: state.gameId
                     },
@@ -377,7 +388,19 @@ export default new Vuex.Store({
             dispatch('fetchGame')
         },
 
-        async postCheckIn({ state }, location) {
+        async fetchKills({ state, commit }) {         
+            const response = await fetch(state.apiUrl + `/game/${state.gameId}/kill`);
+            const data = await response.json();
+            for (let i = 0; i < data.length; i++) {
+                data[i] = {
+                    ...data[i],
+                    latlng: new latLng(data[i].lat, data[i].lng)
+                }
+            }
+            commit("setKills", data);
+        },
+
+        async postCheckIn({ state }) {
             let timeOfCheckIn = new Date(Date.now());
             timeOfCheckIn.setHours(timeOfCheckIn.getHours() + 2);
 
@@ -389,8 +412,8 @@ export default new Vuex.Store({
                 },
                 body: JSON.stringify({
                     timeOfCheckIn: timeOfCheckIn, 
-                    lat: location.lat,
-                    lng: location.lng,
+                    lat: state.location.lat,
+                    lng: state.location.lng,
                     game: {
                         id: state.gameId
                     },

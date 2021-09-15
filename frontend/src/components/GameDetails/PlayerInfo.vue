@@ -10,10 +10,10 @@
       <li>
         <p>Faction: {{player.human ? "Human" : "Zombie"}}</p>
       </li>
-      <li>
+      <li v-if="player.human">
         <p>Squad: {{squadId === null ? "None" : squad.name}}</p>
       </li>
-      <li>
+      <li v-if="!player.human">
         <p>Kills: {{player.kills.length}}</p>
       </li>
     </ul>

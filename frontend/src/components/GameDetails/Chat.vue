@@ -12,7 +12,7 @@
         >Faction</a
       >
       <a
-        v-if="this.squadId !== null"
+        v-if="this.squadId !== null && player.human"
         v-on:click="activetab = 3"
         v-bind:class="[activetab === 3 ? 'active' : '']"
         >Squad</a

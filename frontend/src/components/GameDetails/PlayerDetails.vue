@@ -7,12 +7,13 @@
         >Player info</a
       >
       <a
-      v-if="this.player.human === false"
+        v-if="!player.human && game.gameState === 'IN_PROGRESS'"
         v-on:click="activetab = 2"
         v-bind:class="[activetab === 2 ? 'active' : '']"
         >Kill</a
       >
       <a
+        v-if="player.human"
         v-on:click="activetab = 3"
         v-bind:class="[activetab === 3 ? 'active' : '']"
         >Squad info</a
@@ -47,7 +48,7 @@ export default {
   },
 
   computed: {
-      ...mapState(["player"])
+      ...mapState(["player", "game"])
   },
   components: {
     PlayerInfo,
@@ -65,6 +66,11 @@ export default {
     await this.fetchPlayer();
   },
 
+   updated(){
+    if(this.activetab === 2 && this.game.gameState === 'COMPLETE'){
+      this.activetab = 1;
+    }
+  }
 };
 </script>
 

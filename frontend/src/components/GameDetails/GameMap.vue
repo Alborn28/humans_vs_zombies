@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="map" v-if="checkInsLoaded">
+    <div class="map">
       <l-map
         :zoom="zoom"
         :center="center"
@@ -12,19 +12,21 @@
         style="height: 500px; width: 100%"
       >
         <l-tile-layer :url="url" :attribution="attribution" />
-        <!-- <l-marker v-for="(marker, index) in markers" :key="index" :lat-lng="marker" >
+        <l-marker v-for="(kill, index) in kills" :key="index" :lat-lng="kill.latlng" >
           <l-icon :iconUrl="'assets/skull.png'" :iconSize = "[30, 30]" />
-        </l-marker> -->
-        <l-marker v-if="currentMarker !==null" :lat-lng="currentMarker" >
-          <l-icon :iconUrl="'assets/checkin.png'" :iconSize = "[30, 30]" />
-          <l-popup>hej</l-popup>
         </l-marker>
-        <l-marker v-for="(checkin, index) in checkIns" :key="index" :lat-lng="checkin.latlng">
-          <l-icon :iconUrl="'assets/checkin.png'" :iconSize = "[30, 30]" />
-        </l-marker> 
+        <div v-if="player.human"> 
+          <l-marker v-if="currentMarker !==null" :lat-lng="currentMarker" >
+            <l-icon :iconUrl="'assets/checkin.png'" :iconSize = "[30, 30]" />
+            <l-popup>hej</l-popup>
+          </l-marker>
+          <l-marker v-for="(checkin, index) in checkIns" :key="index" :lat-lng="checkin.latlng">
+            <l-icon :iconUrl="'assets/checkin.png'" :iconSize = "[30, 30]" />
+          </l-marker> 
+        </div>
       </l-map>
     </div>
-    <div v-if="this.game.gameState === 'IN_PROGRESS' && this.squadId !== null" class="check-in">
+    <div v-if="this.game.gameState === 'IN_PROGRESS' && this.squadId !== null && player.human" class="check-in">
       <button @click="placeCheckIn">Check in</button>
     </div>
   </div>
@@ -34,7 +36,7 @@
 import { latLngBounds } from "leaflet";
 import { LMap, LTileLayer, LMarker, LIcon, LPopup } from "vue2-leaflet";
 import "leaflet/dist/leaflet.css";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   name: "SetBounds",
@@ -51,7 +53,7 @@ export default {
   async created() {
     await this.fetchGame();
     await this.fetchSquadCheckIns();
-    this.checkInsLoaded = true
+    await this.fetchKills();
     
     this.maxBounds = latLngBounds([
       [this.game.swLat, this.game.swLng],
@@ -63,11 +65,12 @@ export default {
   },
 
   computed: {
-    ...mapState(["game", "squadId", "player", "checkIns"]),
+    ...mapState(["game", "squadId", "player", "checkIns", "location", "kills"]),
   },
 
   methods: {
-    ...mapActions(["fetchGame", "postCheckIn", "fetchSquadCheckIns"]),
+    ...mapActions(["fetchGame", "postCheckIn", "fetchSquadCheckIns", "fetchKills"]),
+    ...mapMutations(["setLocation"]),
     handleMapClick(mapObject){
       //this.markers.push(event.latlng)
       // this.currentMarker = event.latlng;
@@ -75,7 +78,7 @@ export default {
       mapObject.locate();
     },
     onLocationFound(location){
-      this.location = location.latlng;
+      this.setLocation(location.latlng)
     },
     async placeCheckIn() {
       this.currentMarker = this.location;   
@@ -101,8 +104,6 @@ export default {
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       markers: [],
       currentMarker: null,
-      location: null,
-      checkInsLoaded: false
     };
   },
 };
