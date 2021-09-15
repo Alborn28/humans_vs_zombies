@@ -207,6 +207,8 @@ public class SquadController {
         SquadCheckin returnSquadCheckin = new SquadCheckin();
         HttpStatus status;
 
+        //Test
+
         if (!squadRepository.existsById(squadId)) {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(returnSquadCheckin, status);
@@ -215,6 +217,14 @@ public class SquadController {
         if (squadCheckin.getGame().getId() != gameId || squadCheckin.getSquad().getId() != squadId) {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(returnSquadCheckin, status);
+        }
+
+        SquadMember squadMember = squadMemberRepository.findById(squadCheckin.getSquadMember().getId()).get();
+        if(squadMember.getSquadCheckin() != null) {
+            Long squadCheckinId = squadMember.getSquadCheckin().getId();
+            squadMember.setSquadCheckin(null);
+            squadMemberRepository.save(squadMember);
+            squadCheckinRepository.deleteById(squadCheckinId);
         }
 
         status = HttpStatus.CREATED;
