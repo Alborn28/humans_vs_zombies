@@ -69,33 +69,41 @@ export default {
       squadChats: [],
       msg: "",
       activetab: 1,
+      connected: false
     };
   },
+  watch: {
+    player() {
+      if(this.player.id !== null && !this.connected) {
+        this.connected = true;
+        socket.auth = {
+        gameId: this.gameId,
+        username: this.player.username,
+        human: this.player.human,
+        squadId: this.squadId
+        };
+        socket.connect();
+        socket.on("globalMessage", (msg) => {
+          this.globalChats.push(msg);
+        });
+        socket.on("factionMessage", (msg) => {
+          this.factionChats.push(msg);
+        });
+        socket.on("squadMessage", (msg) => {
+          this.squadChats.push(msg);
+        });
+        socket.on("connect_error", (error) => {
+          console.log(error.message)
+        });
+      }
+    } 
+  },
   async created() {
-    await this.fetchPlayer();
     await this.fetchSquad();
-    socket.auth = {
-      gameId: this.gameId,
-      username: this.player.username,
-      human: this.player.human,
-      squadId: this.squadId
-    };
-    socket.connect();
-    socket.on("globalMessage", (msg) => {
-      this.globalChats.push(msg);
-    });
-    socket.on("factionMessage", (msg) => {
-      this.factionChats.push(msg);
-    });
-    socket.on("squadMessage", (msg) => {
-      this.squadChats.push(msg);
-    });
-    socket.on("connect_error", (error) => {
-      console.log(error.message)
-    });
   },
   destroyed() {
     socket.disconnect();
+    this.connected = false;
   },
   updated(){
     if(this.activetab === 3 && this.squadId === null){
@@ -106,9 +114,8 @@ export default {
     ...mapState(["player", "gameId", "squadId"]),
   },
   methods: {
-    ...mapActions(["fetchPlayer", "fetchSquad"]),
+    ...mapActions(["fetchSquad"]),
     sendGlobalMessage(msg) {
-      console.log(msg)
       socket.emit("globalMessage", msg);
       this.msg = "";
     },

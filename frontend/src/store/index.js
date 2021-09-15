@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Keycloak from 'keycloak-js'
 import socket from '../socket/socket'
+import { latLng } from 'leaflet';
 
 Vue.use(Vuex);
 Vue.config.devtools = true
@@ -21,7 +22,8 @@ export default new Vuex.Store({
         squad: {},
         squads: [],
         squadId: null,
-        squadMembers: []
+        squadMembers: [],
+        checkIns: []
     },
     mutations: {
         setSquadMembers: (state, payload) => {
@@ -68,6 +70,10 @@ export default new Vuex.Store({
 
         setChats: (state, payload) => {
             state.chats = payload;
+        },
+
+        setCheckIns: (state, payload) => {
+            state.checkIns = payload;
         }
     },
     actions: {
@@ -102,7 +108,6 @@ export default new Vuex.Store({
                 await state.keycloak.register();
             }
         },
-
 
         async registerSquad({ state, dispatch }, name) {
             const response = await fetch(state.apiUrl + `/game/${state.gameId}/squad`, {
@@ -152,7 +157,6 @@ export default new Vuex.Store({
                 commit("setSquadId", null)
             }
         },
-
 
         async joinSquad({ state, dispatch, commit }, { rank, squadId }) {
             await fetch(state.apiUrl + `/game/${state.gameId}/squad/${squadId}/join`, {
@@ -224,6 +228,7 @@ export default new Vuex.Store({
             const response = await fetch(state.apiUrl + `/game/${state.gameId}/player`)
             const data = await response.json()
             commit('setPlayers', data)
+            console.log('in fetch player', data)
         },
 
         /**
@@ -371,6 +376,47 @@ export default new Vuex.Store({
             dispatch('fetchPlayer')
             dispatch('fetchPlayers')
             dispatch('fetchGame')
+        },
+
+        async postCheckIn({ state }, location) {
+            let timeOfCheckIn = new Date(Date.now());
+            timeOfCheckIn.setHours(timeOfCheckIn.getHours() + 2);
+
+            await fetch(state.apiUrl + `/game/${state.gameId}/squad/${state.squadId}/check-in`, {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + state.token,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    timeOfCheckIn: timeOfCheckIn, 
+                    lat: location.lat,
+                    lng: location.lng,
+                    game: {
+                        id: state.gameId
+                    },
+                    squad: {
+                        id: state.squadId,
+                    },
+                    squadMember: {
+                        id: state.player.squadMember.id
+                    }
+                })
+            });
+        },
+
+        async fetchSquadCheckIns({ state, commit, dispatch }) {
+            await dispatch("fetchSquad");
+            
+            const response = await fetch(state.apiUrl + `/game/${state.gameId}/squad/${state.squadId}/check-in`);
+            const data = await response.json();
+            for (let i = 0; i < data.length; i++) {
+                data[i] = {
+                    ...data[i],
+                    latlng: new latLng(data[i].lat, data[i].lng)
+                }
+            }
+            commit("setCheckIns", data);
         }
     },
     getters: {
