@@ -2,7 +2,6 @@
   <div class="background">
       <div class="content">
         <Navbar />
-        <CreateGameButton />
         <GameList />
       </div>
   </div>
@@ -10,14 +9,12 @@
 
 <script>
 import GameList from '../components/LandingPage/GameList.vue'
-import CreateGameButton from '../components/LandingPage/CreateGameButton.vue'
 import Navbar from '../components/Navbar/Navbar.vue'
 
 export default {
     name: "LandingPage",
     components: {
         GameList,
-        CreateGameButton,
         Navbar
     }
 }

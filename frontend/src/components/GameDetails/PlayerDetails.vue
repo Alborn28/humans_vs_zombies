@@ -75,7 +75,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .tabs {
   overflow: hidden;
   margin-left: 20px;
@@ -83,6 +83,7 @@ export default {
 }
 
 .tabs ul {
+  
   list-style-type: none;
   margin-left: 20px;
 }
@@ -94,9 +95,10 @@ export default {
   transition: background-color 0.2s;
   border: 1px solid #ccc;
   border-right: none;
-  background-color: #f1f1f1;
+  background-color: #540dc5;
   border-radius: 10px 10px 0 0;
   font-weight: bold;
+  color: #fff;
 }
 .tabs a:last-child {
   border-right: 1px solid #ccc;
@@ -104,23 +106,27 @@ export default {
 
 /* Change background color of tabs on hover */
 .tabs a:hover {
-  background-color: #aaa;
-  color: #fff;
+  background-color: #834fd6;
 }
 
 /* Styling for active tab */
 .tabs a.active {
-  background-color: #fff;
-  color: #484848;
-  border-bottom: 2px solid #fff;
+  background-color: #834fd6;
+  color: #fff;
+  border-bottom: 2px solid #834fd6;
   cursor: default;
 }
 
 /* Style the tab content */
 .tabcontent {
-  padding: 30px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 3px 3px 6px #e1e1e1;
+  padding: 15px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  background-color: rgb(10, 10, 10);
+  border-radius: 8px;
+  min-height: 320px;
+  min-width: 340px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

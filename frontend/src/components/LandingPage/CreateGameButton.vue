@@ -23,16 +23,19 @@ export default {
 
 <style>
     .createGameButton {
-        background-color: rgba(95, 95, 255, 0.479);
-        margin-left: 50px;
+        width: 100px;
         padding: 8px;
-        color: #fff;
         border: none;
         border-radius: 8px;
-        margin-bottom: 10px;
+        margin-right: 30px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        transition: .3s;
+        background-color: rgba(95, 95, 255, 0.479);
+        color: #fff;
     }
     .createGameButton:hover {
         cursor: pointer;
         background-color: rgba(132, 132, 253, 0.479);
+        transition: .3s;
     }
 </style>

@@ -2,19 +2,19 @@
   <div class="player-info" v-if="playerLoaded">
     <ul>
       <li>
-        <p>Username: {{player.username}}</p>
+        <p><strong>Username: </strong>{{player.username}}</p>
       </li>
       <li>
-        <p>Bite code: {{ player.biteCode }}</p>
+        <p><strong>Bite code:</strong> {{ player.biteCode }}</p>
       </li>
       <li>
-        <p>Faction: {{player.human ? "Human" : "Zombie"}}</p>
+        <p><strong>Faction:</strong> {{player.human ? "Human" : "Zombie"}}</p>
       </li>
       <li v-if="player.human">
-        <p>Squad: {{squadId === null ? "None" : squad.name}}</p>
+        <p><strong>Squad:</strong> {{squadId === null ? "None" : squad.name}}</p>
       </li>
       <li v-if="!player.human">
-        <p>Kills: {{player.kills.length}}</p>
+        <p><strong>Kills: </strong>{{player.kills.length}}</p>
       </li>
     </ul>
   </div>
@@ -53,8 +53,16 @@ export default {
 
 <style>
   .player-info {
-    border: 1px solid black;
-    padding: 5px;
+    color: rgba(178, 58, 248, 0.781);
+    font-size: 1.4em;
+    backdrop-filter: blur(25px);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
+    z-index: 10;
+    padding: 25px;
+    text-align:center;
+      border-radius:8px;
+
   }
 
   .player-info ul {

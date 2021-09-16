@@ -10,6 +10,9 @@
         <span v-if="!this.authenticated">
             <RegisterButton />
         </span>
+        <span v-if="isAdmin">
+            <CreateGameButton />
+        </span>
     </div>
 </template>
 
@@ -18,7 +21,8 @@ import LoginButton from './LoginButton.vue'
 import LogoutButton from './LogoutButton.vue'
 import RegisterButton from './RegisterButton.vue'
 import HomeButton from './HomeButton.vue'
-import { mapState } from 'vuex'
+import CreateGameButton from '../LandingPage/CreateGameButton.vue'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
     name: "Navbar",
@@ -26,10 +30,12 @@ export default {
         LoginButton,
         LogoutButton,
         RegisterButton,
-        HomeButton
+        HomeButton,
+        CreateGameButton
     },
     computed: {
-        ...mapState(['authenticated'])
+        ...mapState(['authenticated']),
+        ...mapGetters(['isAdmin'])
     }
 }
 </script>
@@ -43,5 +49,6 @@ export default {
         justify-content: center;
         align-items: center;
         z-index: 10;
+        margin-bottom: 50px;
     }
 </style>

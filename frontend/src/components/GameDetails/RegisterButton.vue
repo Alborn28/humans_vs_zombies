@@ -23,12 +23,22 @@ export default {
 </script>
 
 <style>
-.reg-btn {
-  padding: 5px;
-  align-items: center;
-  margin-right: 400px;
-  margin-left: 400px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
+  .reg-btn {
+    width: 400px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    transition: .3s;
+    background-color: rgba(95, 95, 255, 0.479);
+    color: lime;
+    margin-top: 25px; 
+    font-size: 18px;
+  }
+  .reg-btn:hover {
+    transition: .3s;
+    cursor: pointer;
+    background-color: rgba(132, 132, 253, 0.479);
+    transition: .3s;
+  }
 </style>

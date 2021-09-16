@@ -58,8 +58,5 @@ export default {
 <style scoped>
     .gameList {
         list-style: none;
-        /* list-style: none;
-        margin: auto;
-        margin-top: 50px; */
     }
 </style>
