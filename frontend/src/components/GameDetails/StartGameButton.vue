@@ -1,6 +1,6 @@
 <template>
   <div v-if="isAdmin && game.gameState === 'REGISTRATION'">
-    <button class="reg-btn" type="button" @click="startGame">
+    <button class="start-btn" type="button" @click="startGame">
       Start Game
     </button>
   </div>
@@ -19,13 +19,22 @@ export default {
 };
 </script>
 
-<style>
-.reg-btn {
-  padding: 5px;
-  align-items: center;
-  margin-right: 400px;
-  margin-left: 400px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
+<style scoped>
+  .start-btn {
+    width: 100px;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    transition: .3s;
+    background-color: rgba(53, 223, 53, 0.479);
+    color: #fff;
+    margin-bottom: 50px;
+  }
+  .start-btn:hover {
+    transition: .3s;
+    cursor: pointer;
+    background-color: rgba(161, 255, 161, 0.479);
+    transition: .3s;
+  }
 </style>

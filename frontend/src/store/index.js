@@ -25,7 +25,8 @@ export default new Vuex.Store({
         squadMembers: [],
         checkIns: [],
         location: null,
-        kills: []
+        kills: [],
+        playerCheckIn: null
     },
     mutations: {
         setSquadMembers: (state, payload) => {
@@ -84,6 +85,10 @@ export default new Vuex.Store({
 
         setKills: (state, payload) => {
             state.kills = payload;
+        },
+
+        setPlayerCheckIn: (state, payload) => {
+            state.playerCheckIn = payload;
         }
     },
     actions: {
@@ -411,7 +416,8 @@ export default new Vuex.Store({
             commit("setKills", data);
         },
 
-        async postCheckIn({ state }) {
+        async postCheckIn({ state, commit }) {
+            commit('setPlayerCheckIn', state.location);
             let timeOfCheckIn = new Date(Date.now());
             timeOfCheckIn.setHours(timeOfCheckIn.getHours() + 2);
 

@@ -1,46 +1,41 @@
 <template>
-  <div>
-    <div class="map">
-      <l-map
-        :zoom="zoom"
-        :center="center"
-        :bounds="bounds"
-        :max-bounds="maxBounds"
-        :min-zoom="minZoom"
-        @ready="handleMapClick"
-        @locationfound="onLocationFound"
-        style="height: 500px; width: 100%"
-      >
-        <l-tile-layer :url="url" :attribution="attribution" />
-        <l-marker v-for="(kill, index) in kills" :key="index" :lat-lng="kill.latlng" >
-          <l-icon :iconUrl="'assets/skull.png'" :iconSize = "[30, 30]" />
+  <div class="map">
+    <l-map
+      :zoom="zoom"
+      :center="center"
+      :bounds="bounds"
+      :max-bounds="maxBounds"
+      :min-zoom="minZoom"
+      @ready="handleMapClick"
+      @locationfound="onLocationFound"
+      style="height: 500px; width: 100%"
+    >
+      <l-tile-layer :url="url" :attribution="attribution" />
+      <l-marker v-for="(kill, index) in kills" :key="index" :lat-lng="kill.latlng" >
+        <l-icon :iconUrl="'assets/skull.png'" :iconSize = "[30, 30]" />
+        <l-popup>
+          <p>Victim: {{kill.victim}}</p>
+          <p>Killer: {{kill.killer}}</p>
+          <p>Time of death: {{kill.timeOfDeath.toLocaleString()}}</p>
+          <p>Story: {{kill.story}}</p>
+        </l-popup>
+      </l-marker>
+      <div v-if="player.human"> 
+        <l-marker v-if="playerCheckIn !== null" :lat-lng="playerCheckIn" >
+          <l-icon :iconUrl="'assets/checkin.png'" :iconSize = "[30, 30]" />
           <l-popup>
-            <p>Victim: {{kill.victim}}</p>
-            <p>Killer: {{kill.killer}}</p>
-            <p>Time of death: {{kill.timeOfDeath.toLocaleString()}}</p>
-            <p>Story: {{kill.story}}</p>
+            {{player.username}}
           </l-popup>
         </l-marker>
-        <div v-if="player.human"> 
-          <l-marker v-if="currentMarker !==null" :lat-lng="currentMarker" >
-            <l-icon :iconUrl="'assets/checkin.png'" :iconSize = "[30, 30]" />
-            <l-popup>
-              {{player.username}}
-            </l-popup>
-          </l-marker>
-          <l-marker v-for="(checkin, index) in checkIns" :key="index" :lat-lng="checkin.latlng">
-            <l-icon :iconUrl="'assets/checkin.png'" :iconSize = "[30, 30]" />
-            <l-popup>
-              <p>Player: {{checkin.squadMember}}</p>
-              <p>Time of check in: {{checkin.timeOfCheckIn}}</p>
-            </l-popup>
-          </l-marker> 
-        </div>
-      </l-map>
-    </div>
-    <div v-if="this.game.gameState === 'IN_PROGRESS' && this.squadId !== null && player.human" class="check-in">
-      <button @click="placeCheckIn">Check in</button>
-    </div>
+        <l-marker v-for="(checkin, index) in checkIns" :key="index" :lat-lng="checkin.latlng">
+          <l-icon :iconUrl="'assets/checkin.png'" :iconSize = "[30, 30]" />
+          <l-popup>
+            <p>Player: {{checkin.squadMember}}</p>
+            <p>Time of check in: {{checkin.timeOfCheckIn}}</p>
+          </l-popup>
+        </l-marker> 
+      </div>
+    </l-map>
   </div>
 </template>
 
@@ -75,27 +70,18 @@ export default {
     this.minZoom = this.game.zoom
     this.zoom = this.game.zoom
   },
-
   computed: {
-    ...mapState(["game", "squadId", "player", "checkIns", "location", "kills"]),
+    ...mapState(["game", "player", "checkIns", "location", "kills", 'playerCheckIn']),
   },
-
   methods: {
-    ...mapActions(["fetchGame", "postCheckIn", "fetchSquadCheckIns", "fetchKills"]),
+    ...mapActions(["fetchGame", "fetchSquadCheckIns", "fetchKills"]),
     ...mapMutations(["setLocation"]),
     handleMapClick(mapObject){
-      //this.markers.push(event.latlng)
-      // this.currentMarker = event.latlng;
-      // this.currentMarker = mapObject.locate();
       mapObject.locate();
     },
     onLocationFound(location){
       this.setLocation(location.latlng)
     },
-    async placeCheckIn() {
-      this.currentMarker = this.location;   
-      await this.postCheckIn(this.location);
-    }
   },
 
   data() {
@@ -115,7 +101,6 @@ export default {
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       markers: [],
-      currentMarker: null,
     };
   },
 };
@@ -123,15 +108,11 @@ export default {
 <style scoped>
   .map {
     border: 1px solid black;
-    padding: 5px;
-    margin-right: 400px;
-    margin-left: 400px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-  .check-in {
-    display: flexbox;
-    justify-content: center;
-    align-items: center;
+    margin: auto;
+    width: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 0;
+    margin-top: 25px;
   }
 </style>

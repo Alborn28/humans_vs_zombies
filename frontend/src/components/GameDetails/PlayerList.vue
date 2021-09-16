@@ -1,9 +1,10 @@
 <template>
 
   <div class="player-list" v-if="players.length > 0 && game.gameState === 'REGISTRATION'">
+    <h3 class="title">Registered players</h3>
       <ul>
-          <li v-for="(player, index) in players" v-bind:key="index" >
-              {{player.username}}
+          <li class="player" v-for="(player, index) in players" v-bind:key="index" >
+              <h4>{{player.username}}</h4>
           </li>
       </ul>
   </div>
@@ -30,16 +31,28 @@ async created() {
 </script>
 
 <style scoped>
+.title {
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
   .player-list{
-  border: 1px solid black;
-  padding: 5px;
-  margin-right: 400px;
-  margin-left: 400px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+    width:50%;
+    margin:auto;
+    color: lime;
+    text-align: center;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding:10px;
+    margin-top: 25px;
   }
 
   .player-list ul{
     list-style: none;
+  }
+
+  .player {
+    margin-bottom: 8px;
+    color: rgba(178, 58, 248, 0.781);
   }
 </style>

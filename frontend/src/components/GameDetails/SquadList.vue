@@ -1,9 +1,11 @@
 <template>
   <div class="squad-list" v-if="squadId===null && squadsLoaded && player.id !== null" >
-      <h4>squad lists</h4>
+      <h3 class="title" >squad lists</h3>
       <ul>
-          <li v-for="(squad,index) in squads" v-bind:key="index" @click="joinSquad({rank: 'MEMBER', squadId: squad.id})">
-              {{squad.name}}
+          <li class="squad" v-for="(squad,index) in squads" v-bind:key="index" @click="joinSquad({rank: 'MEMBER', squadId: squad.id})">
+              <h3 >Name: {{squad.name}}</h3>
+              
+              <h3 >Members: {{squad.squadMembers.length}}</h3>
           </li>
       </ul>
   </div>
@@ -37,18 +39,44 @@ async created() {
 }
 </script>
 
-<style>
-
+<style scoped>
+.title{
+  text-transform: uppercase;
+}
   .squad-list{
-  border: 1px solid black;
-  padding: 5px;
-  margin-right: 400px;
-  margin-left: 400px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+    width:50%;
+    margin:auto;
+    color: lime;
+    text-align: center;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding:10px
   }
 
   .squad-list ul{
     list-style: none;
+    padding:10px
   }
+  .squad{
+    padding: 5px;
+        margin: auto;
+        margin-bottom: 10px;  
+        backdrop-filter: blur(25px);
+        background-color: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
+        z-index: 10;
+        color: rgba(178, 58, 248, 0.781);
+        width: 100%;
+        border-radius: 8px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+  }
+  .squad:hover{
+    background-color: rgb(233, 233, 233, 0.2);
+        cursor: pointer;
+  }
+ 
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="game">
     <div class="game-title">
       <h1>
         {{ game.name }}
@@ -10,11 +10,8 @@
         <li>
           Description: {{ game.description }}
         </li>
-        <li>
-          Game state: {{ game.gameState }}
-        </li>
-        <li v-if="game.gameState === 'REGISTRATION'">
-          Rules: 
+        <li class="game-state">
+          Game state: {{ game.gameState.replace('_', ' ').toLowerCase() }}
         </li>
         <div v-if="game.gameState === 'IN_PROGRESS'">
           <li>
@@ -41,8 +38,8 @@
 import { mapActions, mapGetters, mapState } from "vuex";
 
 export default {
-  created() {
-    this.fetchGame();
+  async created() {
+    await this.fetchGame();
   },
 
   computed: {
@@ -57,21 +54,31 @@ export default {
 
 </script>
 <style>
+  .game {
+    color: lime;
+  }
   .game-info {
-    border: 1px solid black;
     list-style: none;
     padding: 5px;
-    margin-right: 400px;
-    margin-left: 400px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: auto;
+    width: 50%;
+    backdrop-filter: blur(25px);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: rgba(178, 58, 248, 0.781);
   }
   .game-title{
     text-align: center;
-    margin-top: 20px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
   }
   .game-info ul {
     list-style: none;
+  }
+  .game-state {
+    text-transform: capitalize;
   }
 </style>
 

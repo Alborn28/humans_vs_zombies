@@ -1,20 +1,22 @@
 <template>
-  <div v-if="squadLoaded">
+  <div class="squad" v-if="squadLoaded">
     <div v-if="squadId === null">
       <input type="name" v-model="name" />
       <button @click="registerNewSquad()">register squad</button>
     </div>
     <div v-if="squadId !== null">
-      <p><strong>Your squad: </strong> {{ squad.name }}</p>
+      <h3 class="title"> {{ squad.name }} </h3>
 
       <ul>
-        <li v-for="(member, index) in squadMembers" :key="index">
-          {{ member.username }}
-          {{ squad.squadMembers[index].rank }}
-          {{ member.human ? "Alive" : "Dead" }}
+        <li class="member" v-for="(member, index) in squadMembers" :key="index">
+          <p><strong>User: </strong>{{ member.username }}</p>
+          <p><strong>Rank: </strong><span class="capitalize">{{ squad.squadMembers[index].rank.toLowerCase() }}</span></p>
+          <p><strong>Status: </strong>{{ member.human ? "Alive" : "Dead" }}</p>
         </li>
       </ul>
+    <div class="btn-container">
       <button class="leave-squad" @click="leaveSquad">Leave squad</button>
+    </div>
     </div>
   </div>
 </template>
@@ -48,5 +50,69 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+  .squad {
+    color: rgba(178, 58, 248, 0.781);
+    font-size: 1.4em;
+    width: 90%;
+  }
+
+  .squad ul {
+    margin: 10px;
+    list-style: none;
+    text-align:center;
+    overflow: scroll;
+    overflow-x: hidden;
+    max-height: 180px;
+    max-width: 300px;
+  }
+
+  .squad ul::-webkit-scrollbar {
+  display: none;
+}
+
+  .title {
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .capitalize {
+    text-transform: capitalize;
+  }
+
+  .member {
+    padding: 8px;
+    margin: 10px;
+    margin-bottom: 25px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    backdrop-filter: blur(25px);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
+    z-index: 10;
+  }
+
+  .leave-squad {
+    width: 100px;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    transition: .3s;
+    background-color: rgba(211, 30, 45, 0.479);
+    color: #fff;
+  }
+  .leave-squad:hover {
+    transition: .3s;
+    cursor: pointer;
+    background-color: rgba(230, 100, 111, 0.479);
+    transition: .3s;
+  }
+  .btn-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
 </style>
