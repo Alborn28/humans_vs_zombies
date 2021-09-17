@@ -6,30 +6,21 @@
       </h1>
     </div>
     <div class="game-info">
-      <ul>
-        <li>
-          <strong>Description: </strong> {{ game.description }}
-        </li>
-        <li class="game-state">
-         <strong> Game state: </strong> {{ game.gameState.replace('_', ' ').toLowerCase() }}
-        </li>
-        <div v-if="game.gameState === 'IN_PROGRESS'">
-          <li>
-           <strong> Players alive: </strong> {{playersAlive}} 
-          </li>
-          <li>
-           <strong> Time left: </strong>
-          </li>
-        </div>
-        <div v-if="game.gameState === 'COMPLETE'">
-          <li>
-            <strong> Winning faction: </strong>
-          </li>
-          <li>
-           <strong> Zombie with most kills: </strong>
-          </li>
-        </div>
-      </ul>
+      <div class="left-column">
+        <p><strong>Description: </strong></p>
+
+        <p><strong> Game state: </strong></p>
+
+        <p v-if="game.gameState==='IN_PROGRESS'" ><strong> Players alive: </strong></p>
+
+        <p v-if="game.gameState==='COMPLETE'" ><strong> Winning faction: </strong></p>
+      </div>
+      <div class="right-column">
+        <p>{{ game.description }}</p>
+        <p class="capitalize">{{ game.gameState.replace("_", " ").toLowerCase() }}</p>
+        <p v-if="game.gameState==='IN_PROGRESS'" >{{ playersAlive }}</p>
+        <p v-if="game.gameState==='COMPLETE'" ></p>
+      </div>
     </div>
   </div>
 </template>
@@ -43,46 +34,62 @@ export default {
   },
 
   computed: {
-    ...mapState(['game']),
-    ...mapGetters(['playersAlive'])
+    ...mapState(["game"]),
+    ...mapGetters(["playersAlive"]),
   },
 
   methods: {
-    ...mapActions(['fetchGame'])
-  }
+    ...mapActions(["fetchGame"]),
+  },
 };
-
 </script>
 <style>
-  .game {
-    color: lime;
-  }
-  .game-info {
-    list-style: none;
-    padding: 5px;
-    margin: auto;
-    width: 50%;
-    backdrop-filter: blur(25px);
-    background-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
-    border: 5px solid rgba(255, 255, 255, 0.3);
-    border-radius: 8px;
-    color: rgba(178, 58, 248, 0.781);
-    font-size: 20px;
-  }
-  .game-title{
-    text-align: center;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  .game-header{
-    font-family: plasdrip;
-  }
-  .game-info ul {
-    list-style: none;
-  }
-  .game-state {
-    text-transform: capitalize;
-  }
+.capitalize{
+  text-transform: capitalize;
+}
+.game {
+  color: lime;
+}
+.game-info {
+  padding: 5px;
+  margin: auto;
+  width: 50%;
+  backdrop-filter: blur(25px);
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: rgba(178, 58, 248, 0.781);
+  font-size: 20px;
+  display: flex;
+}
+
+.game-title {
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  font-size: 30px;
+}
+.game-header {
+  font-family: plasdrip;
+}
+.game-info ul {
+  list-style: none;
+}
+.game-state {
+  text-transform: capitalize;
+}
+
+.left-column {
+        width: 50%;
+        text-align: right;
+        margin-right: 10px;
+    }
+
+    .right-column {
+        width: 50%;
+        text-align: left;
+        margin-left: 10px;
+    }
 </style>
 

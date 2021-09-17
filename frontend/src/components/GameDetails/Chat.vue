@@ -171,7 +171,7 @@ export default {
   color: transparent;
 }
 .chat-msg::placeholder{
-    color: #aca0c0
+    color: lime;
 }
 
 .tabs {
@@ -257,4 +257,5 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 </style>

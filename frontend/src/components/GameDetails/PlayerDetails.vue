@@ -108,6 +108,8 @@ export default {
   border-radius: 8px;
   min-height: 320px;
   min-width: 340px;
+  max-height: 320px;
+  max-width: 340px;
   display: flex;
   justify-content: center;
   align-items: center;
