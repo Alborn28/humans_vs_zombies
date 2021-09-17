@@ -1,32 +1,32 @@
 <template>
   <div class="game">
     <div class="game-title">
-      <h1>
+      <h1 class="game-header">
         {{ game.name }}
       </h1>
     </div>
     <div class="game-info">
       <ul>
         <li>
-          Description: {{ game.description }}
+          <strong>Description: </strong> {{ game.description }}
         </li>
         <li class="game-state">
-          Game state: {{ game.gameState.replace('_', ' ').toLowerCase() }}
+         <strong> Game state: </strong> {{ game.gameState.replace('_', ' ').toLowerCase() }}
         </li>
         <div v-if="game.gameState === 'IN_PROGRESS'">
           <li>
-            Players alive: {{playersAlive}}
+           <strong> Players alive: </strong> {{playersAlive}} 
           </li>
           <li>
-            Time left: 
+           <strong> Time left: </strong>
           </li>
         </div>
         <div v-if="game.gameState === 'COMPLETE'">
           <li>
-            Winning faction:
+            <strong> Winning faction: </strong>
           </li>
           <li>
-            Zombie with most kills: 
+           <strong> Zombie with most kills: </strong>
           </li>
         </div>
       </ul>
@@ -68,11 +68,15 @@ export default {
     border: 5px solid rgba(255, 255, 255, 0.3);
     border-radius: 8px;
     color: rgba(178, 58, 248, 0.781);
+    font-size: 20px;
   }
   .game-title{
     text-align: center;
     text-transform: uppercase;
     margin-bottom: 10px;
+  }
+  .game-header{
+    font-family: plasdrip;
   }
   .game-info ul {
     list-style: none;
