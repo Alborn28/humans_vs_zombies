@@ -28,7 +28,7 @@ export default {
     padding: 12px;
     border: none;
     border-radius: 8px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: ZombieCarshel;
     transition: .3s;
     background-color: rgba(95, 95, 255, 0.479);
     color: lime;

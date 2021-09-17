@@ -1,29 +1,52 @@
 <template>
-  <CreateGameForm />
+  <div class="create-game-page">
+    <div class="content">
+      <Navbar />
+      <CreateGameForm />
+    </div>
+  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import CreateGameForm from '../components/CreateGame/CreateGameForm.vue'
+import { mapGetters } from "vuex";
+import CreateGameForm from "../components/CreateGame/CreateGameForm.vue";
+import Navbar from "../components/Navbar/Navbar.vue";
 
 export default {
-    name: "CreateGame",
-    components: {
-        CreateGameForm
-    },
+  name: "CreateGame",
+  components: {
+    CreateGameForm,
+    Navbar,
+  },
 
-    created() {
-        if(!this.isAdmin) {
-            this.$router.push("/");
-        }
-    },
-
-    computed: {
-        ...mapGetters(['isAdmin'])
+  created() {
+    if (!this.isAdmin) {
+      this.$router.push("/");
     }
-}
+  },
+
+  computed: {
+    ...mapGetters(["isAdmin"]),
+  },
+};
 </script>
 
-<style>
-
+<style scoped>
+    *{
+        color: lime;
+    }
+    .create-game-page {
+        background-image: url("/assets/background.jpg"); 
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+    }
+    .content {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
+  }
 </style>

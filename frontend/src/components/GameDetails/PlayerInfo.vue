@@ -1,9 +1,7 @@
 <template>
   <div class="player-info" v-if="playerLoaded">
+    <h3 class="title"> {{ player.username }} </h3>
     <ul>
-      <li>
-        <p><strong>Username: </strong>{{player.username}}</p>
-      </li>
       <li>
         <p><strong>Bite code:</strong> {{ player.biteCode }}</p>
       </li>
@@ -55,17 +53,22 @@ export default {
   .player-info {
     color: rgba(178, 58, 248, 0.781);
     font-size: 1.4em;
-    backdrop-filter: blur(25px);
-    background-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
-    z-index: 10;
-    padding: 25px;
-    text-align:center;
-      border-radius:8px;
-
+    margin-bottom: 20px;
   }
 
   .player-info ul {
     list-style: none;
+    backdrop-filter: blur(25px);
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
+    z-index: 10;
+    padding: 25px;
+    text-align:center;
+    border-radius:8px;
+  }
+  .title {
+    margin-bottom: 20px;
+    text-align: center;
   }
 </style>

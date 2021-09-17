@@ -83,7 +83,7 @@ export default {
   .member {
     padding: 8px;
     margin: 10px;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     border: 5px solid rgba(255, 255, 255, 0.3);
     border-radius: 8px;
     backdrop-filter: blur(25px);
