@@ -4,14 +4,17 @@
         <span v-if="!this.authenticated">
             <LoginButton />
         </span>
-        <span v-if="this.authenticated">
-            <LogoutButton />
-        </span>
         <span v-if="!this.authenticated">
             <RegisterButton />
         </span>
         <span v-if="isAdmin">
             <CreateGameButton />
+        </span>
+        <span v-if="isAdmin">
+            <AdminPageButton />
+        </span>
+        <span v-if="this.authenticated">
+            <LogoutButton />
         </span>
     </div>
 </template>
@@ -21,7 +24,8 @@ import LoginButton from './LoginButton.vue'
 import LogoutButton from './LogoutButton.vue'
 import RegisterButton from './RegisterButton.vue'
 import HomeButton from './HomeButton.vue'
-import CreateGameButton from '../LandingPage/CreateGameButton.vue'
+import CreateGameButton from './CreateGameButton.vue'
+import AdminPageButton from './AdminPageButton.vue'
 import { mapGetters, mapState } from 'vuex'
 
 export default {
@@ -31,7 +35,8 @@ export default {
         LogoutButton,
         RegisterButton,
         HomeButton,
-        CreateGameButton
+        CreateGameButton,
+        AdminPageButton
     },
     computed: {
         ...mapState(['authenticated']),

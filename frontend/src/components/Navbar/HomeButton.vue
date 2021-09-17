@@ -10,9 +10,6 @@ export default {
     name: "HomeButton",
  
     methods: {
-        /**
-         * Re-directs the user to the landing page
-         */
         handleClick(){
             this.$router.push("/");
         }
@@ -27,7 +24,6 @@ export default {
         border: none;
         border-radius: 8px;
         margin-right: 30px;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-family: ZombieCarshel;
         transition: .3s;
         background-color: rgba(95, 95, 255, 0.479);

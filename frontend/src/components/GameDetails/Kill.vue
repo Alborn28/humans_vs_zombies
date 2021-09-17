@@ -1,4 +1,5 @@
 <template>
+<div v-if="player.id !== null">
   <div class="kill-container" v-if="game.gameState === 'IN_PROGRESS' && player.human === false">
     <form class="killWindow" @submit="handleSubmit">
       <div class="kill-label">
@@ -14,6 +15,7 @@
       <button class="kill-button" type="submit">KILL</button>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -66,7 +68,7 @@ export default {
   flex-direction: column;
   text-align: right;
   margin-right: 5px;
-  color: limegreen;
+  color: lime;
 }
 .kill-label label{
   margin-bottom: 15px;
@@ -83,8 +85,8 @@ export default {
     padding: 8px;
     border: none;
     border-radius: 8px;
-  font-family: ZombieCarshel;   
-   transition: .3s;
+    font-family: ZombieCarshel;   
+    transition: .3s;
     background-color: rgba(255, 0, 21, 0.514);
     color: #fff;
 
