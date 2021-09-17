@@ -70,6 +70,7 @@ public class PlayerController {
 
     @PostMapping
     public ResponseEntity<Player> createPlayer(@PathVariable Long gameId, @RequestBody Player player) {
+        System.out.println("i början av projektet");
         Player returnPlayer = new Player();
         HttpStatus status;
         BiteCode biteCode= new BiteCode();
@@ -81,7 +82,10 @@ public class PlayerController {
 
         if (!gameRepository.existsById(gameId) || player.getGame().getId() != gameId) {
             status = HttpStatus.BAD_REQUEST;
+            System.out.println("i andra if statsen" );
             return new ResponseEntity<>(returnPlayer, status);
+
+
         }
 
         returnPlayer = playerRepository.save(player);

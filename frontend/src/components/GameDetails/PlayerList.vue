@@ -1,10 +1,9 @@
 <template>
-
   <div class="player-list" v-if="players.length > 0 && game.gameState === 'REGISTRATION'">
-    <h3 class="title">Registered players</h3>
+    <h3 class="title"><strong>Registered players</strong></h3>
       <ul>
           <li class="player" v-for="(player, index) in players" v-bind:key="index" >
-              <h4>{{player.username}}</h4>
+              <h3 class="players">{{player.username}}</h3>
           </li>
       </ul>
   </div>
@@ -41,10 +40,14 @@ async created() {
     margin:auto;
     color: lime;
     text-align: center;
+    backdrop-filter: blur(25px);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
     border: 5px solid rgba(255, 255, 255, 0.3);
     border-radius: 8px;
     padding:10px;
     margin-top: 25px;
+    font-size: 20px;
   }
 
   .player-list ul{
@@ -55,4 +58,5 @@ async created() {
     margin-bottom: 8px;
     color: rgba(178, 58, 248, 0.781);
   }
+  
 </style>

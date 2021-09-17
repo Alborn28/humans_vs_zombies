@@ -1,8 +1,7 @@
 <template>
   <form class="create-game-form" @submit="handleSubmit">
     <div class="create-game-container">
-      <p class="create-game-header2">CREATE GAME</p>
-      <!-- <p class="create-game-header3">CREATE GAME</p> -->
+      <p class="create-game-header">CREATE GAME</p>
     </div>
     <div class="form-container">
     <div class="input-label">
@@ -194,8 +193,6 @@ export default {
   padding: 8px;
   border: none;
   border-radius: 8px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-family: ZombieCarshel;
   transition: 0.3s;
   background-color: rgba(53, 223, 53, 0.479);
@@ -220,44 +217,10 @@ export default {
     justify-content: center;
     align-items: center;
 }
+
 .create-game-header {
-  font-family: yataghanregular;
-  font-size: 60px;
-}
-.create-game-header2 {
   font-family: plasdrip;
   font-size: 60px;
 }
-.create-game-header3 {
-  font-family: plasdrpe;
-  font-size: 60px;
-}
-.create-game-header4 {
-  font-family: Death-Party-ttf;
-  font-size: 60px;
-}
-.create-game-header5 {
-  font-family: Death-Party-otf;
-  font-size: 60px;
-}
-.create-game-header6 {
-  font-family: Mantune;
-  font-size: 60px;
-}
-.create-game-header7 {
-  font-family: ShadowsIntoLight;
-  font-size: 60px;
-}
-.create-game-header8 {
-  font-family: Spooky-Ghoster-ttf;
-  font-size: 60px;
-}
-.create-game-header9 {
-  font-family: Spooky-Ghoster-otf;
-  font-size: 60px;
-}
-.create-game-header10 {
-  font-family: ZombieCarshel;
-  font-size: 60px;
-}
+
 </style>

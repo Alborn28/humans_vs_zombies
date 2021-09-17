@@ -1,8 +1,9 @@
 <template>
   <div class="squad" v-if="squadLoaded">
     <div v-if="squadId === null">
-      <input type="name" v-model="name" />
-      <button @click="registerNewSquad()">register squad</button>
+      <h3 class="reg-squad-title">CREATE SQUAD</h3>
+      <input class="name" placeholder="Name" type="name" v-model="name" />
+      <button class="reg-squad-btn" @click="registerNewSquad()">register squad</button>
     </div>
     <div v-if="squadId !== null">
       <h3 class="title"> {{ squad.name }} </h3>
@@ -113,6 +114,35 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .reg-squad-btn{    
+    border: none;
+    border-radius: 8px;
+    font-family: ZombieCarshel;
+    transition: .3s;
+    background-color: rgba(95, 95, 255, 0.479);
+    color: lime; 
+    padding: 8px;
+    padding-left: 12px;    
+    padding-right: 12px;
+    font-size: 14px;    
+  }
+  .reg-squad-btn:hover {
+    transition: .3s;
+    cursor: pointer;
+    background-color: rgba(132, 132, 253, 0.479);
+    transition: .3s;
+  }
+  .name{
+  background-color: #834fd6;
+  padding: 8px;
+  border: none;
+  outline: none;
+  color: lime;
+  border-radius: 8px;
+  margin-right: 5px;
+  font-size: 14px;
+  width: 200px;
   }
 
 </style>

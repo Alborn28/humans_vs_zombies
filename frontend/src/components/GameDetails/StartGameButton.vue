@@ -21,12 +21,14 @@ export default {
 
 <style scoped>
   .start-btn {
-    width: 100px;
+    width: 300px;
+    height: 35px;
     padding: 8px;
     border: none;
     border-radius: 8px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-family: ZombieCarshel;
+    font-size: 20px;
     transition: .3s;
     background-color: rgba(53, 223, 53, 0.479);
     color: #fff;

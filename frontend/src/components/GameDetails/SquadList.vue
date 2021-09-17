@@ -3,9 +3,9 @@
       <h3 class="title" >squad lists</h3>
       <ul>
           <li class="squad" v-for="(squad,index) in squads" v-bind:key="index" @click="joinSquad({rank: 'MEMBER', squadId: squad.id})">
-              <h3 >Name: {{squad.name}}</h3>
+              <p class="name"><strong>Name:</strong> {{squad.name}}</p>
               
-              <h3 >Members: {{squad.squadMembers.length}}</h3>
+              <p class="members"><strong>Members:</strong> {{squad.squadMembers.length}}</p>
           </li>
       </ul>
   </div>
@@ -48,9 +48,13 @@ async created() {
     margin:auto;
     color: lime;
     text-align: center;
+    backdrop-filter: blur(25px);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
     border: 5px solid rgba(255, 255, 255, 0.3);
+    padding:10px;
+    font-size: 20px;
     border-radius: 8px;
-    padding:10px
   }
 
   .squad-list ul{
@@ -78,5 +82,6 @@ async created() {
     background-color: rgb(233, 233, 233, 0.2);
         cursor: pointer;
   }
+  
  
 </style>
