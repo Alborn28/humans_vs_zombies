@@ -50,5 +50,12 @@ export default {
         align-items: center;
         z-index: 10;
         margin-bottom: 50px;
+
+        
+        padding: 5px;
+        backdrop-filter: blur(75px);
+        background-color: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
+        /* border: 1px solid rgba(255, 255, 255, 0.3); */
     }
 </style>

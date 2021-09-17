@@ -1,10 +1,10 @@
 <template>
   <div class="map">
-    <div class="info">
+    <!-- <div class="info">
       <span>Center: {{ center }}</span>
       <span>Zoom: {{ zoom }}</span>
       <span>Bounds: {{ bounds }}</span>
-    </div>
+    </div> -->
     <l-map id="mapId"
       style="height: 500px; width: 100%"
       :zoom="zoom"
@@ -57,13 +57,14 @@ export default {
   }
 }
 </script>
-<style>
-.map {
-  border: 1px solid black;
-  padding: 5px;
-  margin-right: 400px;
-  margin-left: 400px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
+<style scoped>
+  .map {
+    border: 1px solid black;
+    margin: auto;
+    width: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 0;
+    margin-top: 25px;
+  }
 </style>

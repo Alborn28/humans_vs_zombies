@@ -142,7 +142,8 @@ export default {
     
     border: none;
     border-radius: 8px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
+    font-family: ZombieCarshel;
     transition: .3s;
     background-color: rgba(95, 95, 255, 0.479);
     color: lime; 
@@ -248,7 +249,6 @@ export default {
   justify-content: center;
   align-items: center;
   border-radius: 8px;
-  box-shadow: 3px 3px 6px #e1e1e1;
   border: 5px solid rgba(255, 255, 255, 0.3);
   padding: 10px;
   max-height: 320px;
