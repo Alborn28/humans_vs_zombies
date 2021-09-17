@@ -9,6 +9,7 @@
         <CheckInButton />
         <RegisterButton />
       </div>
+      <Kill/>
       <SquadList/>
       <div class="buttons">
         <StartGameButton />
@@ -35,6 +36,7 @@ import Chat from '../components/GameDetails/Chat.vue'
 import PlayerDetails from '../components/GameDetails/PlayerDetails.vue'
 import { mapState } from 'vuex'
 import SquadList from '../components/GameDetails/SquadList.vue'
+import Kill from "../components/GameDetails/Kill.vue";
 
 
 export default {
@@ -48,6 +50,7 @@ export default {
         RegisterButton,
         StartGameButton,
         Chat,
+        Kill,
         EndGameButton,
         PlayerDetails,
         SquadList

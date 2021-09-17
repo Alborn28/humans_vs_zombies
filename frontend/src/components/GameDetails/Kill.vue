@@ -1,18 +1,18 @@
 <template>
-  <div
-    class="killWindow"
-    v-if="game.gameState === 'IN_PROGRESS' && player.human === false">
-    <form @submit="handleSubmit">
-      <div>
-        <label>insert bite code</label>
-        <input type="text" v-model="biteCode" />
+  <div class="kill-container" v-if="game.gameState === 'IN_PROGRESS' && player.human === false">
+    <form class="killWindow" @submit="handleSubmit">
+      <div class="kill-label">
+        <label> bite code:</label>
+        <label> description:</label>
       </div>
-      <div>
-        <label>insert story-description</label>
-        <input type="text" v-model="story" />
+      <div class="kill-input">
+        <input type="text" v-model="biteCode" required/>
+        <textarea class="kill-description" rows="3" v-model="story" placeholder="(Optional)"/>
       </div>
-      <button type="submit">KILL</button>
     </form>
+    <div class="kill-button-container">
+      <button class="kill-button" type="submit">KILL</button>
+    </div>
   </div>
 </template>
 
@@ -35,15 +35,101 @@ export default {
 
     async handleSubmit(event) {
       event.preventDefault();
-      this.kill({bitecode: this.biteCode, story: this.story});
+      this.kill({ bitecode: this.biteCode, story: this.story });
     },
   },
 };
 </script>
 
 <style scoped>
+.kill-container{
+ width:40%;
+    margin:auto;
+    color: lime;
+    text-align: center;
+    backdrop-filter: blur(25px);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding:10px;
+    margin-top: 25px;
+}
 .killWindow {
-  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+
+}
+.kill-label {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  margin-right: 5px;
+  color: limegreen;
+}
+.kill-label label{
+  margin-bottom: 15px;
+
+}
+.kill-button-container{
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.kill-button {
+    width: 100px;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+  font-family: ZombieCarshel;   
+   transition: .3s;
+    background-color: rgba(255, 0, 21, 0.514);
+    color: #fff;
+
+  }
+  .kill-button:hover {
+    transition: .3s;
+    cursor: pointer;
+    background-color: rgba(250, 43, 60, 0.616);
+    transition: .3s;
+  }
+.kill-input {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 5px;
+  
+}
+.kill-description{
+  margin-top: 10px;
+  border-radius: 8px;
+  width: 150px;
+  border:none;
+   background-color: #834fd6;
   padding: 5px;
+  color: lime;
+}
+.kill-description::placeholder{
+
+  color: lime;
+}
+.kill-input input {
+  border-radius: 8px;
+  width: 150px;
+  border:none;
+  background-color: #834fd6;
+  padding: 5px;
+  color: lime;
+}
+.kill-description:focus{
+  outline: none;
+}
+.kill-input input:focus{
+  outline: none;
+}
+.kill-description:focus::placeholder{
+  color:transparent;
 }
 </style>
