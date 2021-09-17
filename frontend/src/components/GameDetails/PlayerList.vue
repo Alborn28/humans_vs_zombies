@@ -36,7 +36,7 @@ async created() {
 }
 
   .player-list{
-    width:50%;
+    width:35%;
     margin:auto;
     color: lime;
     text-align: center;

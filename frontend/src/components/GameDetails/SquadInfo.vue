@@ -1,6 +1,6 @@
 <template>
   <div class="squad" v-if="squadLoaded">
-    <div v-if="squadId === null">
+    <div class="create-squad-container" v-if="squadId === null">
       <h3 class="reg-squad-title">CREATE SQUAD</h3>
       <input class="name" placeholder="Name" type="name" v-model="name" />
       <button class="reg-squad-btn" @click="registerNewSquad()">register squad</button>
@@ -52,10 +52,35 @@ export default {
 </script>
 
 <style scoped>
+.create-squad-container{
+   display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    backdrop-filter: blur(25px);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
+    z-index: 10;
+    padding: 10px;
+
+}
+.create-squad-container *{
+  margin-top: 10px;
+}
+.create-squad-container input:focus::placeholder{
+  color: transparent;
+}
+
+.create-squad-container input::placeholder{
+  color: lime;
+}
   .squad {
     color: rgba(178, 58, 248, 0.781);
     font-size: 1.4em;
     width: 90%;
+   
   }
 
   .squad ul {
@@ -66,6 +91,7 @@ export default {
     overflow-x: hidden;
     max-height: 180px;
     max-width: 300px;
+    
   }
 
   .squad ul::-webkit-scrollbar {

@@ -2,8 +2,8 @@
   <div class="kill-container" v-if="game.gameState === 'IN_PROGRESS' && player.human === false">
     <form class="killWindow" @submit="handleSubmit">
       <div class="kill-label">
-        <label> bite code:</label>
-        <label> description:</label>
+        <label>Bite code:</label>
+        <label>Description:</label>
       </div>
       <div class="kill-input">
         <input type="text" v-model="biteCode" required/>
@@ -43,7 +43,7 @@ export default {
 
 <style scoped>
 .kill-container{
- width:40%;
+ width:35%;
     margin:auto;
     color: lime;
     text-align: center;

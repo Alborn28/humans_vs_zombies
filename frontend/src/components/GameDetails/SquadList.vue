@@ -44,7 +44,7 @@ async created() {
   text-transform: uppercase;
 }
   .squad-list{
-    width:50%;
+    width:35%;
     margin:auto;
     color: lime;
     text-align: center;
