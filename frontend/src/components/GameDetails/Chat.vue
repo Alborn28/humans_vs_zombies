@@ -138,28 +138,23 @@ export default {
 </script>
 
 <style scoped>
-.send-chat-msg{
-    
+.send-chat-msg{    
     border: none;
     border-radius: 8px;
-    /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
     font-family: ZombieCarshel;
     transition: .3s;
     background-color: rgba(95, 95, 255, 0.479);
     color: lime; 
     padding: 8px;
-    padding-left: 12px;
-    
+    padding-left: 12px;    
     padding-right: 12px;
-    font-size: 14px;
-    
+    font-size: 14px;    
   }
   .send-chat-msg:hover {
     transition: .3s;
     cursor: pointer;
     background-color: rgba(132, 132, 253, 0.479);
     transition: .3s;
-
   }
 .chat-msg{
   background-color: #834fd6; 
