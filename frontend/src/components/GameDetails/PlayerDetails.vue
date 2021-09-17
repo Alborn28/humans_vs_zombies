@@ -7,15 +7,9 @@
         >Player info</a
       >
       <a
-        v-if="!player.human && game.gameState === 'IN_PROGRESS'"
+        v-if="player.human"
         v-on:click="activetab = 2"
         v-bind:class="[activetab === 2 ? 'active' : '']"
-        >Kill</a
-      >
-      <a
-        v-if="player.human"
-        v-on:click="activetab = 3"
-        v-bind:class="[activetab === 3 ? 'active' : '']"
         >Squad info</a
       >
     </div>
@@ -25,9 +19,6 @@
         <PlayerInfo />
       </div>
       <div v-if="activetab === 2" class="tabcontent">
-        <Kill />
-      </div>
-      <div v-if="activetab === 3" class="tabcontent">
         <SquadInfo />
       </div>
     </div>
@@ -36,7 +27,6 @@
 
 <script>
 import PlayerInfo from "../GameDetails/PlayerInfo.vue";
-import Kill from "../GameDetails/Kill.vue";
 import SquadInfo from "../GameDetails/SquadInfo.vue";
 import { mapActions, mapState } from 'vuex';
 
@@ -52,7 +42,6 @@ export default {
   },
   components: {
     PlayerInfo,
-    Kill,
     SquadInfo,
   },
   methods: {
@@ -65,12 +54,6 @@ export default {
   async created() {
     await this.fetchPlayer();
   },
-
-   updated(){
-    if(this.activetab === 2 && this.game.gameState === 'COMPLETE'){
-      this.activetab = 1;
-    }
-  }
 };
 </script>
 
