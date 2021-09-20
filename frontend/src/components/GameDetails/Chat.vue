@@ -22,7 +22,7 @@
     <div class="chat-container">
       <div v-if="activetab === 1" class="chat-content">
         <form class="chat-form" @submit.prevent="sendGlobalMessage(msg)">
-          <ul>
+          <ul id="global-chat-window">
             <li v-for="(chat, index) in globalChats" :key="index">
               {{ chat }}
             </li>
@@ -35,7 +35,7 @@
       </div>
       <div v-if="activetab === 2" class="chat-content">
         <form class="chat-form" @submit.prevent="sendFactionMessage(msg)">
-          <ul>
+          <ul id="faction-chat-window">
             <li v-for="(chat, index) in factionChats" :key="index">
               {{ chat }}
             </li>
@@ -49,7 +49,7 @@
 
       <div v-if="activetab === 3 && this.squadId !== null" class="chat-content">
         <form class="chat-form" @submit.prevent="sendSquadMessage(msg)">
-          <ul>
+          <ul id="squad-chat-window">
             <li v-for="(chat, index) in squadChats" :key="index">
               {{ chat }}
             </li>
@@ -91,12 +91,24 @@ export default {
         socket.connect();
         socket.on("globalMessage", (msg) => {
           this.globalChats.push(msg);
+          this.$nextTick(() => {
+            const chatWindow = this.$el.querySelector('#global-chat-window');
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+          })
         });
         socket.on("factionMessage", (msg) => {
           this.factionChats.push(msg);
+          this.$nextTick(() => {
+            const chatWindow = this.$el.querySelector('#faction-chat-window');
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+          })
         });
         socket.on("squadMessage", (msg) => {
           this.squadChats.push(msg);
+          this.$nextTick(() => {
+            const chatWindow = this.$el.querySelector('#squad-chat-window');
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+          })
         });
         socket.on("connect_error", (error) => {
           console.log(error.message)
@@ -198,7 +210,6 @@ export default {
   margin: 10px;
   font-size: 1.2em;
   border-radius:8px;
-
 }
 
 .chat-content li {

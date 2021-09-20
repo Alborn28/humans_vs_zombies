@@ -35,8 +35,7 @@ export default {
     const response = await fetch(this.apiUrl + `/game/${this.gameId}/squad`)
     const data = await response.json();
     this.squads=data;
-    this.squadId=this.squads[0].id;
-    
+    this.squadId=this.squads.length === 0 ? null : this.squads[0].id;
   },
 
   methods: {
@@ -100,5 +99,10 @@ button:hover {
     cursor: pointer;
     background-color:rgba(132, 132, 253, 0.479);
     transition: .3s;
+  }
+  @media screen and (max-width: 350px) {
+    .select-container {
+      width: 90%;
+    }
   }
 </style>

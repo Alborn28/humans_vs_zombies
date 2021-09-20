@@ -1,10 +1,5 @@
 <template>
   <div class="map">
-    <!-- <div class="info">
-      <span>Center: {{ center }}</span>
-      <span>Zoom: {{ zoom }}</span>
-      <span>Bounds: {{ bounds }}</span>
-    </div> -->
     <l-map id="mapId"
       style="height: 500px; width: 100%"
       :zoom="zoom"
@@ -66,5 +61,17 @@ export default {
     border-radius: 8px;
     padding: 0;
     margin-top: 25px;
+  }
+
+   @media screen and (max-width: 900px) {
+    .map{
+      width: 90%;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    #mapId {
+      height: 300px !important;
+    }
   }
 </style>

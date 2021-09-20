@@ -36,7 +36,7 @@ export default {
     const response = await fetch(this.apiUrl + `/game/${this.gameId}/player`)
     const data = await response.json();
     this.players=data;
-    this.playerId=this.players[0].id;
+    this.playerId=this.players.length === 0 ? null : this.players[0].id;
   },
 
   methods: {
@@ -100,6 +100,11 @@ button:hover {
     cursor: pointer;
     background-color:rgba(132, 132, 253, 0.479);
     transition: .3s;
+  }
+  @media screen and (max-width: 350px) {
+    .select-container {
+      width: 90%;
+    }
   }
 
 </style>

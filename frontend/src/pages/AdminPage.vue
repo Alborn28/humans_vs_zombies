@@ -70,12 +70,14 @@ export default {
 </script>
 
 <style scoped>
-
 .select-game-components {
   justify-content: center;
   align-items: center;
   display: flex;
   color: aliceblue;
+}
+.select-game-components * {
+  margin: 5px;
 }
 .admin-components-container {
   background-image: url("/assets/admin-bg.jpg");
@@ -85,6 +87,12 @@ export default {
   width: 100%;
   height: 100%;
   position: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
-
+ @media screen and (max-width: 900px) {
+    .select-game-components   {
+      flex-direction: column;
+    }
+}
 </style>

@@ -14,39 +14,37 @@
 <script>
 import { mapState } from "vuex";
 export default {
-    props:{
-        squad:Object,
-        gameId:Number,
-    },
+  props: {
+    squad: Object,
+    gameId: Number,
+  },
   computed: {
     ...mapState(["apiUrl", "token"]),
   },
 
   methods: {
     async updateSquad() {
-        console.log(this.gameId, "-__" , this.squad);
-      await fetch(this.apiUrl + "/game/" + this.gameId+"/squad/"+this.squad.id, {
-        method: "PATCH",
-        headers: {
-          Authorization: "Bearer " + this.token,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: this.squad.id,
-          name: this.squad.name,
-          
-        }),
-      });
+      console.log(this.gameId, "-__", this.squad);
+      await fetch(
+        this.apiUrl + "/game/" + this.gameId + "/squad/" + this.squad.id,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: "Bearer " + this.token,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: this.squad.id,
+            name: this.squad.name,
+          }),
+        }
+      );
     },
   },
 };
 </script>
 
 <style scoped>
-.update-squad-container{
-    
-}
-
 .select-component {
   margin-top: 10px;
   background-color: lime;
@@ -82,14 +80,18 @@ export default {
   border: none;
   color: lime;
   background-color: rgba(95, 95, 255, 0.479);
-  transition: .3s;
+  transition: 0.3s;
 }
 
-
 .update-squad-form button:hover {
-    cursor: pointer;
-    background-color: rgba(132, 132, 253, 0.479);
-    transition: .3s;
-  }
+  cursor: pointer;
+  background-color: rgba(132, 132, 253, 0.479);
+  transition: 0.3s;
+}
 
+@media screen and (max-width: 350px) {
+  .update-squad-form {
+    width: 90%;
+  }
+}
 </style>

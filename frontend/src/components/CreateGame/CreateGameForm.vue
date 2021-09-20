@@ -1,21 +1,19 @@
 <template>
   <form class="create-game-form" @submit="handleSubmit">
-    <div class="create-game-container">
-      <p class="create-game-header">CREATE GAME</p>
-    </div>
+    <h3 class="create-game-header">CREATE GAME</h3>  
     <div class="form-container">
-    <div class="input-label">
-      <label for="name">Name: </label>
-      <label for="description">Description: </label>
-      <label for="startDate">Start date: </label>
-      <label for="endDate">End date: </label>
-    </div>
-    <div class="input-container">
-      <input class="name" required id="name" type="text" v-model="name" />
-      <input class="description" required id="description" type="text" v-model="description" />
-      <input class="start-date" required id="startDate" type="datetime-local" v-model="startDate" />
-      <input class="end-date" required id="endDate" type="datetime-local" v-model="endDate" />
-    </div>
+      <div class="input-label">
+        <label for="name">Name: </label>
+        <label for="description">Description: </label>
+        <label for="startDate">Start date: </label>
+        <label for="endDate">End date: </label>
+      </div>
+      <div class="input-container">
+        <input class="name" required id="name" type="text" v-model="name" />
+        <input class="description" required id="description" type="text" v-model="description" />
+        <input class="start-date" required id="startDate" type="datetime-local" v-model="startDate" />
+        <input class="end-date" required id="endDate" type="datetime-local" v-model="endDate" />
+      </div>
     </div>
 
     <div class="map-container">
@@ -112,33 +110,32 @@ export default {
 
 <style scoped>
 .form-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
 }
 
 .input-container {
-    width: 51%;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
+  width: 51%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
 }
 .input-container input{
     margin: 6px
 }
 .input-label {
-    width: 40%;
-    display: flex;
-    text-align: right;
-    flex-direction: column;
-    margin-top: 27px;
+  width: 40%;
+  display: flex;
+  text-align: right;
+  flex-direction: column;
+  margin-top: 27px;
 }
 .input-label label{
-    margin-bottom: 25px;
-
+  margin-bottom: 25px;
 }
-.end-date {
+.end-date, .name, .start-date, .description {
   background-color: #834fd6;
   padding: 8px;
   border: none;
@@ -148,42 +145,9 @@ export default {
   margin-right: 5px;
   font-size: 14px;
   width: 200px;
-}
-.name {
-  background-color: #834fd6;
-  padding: 8px;
-  border: none;
-  outline: none;
-  color: lime;
-  border-radius: 8px;
-  margin-right: 5px;
-  font-size: 14px;
-  width: 200px;
-}
+} 
 .name::placeholder {
   color: lime;
-}
-.start-date {
-  background-color: #834fd6;
-  padding: 8px;
-  border: none;
-  outline: none;
-  color: lime;
-  border-radius: 8px;
-  margin-right: 5px;
-  font-size: 14px;
-  width: 200px;
-}
-.description {
-  background-color: #834fd6;
-  padding: 8px;
-  border: none;
-  outline: none;
-  color: lime;
-  border-radius: 8px;
-  margin-right: 5px;
-  font-size: 14px;
-  width: 200px;
 }
 .description::placeholder {
   color: lime;
@@ -221,6 +185,46 @@ export default {
 .create-game-header {
   font-family: plasdrip;
   font-size: 60px;
+  text-align: center;
 }
+
+ @media screen and (max-width: 400px) {
+    .create-game-btn, .end-date, .name, .start-date, .description {
+      width: 90%;
+    }
+
+    .input-label {
+      width: 20%;
+    }
+
+    .input-container {
+      width: 70%;
+    }
+
+    .create-game-header {
+      font-size: 40px;
+    }
+  }
+
+   @media screen and (max-width: 500px) and (min-width: 400px) {
+    .input-label {
+      width: 30%;
+    }
+    .input-container {
+      width: 65%;
+    }
+    .create-game-header {
+      font-size: 40px;
+    }
+  }
+
+   @media screen and (max-width: 700px) and (min-width: 500px) {
+    .input-label {
+      width: 35%;
+    }
+    .input-container {
+      width: 60%;
+    }
+  }
 
 </style>
