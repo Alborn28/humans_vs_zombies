@@ -58,5 +58,10 @@ async created() {
     margin-bottom: 8px;
     color: rgba(178, 58, 248, 0.781);
   }
-  
+
+   @media screen and (max-width: 800px) {
+    .player-list  {
+      width: 90%;
+    }
+  }  
 </style>

@@ -66,7 +66,6 @@ export default {
 }
 
 .tabs ul {
-  
   list-style-type: none;
   margin-left: 20px;
 }
@@ -113,5 +112,12 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 25px;
+}
+
+@media screen and (max-width: 400px) {
+  .tabcontent {
+    min-width: 0;
+  }
 }
 </style>

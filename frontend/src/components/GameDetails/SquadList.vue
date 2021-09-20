@@ -82,6 +82,10 @@ async created() {
     background-color: rgb(233, 233, 233, 0.2);
         cursor: pointer;
   }
-  
+  @media screen and (max-width: 800px) {
+    .squad-list  {
+      width: 90%;
+    }
+  }  
  
 </style>

@@ -260,6 +260,7 @@ export default {
   max-height: 320px;
   max-width: 340px;
   background-color: rgb(10, 10, 10);
+  margin-bottom: 25px;
 }
 
 .input-container {
@@ -268,5 +269,18 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
+@media screen and (max-width: 400px) {
+  .chat-content {
+    width: 90%;
+    margin: auto;
+  }
+
+  .chat-content ul {
+    min-width: 0;
+    max-width: 200px;
+    margin: auto;
+  }
+} 
 
 </style>

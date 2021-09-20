@@ -115,4 +115,16 @@ export default {
     padding: 0;
     margin-top: 25px;
   }
+  
+   @media screen and (max-width: 900px) {
+    .map{
+      width: 90%;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    #mapId {
+      height: 300px !important;
+    }
+  }
 </style>

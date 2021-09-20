@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.game.gameState === 'IN_PROGRESS' && this.squadId !== null && player.human" class="button-container">
+  <div class="btn-container" v-if="this.game.gameState === 'IN_PROGRESS' && this.squadId !== null && player.human">
     <button @click="postCheckIn" class="check-in">Check in</button>
   </div>
 </template>
@@ -19,11 +19,11 @@ export default {
 
 <style scoped>
  .check-in {
-    width: 400px;
+    width: 300px;
     padding: 12px;
     border: none;
     border-radius: 8px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: ZombieCarshel;
     transition: .3s;
     background-color: rgba(95, 95, 255, 0.479);
     color: lime;
@@ -36,4 +36,13 @@ export default {
     background-color: rgba(132, 132, 253, 0.479);
     transition: .3s;
   }
+    @media screen and (max-width: 330px) {
+      .btn-container {
+        width: 90%;
+      }
+      .check-in  {
+        width: 100%;
+      }
+    } 
+  
 </style>

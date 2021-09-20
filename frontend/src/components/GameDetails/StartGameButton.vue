@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isAdmin && game.gameState === 'REGISTRATION'">
+  <div class="btn-container" v-if="isAdmin && game.gameState === 'REGISTRATION'">
     <button class="start-btn" type="button" @click="startGame">
       Start Game
     </button>
@@ -40,4 +40,13 @@ export default {
     background-color: rgba(161, 255, 161, 0.479);
     transition: .3s;
   }
+
+  @media screen and (max-width: 330px) {
+    .btn-container {
+      width: 90%;
+    }
+    .start-btn  {
+      width: 100%;
+    }
+  } 
 </style>

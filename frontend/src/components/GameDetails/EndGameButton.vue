@@ -1,5 +1,5 @@
 <template>
-  <div v-if="game.gameState === 'IN_PROGRESS' && isAdmin ">
+  <div class="btn-container" v-if="game.gameState === 'IN_PROGRESS' && isAdmin ">
     <button class="end-btn" type="button" @click="endGame">
       End Game
     </button>
@@ -21,7 +21,7 @@ export default {
 
 <style scoped>
   .end-btn {
-    width: 100px;
+    width: 300px;
     padding: 8px;
     border: none;
     border-radius: 8px;
@@ -29,6 +29,7 @@ export default {
     transition: .3s;
     background-color: rgba(211, 30, 45, 0.479);
     color: #fff;
+    margin-bottom: 25px;
   }
   .end-btn:hover {
     transition: .3s;
@@ -36,4 +37,12 @@ export default {
     background-color: rgba(230, 100, 111, 0.479);
     transition: .3s;
   }
+  @media screen and (max-width: 330px) {
+    .btn-container {
+      width: 90%;
+    }
+    .end-btn  {
+      width: 100%;
+    }
+  } 
 </style>
