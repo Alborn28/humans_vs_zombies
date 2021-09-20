@@ -108,6 +108,26 @@ public class PlayerController {
         return new ResponseEntity<>(returnPlayer, status);
     }
 
+    @PatchMapping("/{playerId}")
+    public ResponseEntity<Player> patchPlayer(@RequestBody Player updatedPlayer, @PathVariable Long gameId, @PathVariable Long playerId) {
+        Player returnPlayer = new Player();
+        HttpStatus status;
+
+        if (playerId != updatedPlayer.getId()) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnPlayer, status);
+        }
+
+        Player player = playerRepository.findById(playerId).get();
+        player.setHuman(updatedPlayer.isHuman());
+        player.setPatientZero(updatedPlayer.isPatientZero());
+        player.setBiteCode(updatedPlayer.getBiteCode());
+
+        returnPlayer = playerRepository.save(player);
+        status = HttpStatus.OK;
+        return new ResponseEntity<>(returnPlayer, status);
+    }
+
     @DeleteMapping("/{playerId}")
     public ResponseEntity<Player> deletePlayer(@PathVariable Long gameId, @PathVariable Long playerId) {
         HttpStatus status = null;

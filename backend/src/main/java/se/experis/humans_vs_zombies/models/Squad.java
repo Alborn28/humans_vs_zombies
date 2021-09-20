@@ -16,9 +16,6 @@ public class Squad {
     @Column(length = 64, nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private boolean isHuman;
-
     @ManyToOne
     @JoinColumn(name = "gameId")
     private Game game;
@@ -59,14 +56,6 @@ public class Squad {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public boolean isHuman() {
-        return isHuman;
-    }
-
-    public void setHuman(boolean human) {
-        isHuman = human;
     }
 
     public Game getGame() {
