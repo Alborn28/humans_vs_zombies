@@ -81,15 +81,21 @@ export default {
 }
 
 .left-column {
-        width: 50%;
-        text-align: right;
-        margin-right: 10px;
-    }
+    width: 50%;
+    text-align: right;
+    margin-right: 10px;
+}
 
-    .right-column {
-        width: 50%;
-        text-align: left;
-        margin-left: 10px;
+.right-column {
+    width: 50%;
+    text-align: left;
+    margin-left: 10px;
+}
+
+ @media screen and (max-width: 800px) {
+    .game-info  {
+      width: 90%;
     }
+  }
 </style>
 

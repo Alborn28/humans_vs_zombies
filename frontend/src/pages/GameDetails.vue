@@ -99,4 +99,12 @@ export default {
     margin-right: 50px;
     margin-bottom: 30px;
   }
+
+  @media screen and (max-width: 800px) {
+    .row {
+      flex-direction: column;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  } 
 </style>

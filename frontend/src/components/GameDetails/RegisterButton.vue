@@ -1,5 +1,5 @@
 <template>
-  <div v-if="game.gameState === 'REGISTRATION' && player.id === null">
+  <div class="btn-container" v-if="game.gameState === 'REGISTRATION' && player.id === null">
     <button class="reg-btn" type="button" @click="registerPlayer()">
       Registration button
     </button>
@@ -24,7 +24,7 @@ export default {
 
 <style>
   .reg-btn {
-    width: 400px;
+    width: 300px;
     padding: 12px;
     border: none;
     border-radius: 8px;
@@ -41,4 +41,12 @@ export default {
     background-color: rgba(132, 132, 253, 0.479);
     transition: .3s;
   }
+  @media screen and (max-width: 330px) {
+    .btn-container {
+      width: 90%;
+    }
+    .reg-btn  {
+      width: 100%;
+    }
+  } 
 </style>
