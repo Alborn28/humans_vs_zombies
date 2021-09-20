@@ -138,6 +138,24 @@ public class SquadController {
         return new ResponseEntity<>(returnSquad, status);
     }
 
+    @PatchMapping("/{squadId}")
+    public ResponseEntity<Squad> patchSquad(@RequestBody Squad updatedSquad, @PathVariable Long gameId, @PathVariable Long squadId) {
+        Squad returnSquad = new Squad();
+        HttpStatus status;
+
+        if (squadId != updatedSquad.getId()) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnSquad, status);
+        }
+
+        Squad squad = squadRepository.findById(squadId).get();
+        squad.setName(updatedSquad.getName());
+
+        returnSquad = squadRepository.save(squad);
+        status = HttpStatus.OK;
+        return new ResponseEntity<>(returnSquad, status);
+    }
+
     @DeleteMapping("/{squadId}")
     public ResponseEntity<Squad> deleteSquad(@PathVariable Long gameId, @PathVariable Long squadId) {
         HttpStatus status;
@@ -206,8 +224,6 @@ public class SquadController {
     public ResponseEntity<SquadCheckin> addCheckin(@PathVariable Long gameId, @PathVariable Long squadId, @RequestBody SquadCheckin squadCheckin) {
         SquadCheckin returnSquadCheckin = new SquadCheckin();
         HttpStatus status;
-
-        //Test
 
         if (!squadRepository.existsById(squadId)) {
             status = HttpStatus.BAD_REQUEST;

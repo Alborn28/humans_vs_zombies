@@ -69,6 +69,28 @@ public class GameController {
         return new ResponseEntity<>(returnGame, status);
     }
 
+    @PatchMapping("/{gameId}")
+    public ResponseEntity<Game> patchGame(@RequestBody Game updatedGame, @PathVariable Long gameId) {
+        Game returnGame = new Game();
+        HttpStatus status;
+
+        if (gameId != updatedGame.getId()) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnGame, status);
+        }
+
+        Game game = gameRepository.findById(gameId).get();
+        game.setName(updatedGame.getName());
+        game.setDescription(updatedGame.getDescription());
+        game.setGameState(updatedGame.getGameState());
+        game.setStartDate(updatedGame.getStartDate());
+        game.setEndDate(updatedGame.getEndDate());
+
+        returnGame = gameRepository.save(game);
+        status = HttpStatus.OK;
+        return new ResponseEntity<>(returnGame, status);
+    }
+
     @PutMapping("/{gameId}/start")
     public ResponseEntity<Game> startGame(@PathVariable Long gameId) {
         Game updatedGame = new Game();
