@@ -1,5 +1,5 @@
 <template>
-  <div class="map">
+  <div class="map" v-if="mapLoaded">
     <l-map
       :zoom="zoom"
       :center="center"
@@ -20,20 +20,22 @@
           <p>Story: {{kill.story}}</p>
         </l-popup>
       </l-marker>
-      <div v-if="player.human"> 
-        <l-marker v-if="playerCheckIn !== null" :lat-lng="playerCheckIn" >
-          <l-icon :iconUrl="'assets/checkin.png'" :iconSize = "[30, 30]" />
-          <l-popup>
-            {{player.username}}
-          </l-popup>
-        </l-marker>
-        <l-marker v-for="(checkin, index) in checkIns" :key="index" :lat-lng="checkin.latlng">
-          <l-icon :iconUrl="'assets/checkin.png'" :iconSize = "[30, 30]" />
-          <l-popup>
-            <p>Player: {{checkin.squadMember}}</p>
-            <p>Time of check in: {{checkin.timeOfCheckIn}}</p>
-          </l-popup>
-        </l-marker> 
+      <div v-if="player.id !== null">
+        <div v-if="player.human"> 
+          <l-marker v-if="playerCheckIn !== null" :lat-lng="playerCheckIn" >
+            <l-icon :iconUrl="'assets/checkin.png'" :iconSize = "[30, 30]" />
+            <l-popup>
+              {{player.username}}
+            </l-popup>
+          </l-marker>>
+          <l-marker v-for="(checkin, index) in checkIns" :key="index" :lat-lng="checkin.latlng">
+            <l-icon :iconUrl="'assets/checkin.png'" :iconSize = "[30, 30]" />
+            <l-popup>
+              <p>Player: {{checkin.squadMember}}</p>
+              <p>Time of check in: {{checkin.timeOfCheckIn}}</p>
+            </l-popup>
+          </l-marker>
+        </div>
       </div>
     </l-map>
   </div>
@@ -69,12 +71,14 @@ export default {
     
     this.minZoom = this.game.zoom
     this.zoom = this.game.zoom
+
+    this.mapLoaded = true;
   },
   computed: {
-    ...mapState(["game", "player", "checkIns", "location", "kills", 'playerCheckIn']),
+    ...mapState(["game", "player", "squad", "checkIns", "location", "kills", 'playerCheckIn']),
   },
   methods: {
-    ...mapActions(["fetchGame", "fetchSquadCheckIns", "fetchKills"]),
+    ...mapActions(["fetchGame", "fetchSquad", "fetchSquadCheckIns", "fetchKills"]),
     ...mapMutations(["setLocation"]),
     handleMapClick(mapObject){
       mapObject.locate();
@@ -101,6 +105,7 @@ export default {
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       markers: [],
+      mapLoaded: false
     };
   },
 };
