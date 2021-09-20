@@ -29,7 +29,7 @@ export default {
   },
   async created() {
     await this.fetchGames();
-    this.gameId = this.games[0].id;
+    this.gameId = this.games.length === 0 ? null : this.games[0].id;
   },
 
   methods: {
@@ -96,5 +96,11 @@ button:hover {
     cursor: pointer;
     background-color:rgba(132, 132, 253, 0.479);
     transition: .3s;
+  }
+
+   @media screen and (max-width: 350px) {
+    .select-container {
+      width: 90%;
+    }
   }
 </style>

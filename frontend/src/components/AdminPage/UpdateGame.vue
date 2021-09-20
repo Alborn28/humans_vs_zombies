@@ -1,6 +1,6 @@
 <template>
-  <div class="update_game_container">
-    <form class="update_game_form">
+  <div class="update-game-container">
+    <form class="update-game-form ">
       <h3>Edit Game</h3>
       <div>
         <label><strong>Name: </strong></label>
@@ -80,10 +80,9 @@ export default {
   width: 150px;
   border: none;
   text-align-last: center;
-
   border-radius: 8px;
 }
-.update_game_form {
+.update-game-form {
   justify-content: center;
   align-items: center;
   display: flex;
@@ -101,7 +100,7 @@ export default {
   max-width: 290px;
 }
 
-.update_game_form button {
+.update-game-form button {
   margin-top: 10px;
   width: 150px;
   border-radius: 8px;
@@ -114,10 +113,15 @@ export default {
   text-transform: capitalize;
 }
 
-.update_game_form button:hover {
+.update-game-form button:hover {
     cursor: pointer;
     background-color: rgba(132, 132, 253, 0.479);
     transition: .3s;
+  }
+  @media screen and (max-width: 350px) {
+    .update-game-form  {
+      width: 90%;
+    }
   }
 
 </style>

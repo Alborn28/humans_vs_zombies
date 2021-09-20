@@ -57,7 +57,6 @@ export default {
 </script>
 
 <style>
-
 .select-component {
   margin-top: 10px;
   background-color: lime;
@@ -65,9 +64,9 @@ export default {
   width: 150px;
   border: none;
   text-align-last: center;
-
   border-radius: 8px;
 }
+
 .update-player-form {
   justify-content: center;
   align-items: center;
@@ -105,4 +104,9 @@ export default {
     transition: .3s;
   }
 
+@media screen and (max-width: 350px) {
+  .update-player-form  {
+    width: 90%;
+  }
+}
 </style>

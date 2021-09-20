@@ -23,7 +23,6 @@ export default {
         padding: 8px;
         border: none;
         border-radius: 8px;
-        margin-right: 30px;
         font-family: ZombieCarshel;
         transition: .3s;
         background-color: rgba(95, 95, 255, 0.479);
@@ -35,4 +34,9 @@ export default {
         background-color: rgba(132, 132, 253, 0.479);
         transition: .3s;
     }
+    @media screen and (max-width: 580px) {
+  .home-btn{
+    width: 100%;
+  }
+}
 </style>

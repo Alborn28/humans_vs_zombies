@@ -87,6 +87,7 @@ export default {
         font-family: 'ShadowsIntoLight';
     }
     .app {
+        min-width: 300px;
         width: 100%;
         height: 100vh;
     }
