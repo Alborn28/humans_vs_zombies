@@ -45,7 +45,6 @@ export default {
     async handleSelectSquad() {
       const response = await fetch(this.apiUrl + "/game/" + this.gameId + "/squad/" +this.squadId);
       const data = await response.json();
-      
       this.$emit("squad-selected", data)
     },
   },

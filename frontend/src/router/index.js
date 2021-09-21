@@ -3,6 +3,7 @@ import Start from '../pages/LandingPage.vue'
 import Game from '../pages/GameDetails.vue'
 import CreateGame from '../pages/CreateGame.vue'
 import AdminPage from '../pages/AdminPage.vue'
+import RulesPage from '../pages/RulesPage.vue'
 
 
 /**
@@ -28,6 +29,11 @@ const routes = [
         path: '/admin-page',
         name: 'AdminPage',
         component: AdminPage
+    },
+    {
+        path: '/rules',
+        name: 'RulesPage',
+        component: RulesPage
     }
 ]
 

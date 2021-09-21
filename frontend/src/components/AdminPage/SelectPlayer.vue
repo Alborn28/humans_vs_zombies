@@ -32,7 +32,6 @@ export default {
     ...mapState(["apiUrl" ]),
   },
   async created() {
-
     const response = await fetch(this.apiUrl + `/game/${this.gameId}/player`)
     const data = await response.json();
     this.players=data;

@@ -40,10 +40,12 @@ export default {
     async handleSelectGame() {
       const response = await fetch(this.apiUrl + "/game/" + this.gameId);
       const data = await response.json();
+      console.log(data)
       this.game = data;
       this.game.startDate = this.game.startDate.slice(0, -6);
       this.game.endDate = this.game.endDate.slice(0, -6);
       this.$emit("game-selected", this.game)
+      
     },
   },
 };
