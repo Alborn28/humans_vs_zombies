@@ -1,5 +1,5 @@
 <template>
-  <div class="game" v-if="gameLoaded">
+  <div class="game">
     <div class="game-title">
       <h1 class="game-header">
         {{ game.name }}
@@ -26,28 +26,13 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
-  data() {
-    return {
-      gameLoaded: false
-    }
-  },
-  
-  async created() {
-    await this.fetchGame();
-    this.gameLoaded = true;
-  },
-
   computed: {
     ...mapState(["game"]),
     ...mapGetters(["playersAlive"]),
-  },
-
-  methods: {
-    ...mapActions(["fetchGame"]),
-  },
+  }
 };
 </script>
 <style>

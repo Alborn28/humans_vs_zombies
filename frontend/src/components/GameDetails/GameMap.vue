@@ -45,7 +45,7 @@
 import { latLngBounds } from "leaflet";
 import { LMap, LTileLayer, LMarker, LIcon, LPopup } from "vue2-leaflet";
 import "leaflet/dist/leaflet.css";
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 
 export default {
   name: "SetBounds",
@@ -58,10 +58,6 @@ export default {
   },
 
   async created() {
-    await this.fetchGame();
-    await this.fetchSquadCheckIns();
-    await this.fetchKills();
-    
     this.maxBounds = latLngBounds([
       [this.game.swLat, this.game.swLng],
       [this.game.neLat, this.game.neLng],
@@ -76,7 +72,6 @@ export default {
     ...mapState(["game", "player", "squad", "checkIns", "location", "kills", 'playerCheckIn']),
   },
   methods: {
-    ...mapActions(["fetchGame", "fetchSquad", "fetchSquadCheckIns", "fetchKills"]),
     ...mapMutations(["setLocation"]),
 
     locate(mapObject){

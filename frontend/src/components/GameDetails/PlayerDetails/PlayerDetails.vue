@@ -28,7 +28,7 @@
 <script>
 import PlayerInfo from "./PlayerInfo.vue";
 import SquadInfo from "./SquadInfo.vue";
-import { mapActions, mapState } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   data() {
@@ -47,13 +47,8 @@ export default {
   methods: {
     handleClick(index) {
       this.selectedIndex = index;
-    },
-    ...mapActions(["fetchPlayer"])
-  },
-
-  async created() {
-    await this.fetchPlayer();
-  },
+    }
+  }
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="squad" v-if="squadLoaded">
+  <div class="squad">
     <div class="create-squad-container" v-if="squadId === null && game.gameState !== 'COMPLETE'">
       <h3 class="reg-squad-title">CREATE SQUAD</h3>
       <input class="name" placeholder="Name" type="name" v-model="name" />
@@ -35,22 +35,16 @@ import { mapActions, mapState } from "vuex";
 export default {
   data() {
     return {
-      name: "",
-      squadLoaded: false,
+      name: ""
     };
   },
 
   computed: {
     ...mapState(["squadId", "squad", "squadMembers", "game"]),
   },
-  
-  async created() {
-    await this.fetchSquad();
-    this.squadLoaded = true;
-  },
 
   methods: {
-    ...mapActions(["registerSquad", "fetchSquad", "leaveSquad"]),
+    ...mapActions(["registerSquad", "leaveSquad"]),
 
     async registerNewSquad() {
       await this.registerSquad(this.name);

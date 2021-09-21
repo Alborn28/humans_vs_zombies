@@ -1,7 +1,7 @@
 <template>
 <div v-if="player.id !== null">
   <div class="kill-container" v-if="game.gameState === 'IN_PROGRESS' && player.human === false">
-    <form class="killWindow" @submit="handleSubmit">
+    <form class="killWindow">
       <div class="kill-label">
         <label>Bite code:</label>
         <label>Description:</label>
@@ -12,7 +12,7 @@
       </div>
     </form>
     <div class="kill-button-container">
-      <button class="kill-button" type="submit">KILL</button>
+      <button class="kill-button" type="button" @click="killPlayer">KILL</button>
     </div>
   </div>
 </div>
@@ -20,6 +20,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+
 export default {
   data() {
     return {
@@ -35,7 +36,7 @@ export default {
   methods: {
     ...mapActions(["kill"]),
 
-    async handleSubmit(event) {
+    async killPlayer(event) {
       event.preventDefault();
       this.kill({ bitecode: this.biteCode, story: this.story });
     },
