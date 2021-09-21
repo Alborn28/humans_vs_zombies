@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import PlayerInfo from "../GameDetails/PlayerInfo.vue";
-import SquadInfo from "../GameDetails/SquadInfo.vue";
+import PlayerInfo from "./PlayerInfo.vue";
+import SquadInfo from "./SquadInfo.vue";
 import { mapActions, mapState } from 'vuex';
 
 export default {

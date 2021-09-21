@@ -3,8 +3,7 @@
       <h3 class="title" >squad lists</h3>
       <ul>
           <li class="squad" v-for="(squad,index) in squads" v-bind:key="index" @click="joinSquad({rank: 'MEMBER', squadId: squad.id})">
-              <p class="name"><strong>Name:</strong> {{squad.name}}</p>
-              
+              <p class="name"><strong>Name:</strong> {{squad.name}}</p>    
               <p class="members"><strong>Members:</strong> {{squad.squadMembers.length}}</p>
           </li>
       </ul>

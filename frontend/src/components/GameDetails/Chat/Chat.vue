@@ -21,44 +21,13 @@
 
     <div class="chat-container">
       <div v-if="activetab === 1" class="chat-content">
-        <form class="chat-form" @submit.prevent="sendGlobalMessage(msg)">
-          <ul id="global-chat-window">
-            <li v-for="(chat, index) in globalChats" :key="index">
-              {{ chat }}
-            </li>
-          </ul>
-          <div class="input-container">
-            <input v-model="msg" class="chat-msg" placeholder="Message..." />
-            <button class="send-chat-msg" type="submit">Send</button>
-          </div>
-        </form>
+        <GlobalChat />
       </div>
       <div v-if="activetab === 2" class="chat-content">
-        <form class="chat-form" @submit.prevent="sendFactionMessage(msg)">
-          <ul id="faction-chat-window">
-            <li v-for="(chat, index) in factionChats" :key="index">
-              {{ chat }}
-            </li>
-          </ul>
-          <div class="input-container">
-            <input v-model="msg" class="chat-msg" placeholder="Message..." />
-            <button class="send-chat-msg" type="submit">Send</button>
-          </div>
-        </form>
+        <FactionChat />
       </div>
-
       <div v-if="activetab === 3 && this.squadId !== null" class="chat-content">
-        <form class="chat-form" @submit.prevent="sendSquadMessage(msg)">
-          <ul id="squad-chat-window">
-            <li v-for="(chat, index) in squadChats" :key="index">
-              {{ chat }}
-            </li>
-          </ul>
-          <div class="input-container">
-            <input v-model="msg" class="chat-msg" placeholder="Message..." />
-            <button class="send-chat-msg" type="submit">Send</button>
-          </div>
-        </form>
+        <SquadChat />
       </div>
     </div>
   </div>
@@ -66,13 +35,15 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import socket from "../../socket/socket";
+import socket from "../../../socket/socket";
+import FactionChat from './FactionChat.vue';
+import GlobalChat from './GlobalChat.vue';
+import SquadChat from './SquadChat.vue';
+
 export default {
+  components: { GlobalChat, FactionChat, SquadChat },
   data() {
     return {
-      globalChats: [],
-      factionChats: [],
-      squadChats: [],
       msg: "",
       activetab: 1,
       connected: false
@@ -82,34 +53,15 @@ export default {
     player() {
       if(this.player.id !== null && !this.connected) {
         this.connected = true;
+
         socket.auth = {
-        gameId: this.gameId,
-        username: this.player.username,
-        human: this.player.human,
-        squadId: this.squadId
+          gameId: this.gameId,
+          username: this.player.username,
+          human: this.player.human,
+          squadId: this.squadId
         };
+
         socket.connect();
-        socket.on("globalMessage", (msg) => {
-          this.globalChats.push(msg);
-          this.$nextTick(() => {
-            const chatWindow = this.$el.querySelector('#global-chat-window');
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-          })
-        });
-        socket.on("factionMessage", (msg) => {
-          this.factionChats.push(msg);
-          this.$nextTick(() => {
-            const chatWindow = this.$el.querySelector('#faction-chat-window');
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-          })
-        });
-        socket.on("squadMessage", (msg) => {
-          this.squadChats.push(msg);
-          this.$nextTick(() => {
-            const chatWindow = this.$el.querySelector('#squad-chat-window');
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-          })
-        });
         socket.on("connect_error", (error) => {
           console.log(error.message)
         });
@@ -133,23 +85,11 @@ export default {
   },
   methods: {
     ...mapActions(["fetchSquad"]),
-    sendGlobalMessage(msg) {
-      socket.emit("globalMessage", msg);
-      this.msg = "";
-    },
-    sendFactionMessage(msg) {
-      socket.emit("factionMessage", msg);
-      this.msg = "";
-    },
-    sendSquadMessage(msg) {
-      socket.emit("squadMessage", msg);
-      this.msg = "";
-    },
   },
 };
 </script>
 
-<style scoped>
+<style>
 .send-chat-msg{    
     border: none;
     border-radius: 8px;
