@@ -1,6 +1,6 @@
 <template>
   <div class="squad" v-if="squadLoaded">
-    <div class="create-squad-container" v-if="squadId === null">
+    <div class="create-squad-container" v-if="squadId === null && game.gameState !== 'COMPLETE'">
       <h3 class="reg-squad-title">CREATE SQUAD</h3>
       <input class="name" placeholder="Name" type="name" v-model="name" />
       <button class="reg-squad-btn" @click="registerNewSquad()">
@@ -22,7 +22,7 @@
           <p><strong>Status: </strong>{{ member.human ? "Alive" : "Dead" }}</p>
         </li>
       </ul>
-      <div class="btn-container">
+      <div class="btn-container" v-if="game.gameState !== 'COMPLETE'">
         <button class="leave-squad" @click="leaveSquad">Leave squad</button>
       </div>
     </div>
@@ -41,7 +41,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["squadId", "squad", "squadMembers"]),
+    ...mapState(["squadId", "squad", "squadMembers", "game"]),
   },
   async created() {
     await this.fetchSquad();
