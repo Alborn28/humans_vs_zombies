@@ -1,5 +1,5 @@
 <template>
-  <div class="select-container">
+  <div class="select-container" v-if="squads.length > 0">
     <h3>select Squad</h3>
     <select @change="handleChangeSquad" class="select-component">
       <option
@@ -12,6 +12,7 @@
       </option>
     </select>
     <button @click="handleSelectSquad" class="button">Select Squad</button>
+    
   </div>
 </template>
 
@@ -26,11 +27,13 @@ export default {
     return {
       squads: [],
       squadId:null,
+     
     };
   },
   computed: {
     ...mapState(["apiUrl" ]),
   },
+  
 
   /**
    * Fetch a list of all the squads in the selected game.
