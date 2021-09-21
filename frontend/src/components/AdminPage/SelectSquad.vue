@@ -31,6 +31,10 @@ export default {
   computed: {
     ...mapState(["apiUrl" ]),
   },
+
+  /**
+   * Fetch a list of all the squads in the selected game.
+   */
   async created() {
     const response = await fetch(this.apiUrl + `/game/${this.gameId}/squad`)
     const data = await response.json();

@@ -31,8 +31,11 @@ export default {
   computed: {
     ...mapState(["apiUrl" ]),
   },
+  
+  /**
+   * Fetch a list of all the players in the selected game.
+   */
   async created() {
-
     const response = await fetch(this.apiUrl + `/game/${this.gameId}/player`)
     const data = await response.json();
     this.players=data;
@@ -46,7 +49,6 @@ export default {
     async handleSelectPlayer() {
       const response = await fetch(this.apiUrl + "/game/" + this.gameId + "/player/" +this.playerId);
       const data = await response.json();
-      
       this.$emit("player-selected", data)
     },
   },
