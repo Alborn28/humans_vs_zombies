@@ -45,8 +45,6 @@ public class Player {
     private List<Kill> kills = new ArrayList<>();
     @OneToOne(mappedBy = "victim", cascade = CascadeType.ALL)
     private Kill death;
-    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
-    private List<Chat> chats;
     @OneToOne(mappedBy = "player", cascade = CascadeType.ALL)
     private SquadMember squadMember;
 
@@ -108,14 +106,6 @@ public class Player {
 
     public void setDeath(Kill death) {
         this.death = death;
-    }
-
-    public List<Chat> getChats() {
-        return chats;
-    }
-
-    public void setChats(List<Chat> chats) {
-        this.chats = chats;
     }
 
     public SquadMember getSquadMember() {
