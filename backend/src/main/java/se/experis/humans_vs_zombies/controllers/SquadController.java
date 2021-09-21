@@ -28,9 +28,6 @@ public class SquadController {
     private SquadMemberRepository squadMemberRepository;
 
     @Autowired
-    private ChatRepository chatRepository;
-
-    @Autowired
     private SquadCheckinRepository squadCheckinRepository;
 
     @GetMapping
@@ -167,41 +164,6 @@ public class SquadController {
         squadRepository.deleteById(squadId);
         status = HttpStatus.OK;
         return new ResponseEntity<>(status);
-    }
-
-    @GetMapping("/{squadId}/chat")
-    public ResponseEntity<List<Chat>> getChatMessages(@PathVariable Long gameId, @PathVariable Long squadId) {
-        List<Chat> returnChat = new ArrayList<>();
-        HttpStatus status;
-
-        if (!squadRepository.existsById(squadId) || (squadRepository.getById(squadId).getGame().getId() != gameId)) {
-            status = HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(returnChat, status);
-        }
-
-        status = HttpStatus.OK;
-        returnChat = chatRepository.getByGameIdAndSquadId(gameId, squadId);
-        return new ResponseEntity<>(returnChat, status);
-    }
-
-    @PostMapping("/{squadId}/chat")
-    public ResponseEntity<Chat> addMessage(@PathVariable Long gameId, @PathVariable Long squadId, @RequestBody Chat chat) {
-        Chat returnChat = new Chat();
-        HttpStatus status;
-
-        if (!squadRepository.existsById(squadId)) {
-            status = HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(returnChat, status);
-        }
-
-        if (chat.getGame().getId() != gameId || chat.getSquad().getId() != squadId) {
-            status = HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(returnChat, status);
-        }
-
-        status = HttpStatus.CREATED;
-        returnChat = chatRepository.save(chat);
-        return new ResponseEntity<>(returnChat, status);
     }
 
     @GetMapping("/{squadId}/check-in")
