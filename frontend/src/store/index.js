@@ -225,6 +225,7 @@ export default new Vuex.Store({
          * Leave the squad.
          */
         async leaveSquad({state, dispatch}){
+            let localSquadId=state.squadId;
             await fetch(state.apiUrl + `/game/${state.gameId}/squad/${state.squadId}/leave/${state.player.id}`, {
                 method: "DELETE",
                 headers: {
@@ -234,6 +235,22 @@ export default new Vuex.Store({
             })
 
             await dispatch('fetchSquad')
+            //Removes the squad from the database if the player leaving is the last squad member remaining.
+            const response = await fetch("https://hvz-experis-api.herokuapp.com/api/v1" + `/game/${state.gameId}/squad`)
+            const data = await response.json()
+            console.log(data)
+            if(data[0].squadMembers.length<1){
+              console.log(data)
+              console.log("inne i deleten via leave squad")
+              console.log(localSquadId)
+              await fetch(state.apiUrl+"/game/"+state.gameId + "/squad/" + localSquadId,{
+              method: "DELETE",
+              headers: {
+               "Authorization": "Bearer " + state.token,
+                "Content-Type": "application/json"
+         },
+         })
+            }
 
             // Reconnect to the socket with squadId set to null, in order to not receive squad chats.
             socket.disconnect();
