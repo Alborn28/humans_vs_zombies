@@ -34,6 +34,7 @@ export default {
       gameLoaded: false
     }
   },
+  
   async created() {
     await this.fetchGame();
     this.gameLoaded = true;

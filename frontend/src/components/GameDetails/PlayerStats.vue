@@ -15,9 +15,6 @@ export default {
     ...mapState(["players", "game"]),
   },
 
-  /**
- * Fetches all the players from a specific game
- */
   created() {
       this.fetchPlayers();
   },

@@ -59,7 +59,7 @@ export default {
 
   methods: {
     /**
-     * Post the created game to the database
+     * Post the game to the database
      */
     handleSubmit(event) {
       event.preventDefault();

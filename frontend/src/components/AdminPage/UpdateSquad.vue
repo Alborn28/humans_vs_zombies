@@ -24,7 +24,6 @@ export default {
 
   methods: {
     async updateSquad() {
-      console.log(this.gameId, "-__", this.squad);
       await fetch(
         this.apiUrl + "/game/" + this.gameId + "/squad/" + this.squad.id,
         {

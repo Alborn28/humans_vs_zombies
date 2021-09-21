@@ -12,10 +12,7 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 export default {
-/**
- * Fetches all the players from a specific game
- */
-async created() {
+  async created() {
     await this.fetchPlayers();
   },
 
