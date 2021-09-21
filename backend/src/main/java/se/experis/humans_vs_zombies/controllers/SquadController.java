@@ -124,7 +124,6 @@ public class SquadController {
 
     @PutMapping("/{squadId}")
     public ResponseEntity<Squad> updateSquad(@PathVariable Long gameId, @PathVariable Long squadId, @RequestBody Squad squad) {
-        //Cascading kan ta bort koppling till Game, går inte att lägga till kopplingen i efterhand
         Squad returnSquad = new Squad();
         HttpStatus status;
 
@@ -236,6 +235,8 @@ public class SquadController {
         }
 
         SquadMember squadMember = squadMemberRepository.findById(squadCheckin.getSquadMember().getId()).get();
+
+        //If the squad member already has a checkin, remove it and save the new one.
         if(squadMember.getSquadCheckin() != null) {
             Long squadCheckinId = squadMember.getSquadCheckin().getId();
             squadMember.setSquadCheckin(null);

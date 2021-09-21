@@ -51,14 +51,19 @@ public class PlayerController {
         return new ResponseEntity<>(returnPlayer, status);
     }
 
+    /**
+     * Get a player based on their email.
+     */
     @PostMapping("/email")
     public ResponseEntity<Player> getSpecificPlayerByEmail(@PathVariable Long gameId, @RequestBody String email) {
         Player returnPlayer = new Player();
         HttpStatus status;
+
         if (!playerRepository.existsByEmailAndGameId(email, gameId)) {
             status = HttpStatus.NOT_FOUND;
             return new ResponseEntity<>(returnPlayer, status);
         }
+
         returnPlayer = playerRepository.getByEmailAndGameId(email, gameId);
         if (returnPlayer.getGame().getId() != gameId) {
             status = HttpStatus.BAD_REQUEST;
@@ -70,22 +75,19 @@ public class PlayerController {
 
     @PostMapping
     public ResponseEntity<Player> createPlayer(@PathVariable Long gameId, @RequestBody Player player) {
-
         Player returnPlayer = new Player();
         HttpStatus status;
         BiteCode biteCode= new BiteCode();
 
+        //Generate a bite code.
         if (player.getBiteCode()==null) {
             biteCode.setBiteCodeValue();
-           player.setBiteCode(biteCode.getBiteCodeValue());
+            player.setBiteCode(biteCode.getBiteCodeValue());
         }
 
         if (!gameRepository.existsById(gameId) || player.getGame().getId() != gameId) {
             status = HttpStatus.BAD_REQUEST;
-
             return new ResponseEntity<>(returnPlayer, status);
-
-
         }
 
         returnPlayer = playerRepository.save(player);

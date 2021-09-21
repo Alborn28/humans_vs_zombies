@@ -28,6 +28,9 @@ public class KillController {
     @Autowired
     private PlayerRepository playerRepository;
 
+    /**
+     * Get all the kills in a specific game.
+     */
     @GetMapping
     public ResponseEntity<List<Kill>> getAllKills(@PathVariable Long gameId) {
         List<Kill> returnKills = killRepository.getByGameId(gameId);
@@ -66,6 +69,7 @@ public class KillController {
             return new ResponseEntity<>(returnKill, status);
         }
 
+        // Check that the victim is a player of the specified game
         if(!playerRepository.existsByBiteCodeAndGameId(kill.getBiteCode(), gameId)) {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(returnKill, status);
