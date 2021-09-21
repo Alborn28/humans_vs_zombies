@@ -6,7 +6,7 @@
       :bounds="bounds"
       :max-bounds="maxBounds"
       :min-zoom="minZoom"
-      @ready="handleMapClick"
+      @ready="locate"
       @locationfound="onLocationFound"
       style="height: 500px; width: 100%"
     >
@@ -56,9 +56,7 @@ export default {
     LIcon,
     LPopup,
   },
-  /**
-   * Fetch coordinates for a specific game
-   */
+
   async created() {
     await this.fetchGame();
     await this.fetchSquadCheckIns();
@@ -80,9 +78,11 @@ export default {
   methods: {
     ...mapActions(["fetchGame", "fetchSquad", "fetchSquadCheckIns", "fetchKills"]),
     ...mapMutations(["setLocation"]),
-    handleMapClick(mapObject){
+
+    locate(mapObject){
       mapObject.locate();
     },
+
     onLocationFound(location){
       this.setLocation(location.latlng)
     },

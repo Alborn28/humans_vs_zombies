@@ -44,7 +44,7 @@ export default {
 
   methods: {
     handleChangeSquad(event) {
-      this.playerId = event.target.value;
+      this.squadId = event.target.value;
     },
     async handleSelectSquad() {
       const response = await fetch(this.apiUrl + "/game/" + this.gameId + "/squad/" +this.squadId);

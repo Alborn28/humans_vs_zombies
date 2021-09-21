@@ -21,15 +21,10 @@
 <script>
 import { mapActions, mapState } from "vuex";
 export default {
-  /**
-   * Fetch player with player email.
-   */
   data(){
     return{
       playerLoaded:false,
-
     }
-
   },
 
   async created() {
@@ -41,7 +36,6 @@ export default {
    computed: {
     ...mapState(["player", "squad", "squadId"])
   },
-  
 
   methods: {
     ...mapActions(["fetchPlayer", "fetchSquad"])

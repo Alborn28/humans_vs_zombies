@@ -13,6 +13,7 @@ export default {
     ...mapState(['game']),
     ...mapGetters(['isAdmin'])
   },
+  
   methods: {
     ...mapActions(["startGame"])
   }

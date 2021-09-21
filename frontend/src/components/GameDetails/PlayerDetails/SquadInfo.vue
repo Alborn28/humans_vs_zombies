@@ -43,6 +43,7 @@ export default {
   computed: {
     ...mapState(["squadId", "squad", "squadMembers", "game"]),
   },
+  
   async created() {
     await this.fetchSquad();
     this.squadLoaded = true;

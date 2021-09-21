@@ -51,6 +51,10 @@ export default {
   },
   watch: {
     player() {
+      /**
+       * Check if we are registered to the game and not connected to the socket,
+       * in that case connect.
+      */
       if(this.player.id !== null && !this.connected) {
         this.connected = true;
 
@@ -68,13 +72,22 @@ export default {
       }
     } 
   },
+  
   async created() {
     await this.fetchSquad();
   },
+
+  /**
+   * Disconnect from the socket when the component is removed from the DOM.
+   */
   destroyed() {
     socket.disconnect();
     this.connected = false;
   },
+  
+  /**
+   * If the player leaves the squad and has the squad chat open, open the global chat instead.
+   */
   updated(){
     if(this.activetab === 3 && this.squadId === null){
       this.activetab = 1;
