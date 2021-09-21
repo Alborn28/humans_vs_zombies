@@ -16,6 +16,9 @@
         <span v-if="this.authenticated" class="btn-span">
             <LogoutButton />
         </span>
+        <span class="btn-span">
+            <RulesButton />
+        </span>
     </div>
 </template>
 
@@ -27,6 +30,7 @@ import HomeButton from './HomeButton.vue'
 import CreateGameButton from './CreateGameButton.vue'
 import AdminPageButton from './AdminPageButton.vue'
 import { mapGetters, mapState } from 'vuex'
+import RulesButton from './RulesButton.vue'
 
 export default {
     name: "Navbar",
@@ -36,7 +40,8 @@ export default {
         RegisterButton,
         HomeButton,
         CreateGameButton,
-        AdminPageButton
+        AdminPageButton,
+        RulesButton
     },
     computed: {
         ...mapState(['authenticated']),
@@ -61,7 +66,7 @@ export default {
         box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
     }
 
-    @media screen and (max-width: 580px) {
+    @media screen and (max-width: 740px) {
   .navbar{
     flex-direction: column;
     width: 100%;

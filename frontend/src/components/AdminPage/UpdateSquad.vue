@@ -6,7 +6,14 @@
         <label><strong>Name: </strong></label>
         <input v-model="squad.name" class="select-component" />
       </div>
-      <button type="button" @click="updateSquad">Update Squad</button>
+      <div v-if="squadMembers.length > 0">
+        <label><strong>Kick: </strong></label>
+        <select v-model="memberId" class="select-component">
+          <option value=0></option>
+          <option v-for="(member, index) in squadMembers" :value="member.id" :key="index">{{member.username}}</option>
+        </select>
+      </div>
+      <button class="update-btn" type="button" @click="updateSquad">Update Squad</button>
     </form>
   </div>
 </template>
@@ -18,11 +25,35 @@ export default {
     squad: Object,
     gameId: Number,
   },
-  computed: {
-    ...mapState(["apiUrl", "token"]),
+  data(){
+    return{
+      squadMembers: [],
+      memberId: 0
+    };
   },
-
+  async created() {
+    for (let i = 0; i < this.squad.squadMembers.length; i++) {
+      const response = await fetch(`https://hvz-experis-api.herokuapp.com${this.squad.squadMembers[i].player}`);
+      const data = await response.json();
+      this.squadMembers.push(data)   
+    }
+  },
+  computed: {
+    ...mapState(["apiUrl", "token"])
+  },
   methods: {
+    async kickPlayer(){
+      if(this.memberId!==0){      
+        await fetch(this.apiUrl+"/game/"+this.gameId + "/squad/" + this.squad.id +"/leave/" + this.memberId ,{
+          method: "DELETE",
+          headers: {
+            "Authorization": "Bearer " + this.token,
+            "Content-Type": "application/json"
+          },
+        })
+      }
+    },
+
     async updateSquad() {
       await fetch(
         this.apiUrl + "/game/" + this.gameId + "/squad/" + this.squad.id,
@@ -38,6 +69,9 @@ export default {
           }),
         }
       );
+
+      this.kickPlayer()
+
     },
   },
 };
@@ -51,7 +85,6 @@ export default {
   width: 150px;
   border: none;
   text-align-last: center;
-
   border-radius: 8px;
 }
 .update-squad-form {
@@ -72,7 +105,7 @@ export default {
   max-width: 290px;
 }
 
-.update-squad-form button {
+.update-btn {
   margin-top: 10px;
   width: 150px;
   border-radius: 8px;
@@ -82,11 +115,30 @@ export default {
   transition: 0.3s;
 }
 
-.update-squad-form button:hover {
+.update-btn:hover {
   cursor: pointer;
   background-color: rgba(132, 132, 253, 0.479);
   transition: 0.3s;
 }
+.kick-btn{
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 40px;
+  border-radius: 8px;
+  border: none;
+  color: lime;
+  background-color: rgba(211, 30, 45, 0.479);
+  transition: 0.3s;
+}
+.kick-btn:hover{
+  cursor: pointer;
+  background-color: rgba(230, 100, 111, 0.479);
+  transition: 0.3s;
+}
+.option-component {
+  border-radius: 8px;
+}
+
 
 @media screen and (max-width: 350px) {
   .update-squad-form {

@@ -37,7 +37,7 @@ export default {
         background-color: rgba(132, 132, 253, 0.479);
         transition: .3s;
     }
-    @media screen and (max-width: 580px) {
+    @media screen and (max-width: 740px) {
   .login-btn{
     
     width: 100%;
