@@ -20,9 +20,18 @@
 
 <script>
 import { mapState } from "vuex";
+import socket from "../../../socket/socket";
 export default {
    computed: {
     ...mapState(["player", "squad", "squadId"])
+  },
+
+  created() {
+    socket.on("kill", (biteCode) => {
+      if(this.player.biteCode === biteCode) {
+        this.player.human = false;
+      }
+    })
   }
 };
 </script>
