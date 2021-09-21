@@ -14,6 +14,7 @@ export default new Vuex.Store({
         authenticated: false,
         players: [],
         apiUrl: "https://hvz-experis-api.herokuapp.com/api/v1",
+        baseApiUrl: "https://hvz-experis-api.herokuapp.com",
         games: [],
         gameId: 0,
         game: {},
@@ -159,7 +160,7 @@ export default new Vuex.Store({
         async fetchSquad({ state, commit, dispatch }) {
             await dispatch("fetchPlayer");
             if (state.player.squadMember !== null) {
-                const response = await fetch(`https://hvz-experis-api.herokuapp.com${state.player.squadMember.squad}`)
+                const response = await fetch(state.baseApiUrl + state.player.squadMember.squad)
                 const data = await response.json()
                 commit('setSquad', data)
                 commit("setSquadId", data.id)
@@ -298,7 +299,7 @@ export default new Vuex.Store({
         async fetchSquadMembers({ state, commit }) {
             let list = [];
             for (let i = 0; i < state.squad.squadMembers.length; i++) {
-                const response = await fetch(`https://hvz-experis-api.herokuapp.com${state.squad.squadMembers[i].player}`);
+                const response = await fetch(state.baseApiUrl + state.squad.squadMembers[i].player);
                 const data = await response.json();
                 list.push(data)
             }
@@ -396,10 +397,10 @@ export default new Vuex.Store({
             const response = await fetch(state.apiUrl + `/game/${state.gameId}/kill`);
             const data = await response.json();
             for (let i = 0; i < data.length; i++) {
-                const res = await fetch('http://hvz-experis-api.herokuapp.com' + data[i].killer);
+                const res = await fetch(state.baseApiUrl + data[i].killer);
                 const killer = await res.json();
 
-                const resp = await fetch('http://hvz-experis-api.herokuapp.com' + data[i].victim);
+                const resp = await fetch(state.baseApiUrl + data[i].victim);
                 const victim = await resp.json();
 
                 let date = new Date(data[i].timeOfDeath)
@@ -450,7 +451,7 @@ export default new Vuex.Store({
                 const response = await fetch(state.apiUrl + `/game/${state.gameId}/squad/${state.squadId}/check-in`);
                 const data = await response.json();
                 for (let i = 0; i < data.length; i++) {
-                    const res = await fetch('http://hvz-experis-api.herokuapp.com' + data[i].squadMember);
+                    const res = await fetch(state.baseApiUrl + data[i].squadMember);
                     const squadMember = await res.json();
 
                     if(!squadMember.human) {
