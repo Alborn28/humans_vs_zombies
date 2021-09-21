@@ -35,6 +35,7 @@ export default {
   color: lime;
   width: 50%;
   border-radius: 8px;
+  padding: 10px;
 }
 
 </style>

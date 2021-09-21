@@ -20,6 +20,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import socket from "../../socket/socket";
 
 export default {
   data() {
@@ -39,6 +40,9 @@ export default {
     async killPlayer(event) {
       event.preventDefault();
       this.kill({ bitecode: this.biteCode, story: this.story });
+      socket.emit("kill", this.biteCode);
+      this.biteCode = "";
+      this.story = "";
     },
   },
 };
