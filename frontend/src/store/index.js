@@ -124,6 +124,9 @@ export default new Vuex.Store({
             }
         },
 
+        /**
+         * Creates a squad and the member who created the squad also becomes the leader of it.
+         */
         async registerSquad({ state, dispatch }, name) {
             const response = await fetch(state.apiUrl + `/game/${state.gameId}/squad`, {
                 method: "POST",
@@ -133,7 +136,6 @@ export default new Vuex.Store({
                 },
                 body: JSON.stringify({
                     name: name,
-                    human: state.player.human,
                     game: {
                         id: state.gameId
                     }
@@ -151,12 +153,18 @@ export default new Vuex.Store({
 
         },
 
+        /**
+         * Fetches a list of all the squads.
+         */
         async fetchSquads({ state, commit }) {
             const response = await fetch(state.apiUrl + `/game/${state.gameId}/squad`)
             const data = await response.json()
             commit('setSquads', data)
         },
 
+        /**
+         * Fetches information about the squad the current player is a member of.
+         */
         async fetchSquad({ state, commit, dispatch }) {
             await dispatch("fetchPlayer");
             if (state.player.squadMember !== null) {
@@ -173,9 +181,11 @@ export default new Vuex.Store({
             }
         },
 
+        /**
+         * The current player joins a squad.
+         */
         async joinSquad({ state, dispatch, commit }, { rank, squadId }) {
             await fetch(state.apiUrl + `/game/${state.gameId}/squad/${squadId}/join`, {
-
                 method: "POST",
                 headers: {
                     "Authorization": "Bearer " + state.token,
@@ -198,6 +208,8 @@ export default new Vuex.Store({
             await dispatch('fetchPlayer')
             await dispatch('fetchSquad')
             commit("setSquadId", squadId)
+
+            // Reconnect to the socket with the updated squadId, in order to receive squad chats.
             socket.disconnect();
             socket.auth = {
               gameId: state.gameId,
@@ -208,6 +220,10 @@ export default new Vuex.Store({
             socket.connect();
 
         },
+
+        /**
+         * Leave the squad.
+         */
         async leaveSquad({state, dispatch}){
             await fetch(state.apiUrl + `/game/${state.gameId}/squad/${state.squadId}/leave/${state.player.id}`, {
                 method: "DELETE",
@@ -216,7 +232,10 @@ export default new Vuex.Store({
                     "Content-Type": "application/json"
                 }
             })
+
             await dispatch('fetchSquad')
+
+            // Reconnect to the socket with squadId set to null, in order to not receive squad chats.
             socket.disconnect();
             socket.auth = {
               gameId: state.gameId,
@@ -228,7 +247,7 @@ export default new Vuex.Store({
         },
 
         /**
-         * Fetch a list of all the games
+         * Fetch a list of all the games.
          */
         async fetchGames({ state, commit }) {
             const response = await fetch(state.apiUrl + "/game");
@@ -237,7 +256,7 @@ export default new Vuex.Store({
         },
 
         /**
-         * Fetch a list of all the players registered for the current game
+         * Fetch a list of all the players registered for the current game.
          */
         async fetchPlayers({ state, commit }) {
             const response = await fetch(state.apiUrl + `/game/${state.gameId}/player`)
@@ -246,7 +265,7 @@ export default new Vuex.Store({
         },
 
         /**
-         * Fetch the current game
+         * Fetch the current game.
          */
         async fetchGame({ state, commit }) {
             const response = await fetch(state.apiUrl + `/game/${state.gameId}`);
@@ -255,7 +274,7 @@ export default new Vuex.Store({
         },
 
         /**
-         * Register player for the current game
+         * Register player for the current game.
          */
         async registerPlayer({ state, getters, dispatch }) {
             await fetch(state.apiUrl + `/game/${state.gameId}/player`, {
@@ -278,7 +297,7 @@ export default new Vuex.Store({
             dispatch('fetchPlayer');
         },
         /**
-         * Fetch player
+         * Fetch the current player.
          */
         async fetchPlayer({ state, commit, getters }) {
             const response = await fetch(state.apiUrl + `/game/${state.gameId}/player/email/`, {
@@ -295,7 +314,9 @@ export default new Vuex.Store({
             commit("setPlayer", data);
         },
 
-
+        /**
+         * Fetch all the members of the current squad.
+         */
         async fetchSquadMembers({ state, commit }) {
             let list = [];
             for (let i = 0; i < state.squad.squadMembers.length; i++) {
@@ -316,6 +337,9 @@ export default new Vuex.Store({
             commit("setChats", data);
         },
 
+        /**
+         * Update the gameState to IN_PROGRESS, and randomly set one player as patient zero.
+         */
         async startGame({ state, dispatch }) {
             await fetch(state.apiUrl + `/game/${state.gameId}/start`, {
                 method: "PUT",
@@ -328,31 +352,37 @@ export default new Vuex.Store({
             await dispatch("fetchPlayers");
 
             const numOfPlayers = state.players.length;
-            const patientZeroIndex = Math.floor(Math.random() * numOfPlayers);
 
-            await fetch(state.apiUrl + `/game/${state.gameId}/player/${state.players[patientZeroIndex].id}`, {
-                method: "PUT",
-                headers: {
-                    "Authorization": "Bearer " + state.token,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    id: state.players[patientZeroIndex].id,
-                    email: state.players[patientZeroIndex].email,
-                    username: state.players[patientZeroIndex].username,
-                    human: false,
-                    patientZero: true,
-                    biteCode: state.players[patientZeroIndex].biteCode,
-                    game: {
-                        id: state.gameId
-                    }
+            if(numOfPlayers > 0) {
+                const patientZeroIndex = Math.floor(Math.random() * numOfPlayers);
+
+                await fetch(state.apiUrl + `/game/${state.gameId}/player/${state.players[patientZeroIndex].id}`, {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": "Bearer " + state.token,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        id: state.players[patientZeroIndex].id,
+                        email: state.players[patientZeroIndex].email,
+                        username: state.players[patientZeroIndex].username,
+                        human: false,
+                        patientZero: true,
+                        biteCode: state.players[patientZeroIndex].biteCode,
+                        game: {
+                            id: state.gameId
+                        }
+                    })
                 })
-            })
+            }
 
             dispatch('fetchGame')
             dispatch('fetchPlayer')
         },
 
+        /**
+         * Set gameState to COMPLETE
+         */
         async endGame({ state, dispatch }) {
             await fetch(state.apiUrl + `/game/${state.gameId}/end`, {
                 method: "PUT",
@@ -364,6 +394,9 @@ export default new Vuex.Store({
             dispatch('fetchGame')
         },
 
+        /**
+         * Kill a player by entering their bite code.
+         */
         async kill({ state, dispatch }, {bitecode, story}) {
             let timeOfDeath = new Date(Date.now());
             timeOfDeath.setHours(timeOfDeath.getHours() + 2);
@@ -393,6 +426,9 @@ export default new Vuex.Store({
             dispatch('fetchGame')
         },
 
+        /**
+         * Fetch all the kills in the current game.
+         */
         async fetchKills({ state, commit }) {         
             const response = await fetch(state.apiUrl + `/game/${state.gameId}/kill`);
             const data = await response.json();
@@ -416,6 +452,9 @@ export default new Vuex.Store({
             commit("setKills", data);
         },
 
+        /**
+         * Post a check in to your squad.
+         */
         async postCheckIn({ state, commit }) {
             commit('setPlayerCheckIn', state.location);
             let timeOfCheckIn = new Date(Date.now());
@@ -444,6 +483,9 @@ export default new Vuex.Store({
             });
         },
 
+        /**
+         * Fetch all the check ins from your squad.
+         */
         async fetchSquadCheckIns({ state, commit, dispatch }) {
             await dispatch("fetchSquad");
             
@@ -475,8 +517,6 @@ export default new Vuex.Store({
                 commit("setCheckIns", []);
             }
         },
-
-
     },
     getters: {
         /**
