@@ -19,7 +19,7 @@
         <p>{{ game.description }}</p>
         <p class="capitalize">{{ game.gameState.replace("_", " ").toLowerCase() }}</p>
         <p v-if="game.gameState==='IN_PROGRESS'" >{{ playersAlive }}</p>
-        <p v-if="game.gameState==='COMPLETE'" ></p>
+        <p v-if="game.gameState==='COMPLETE'" >{{playersAlive > 0 ? 'HUMAN' : 'ZOMBIE'}}</p>
       </div>
     </div>
   </div>
