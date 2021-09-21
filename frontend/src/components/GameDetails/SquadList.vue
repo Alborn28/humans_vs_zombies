@@ -1,5 +1,5 @@
 <template>
-  <div class="squad-list" v-if="squadId===null && squadsLoaded && player.id !== null && game.gameState !== 'COMPLETE'" >
+  <div class="squad-list" v-if="squadId===null && player.id !== null && game.gameState !== 'COMPLETE' && squads.length > 0" >
       <h3 class="title" >squad lists</h3>
       <ul>
           <li class="squad" v-for="(squad,index) in squads" v-bind:key="index" @click="joinSquad({rank: 'MEMBER', squadId: squad.id})">
@@ -13,24 +13,13 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 export default {
-  data() {
-    return {
-      squadsLoaded: false
-    }
-  },
-
-async created() {  
-    await this.fetchSquads();    
-    await this.fetchSquad();
-    this.squadsLoaded = true;    
-  },
 
   computed: {
     ...mapState(['squads', "squadId", "player", "game"])
   },
 
   methods: {
-    ...mapActions(['fetchSquads', "fetchSquad", "joinSquad"])
+    ...mapActions(["joinSquad"])
   }
 }
 </script>

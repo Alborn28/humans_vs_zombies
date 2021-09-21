@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
 import socket from "../../../socket/socket";
 import FactionChat from './FactionChat.vue';
 import GlobalChat from './GlobalChat.vue';
@@ -72,10 +72,6 @@ export default {
       }
     } 
   },
-  
-  async created() {
-    await this.fetchSquad();
-  },
 
   /**
    * Disconnect from the socket when the component is removed from the DOM.
@@ -95,10 +91,7 @@ export default {
   },
   computed: {
     ...mapState(["player", "gameId", "squadId"]),
-  },
-  methods: {
-    ...mapActions(["fetchSquad"]),
-  },
+  }
 };
 </script>
 

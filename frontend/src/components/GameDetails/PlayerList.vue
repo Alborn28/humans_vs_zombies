@@ -10,18 +10,10 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapState } from 'vuex';
 export default {
-  async created() {
-    await this.fetchPlayers();
-  },
-
   computed: {
     ...mapState(['players', 'game'])
-  },
-
-  methods: {
-    ...mapActions(['fetchPlayers'])
   }
 }
 </script>

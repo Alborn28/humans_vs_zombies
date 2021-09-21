@@ -1,6 +1,6 @@
 <template>
   <div class="game-details">
-    <div class="content">
+    <div class="content" v-if="contentLoaded">
       <Navbar />
       <GameInfo />
       <GameMap />
@@ -34,7 +34,7 @@ import StartGameButton from '../components/GameDetails/StartGameButton.vue'
 import EndGameButton from '../components/GameDetails/EndGameButton.vue'
 import Chat from '../components/GameDetails/Chat/Chat.vue'
 import PlayerDetails from '../components/GameDetails/PlayerDetails/PlayerDetails.vue'
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import SquadList from '../components/GameDetails/SquadList.vue'
 import Kill from "../components/GameDetails/Kill.vue";
 
@@ -56,14 +56,33 @@ export default {
         SquadList
     },
 
-    created() {
+    data() {
+      return {
+        contentLoaded: false
+      }
+    },
+
+    async created() {
         if(!this.authenticated || this.gameId == 0) {
             this.$router.push("/");
         }
+
+        this.fetchGame();
+        this.fetchPlayer();
+        this.fetchPlayers();
+        this.fetchSquad();
+        this.fetchSquads();    
+        this.fetchSquadCheckIns();
+        await this.fetchKills();
+        this.contentLoaded = true
     },
 
     computed: {
         ...mapState(['gameId', 'authenticated'])
+    },
+    
+    methods: {
+      ...mapActions(["fetchGame", "fetchPlayer", "fetchPlayers", "fetchSquad", "fetchSquads", "fetchSquadCheckIns", "fetchKills"]),
     }
 }
 

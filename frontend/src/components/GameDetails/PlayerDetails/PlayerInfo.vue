@@ -1,5 +1,5 @@
 <template>
-  <div class="player-info" v-if="playerLoaded">
+  <div class="player-info">
     <h3 class="title"> {{ player.username }} </h3>
     <ul>
       <li>
@@ -19,26 +19,10 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapState } from "vuex";
 export default {
-  data(){
-    return{
-      playerLoaded:false,
-    }
-  },
-
-  async created() {
-    await this.fetchPlayer();
-    await this.fetchSquad();
-    this.playerLoaded=true;
-  },
-
    computed: {
     ...mapState(["player", "squad", "squadId"])
-  },
-
-  methods: {
-    ...mapActions(["fetchPlayer", "fetchSquad"])
   }
 };
 </script>
