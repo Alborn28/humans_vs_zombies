@@ -80,28 +80,6 @@ public class Game {
     }
 
     @OneToMany(mappedBy = "game", cascade=CascadeType.ALL)
-    private List<Mission> missions = new ArrayList<>();
-
-    @JsonGetter("missions")
-    public List<String> missions() {
-        return missions.stream()
-                .map(mission -> {
-                    return "/api/v1/game/" + this.getId() + "/mission/" + mission.getId();
-                }).collect(Collectors.toList());
-    }
-
-    @OneToMany(mappedBy = "game", cascade=CascadeType.ALL)
-    private List<Chat> chats = new ArrayList<>();
-
-    @JsonGetter("chats")
-    public List<String> chats() {
-        return chats.stream()
-                .map(chat -> {
-                    return "/api/v1/game/" + this.getId() + "/chat/" + chat.getId();
-                }).collect(Collectors.toList());
-    }
-
-    @OneToMany(mappedBy = "game", cascade=CascadeType.ALL)
     private List<SquadMember> squadMembers = new ArrayList<>();
 
     @JsonGetter("squadMembers")
@@ -221,22 +199,6 @@ public class Game {
 
     public void setSquads(List<Squad> squads) {
         this.squads = squads;
-    }
-
-    public List<Mission> getMissions() {
-        return missions;
-    }
-
-    public void setMissions(List<Mission> missions) {
-        this.missions = missions;
-    }
-
-    public List<Chat> getChats() {
-        return chats;
-    }
-
-    public void setChats(List<Chat> chats) {
-        this.chats = chats;
     }
 
     public List<SquadMember> getSquadMembers() {
