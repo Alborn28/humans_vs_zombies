@@ -5,10 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import se.experis.humans_vs_zombies.models.Chat;
 import se.experis.humans_vs_zombies.models.Game;
 import se.experis.humans_vs_zombies.models.enumerators.GameState;
-import se.experis.humans_vs_zombies.repositories.ChatRepository;
 import se.experis.humans_vs_zombies.repositories.GameRepository;
 
 import java.util.ArrayList;
@@ -21,9 +19,6 @@ public class GameController {
 
     @Autowired
     private GameRepository gameRepository;
-
-    @Autowired
-    private ChatRepository chatRepository;
 
     @GetMapping
     public ResponseEntity<List<Game>> getAllGames() {
@@ -137,40 +132,5 @@ public class GameController {
         status = HttpStatus.OK;
         gameRepository.deleteById(gameId);
         return new ResponseEntity<>(status);
-    }
-
-    @GetMapping("/{gameId}/chat")
-    public ResponseEntity<List<Chat>> getChatMessages(@PathVariable Long gameId) {
-        List<Chat> returnChat = new ArrayList<>();
-        HttpStatus status;
-
-        if (!gameRepository.existsById(gameId)) {
-            status = HttpStatus.NOT_FOUND;
-            return new ResponseEntity<>(returnChat, status);
-        }
-
-        status = HttpStatus.OK;
-        returnChat = chatRepository.getByGameId(gameId);
-        return new ResponseEntity<>(returnChat, status);
-    }
-
-    @PostMapping("/{gameId}/chat")
-    public ResponseEntity<Chat> addMessage(@PathVariable Long gameId, @RequestBody Chat chat) {
-        Chat returnChat = new Chat();
-        HttpStatus status;
-
-        if (!gameRepository.existsById(gameId)) {
-            status = HttpStatus.NOT_FOUND;
-            return new ResponseEntity<>(returnChat, status);
-        }
-
-        if (chat.getGame().getId() != gameId) {
-            status = HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(returnChat, status);
-        }
-
-        status = HttpStatus.CREATED;
-        returnChat = chatRepository.save(chat);
-        return new ResponseEntity<>(returnChat, status);
     }
 }
