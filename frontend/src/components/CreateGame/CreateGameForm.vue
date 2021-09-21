@@ -118,7 +118,7 @@ export default {
 
 .input-container {
   width: 51%;
-  text-align: left;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
 }

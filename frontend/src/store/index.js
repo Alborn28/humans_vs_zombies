@@ -212,10 +212,10 @@ export default new Vuex.Store({
             // Reconnect to the socket with the updated squadId, in order to receive squad chats.
             socket.disconnect();
             socket.auth = {
-              gameId: state.gameId,
-              username: state.player.username,
-              human: state.player.human,
-              squadId: state.squadId,
+                gameId: state.gameId,
+                username: state.player.username,
+                human: state.player.human,
+                squadId: state.squadId,
             };
             socket.connect();
 
@@ -224,8 +224,8 @@ export default new Vuex.Store({
         /**
          * Leave the squad.
          */
-        async leaveSquad({state, dispatch}){
-            let localSquadId=state.squadId;
+        async leaveSquad({ state, dispatch }) {
+            let localSquadId = state.squadId;
             await fetch(state.apiUrl + `/game/${state.gameId}/squad/${state.squadId}/leave/${state.player.id}`, {
                 method: "DELETE",
                 headers: {
@@ -235,30 +235,29 @@ export default new Vuex.Store({
             })
 
             await dispatch('fetchSquad')
+
             //Removes the squad from the database if the player leaving is the last squad member remaining.
             const response = await fetch("https://hvz-experis-api.herokuapp.com/api/v1" + `/game/${state.gameId}/squad`)
             const data = await response.json()
-            console.log(data)
-            if(data[0].squadMembers.length<1){
-              console.log(data)
-              console.log("inne i deleten via leave squad")
-              console.log(localSquadId)
-              await fetch(state.apiUrl+"/game/"+state.gameId + "/squad/" + localSquadId,{
-              method: "DELETE",
-              headers: {
-               "Authorization": "Bearer " + state.token,
-                "Content-Type": "application/json"
-         },
-         })
+            if (data[0].squadMembers.length < 1) {
+                await fetch(state.apiUrl + "/game/" + state.gameId + "/squad/" + localSquadId, {
+                    method: "DELETE",
+                    headers: {
+                        "Authorization": "Bearer " + state.token,
+                        "Content-Type": "application/json"
+                    },
+                })
             }
+
+            dispatch("fetchSquads")
 
             // Reconnect to the socket with squadId set to null, in order to not receive squad chats.
             socket.disconnect();
             socket.auth = {
-              gameId: state.gameId,
-              username: state.player.username,
-              human: state.player.human,
-              squadId: null,
+                gameId: state.gameId,
+                username: state.player.username,
+                human: state.player.human,
+                squadId: null,
             };
             socket.connect();
         },
@@ -370,7 +369,7 @@ export default new Vuex.Store({
 
             const numOfPlayers = state.players.length;
 
-            if(numOfPlayers > 0) {
+            if (numOfPlayers > 0) {
                 const patientZeroIndex = Math.floor(Math.random() * numOfPlayers);
 
                 await fetch(state.apiUrl + `/game/${state.gameId}/player/${state.players[patientZeroIndex].id}`, {
@@ -414,7 +413,7 @@ export default new Vuex.Store({
         /**
          * Kill a player by entering their bite code.
          */
-        async kill({ state, dispatch }, {bitecode, story}) {
+        async kill({ state, dispatch }, { bitecode, story }) {
             let timeOfDeath = new Date(Date.now());
             timeOfDeath.setHours(timeOfDeath.getHours() + 2);
 
@@ -446,7 +445,7 @@ export default new Vuex.Store({
         /**
          * Fetch all the kills in the current game.
          */
-        async fetchKills({ state, commit }) {         
+        async fetchKills({ state, commit }) {
             const response = await fetch(state.apiUrl + `/game/${state.gameId}/kill`);
             const data = await response.json();
             for (let i = 0; i < data.length; i++) {
@@ -484,7 +483,7 @@ export default new Vuex.Store({
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    timeOfCheckIn: timeOfCheckIn, 
+                    timeOfCheckIn: timeOfCheckIn,
                     lat: state.location.lat,
                     lng: state.location.lng,
                     game: {
@@ -505,15 +504,15 @@ export default new Vuex.Store({
          */
         async fetchSquadCheckIns({ state, commit, dispatch }) {
             await dispatch("fetchSquad");
-            
-            if(state.squadId !== null) {
+
+            if (state.squadId !== null) {
                 const response = await fetch(state.apiUrl + `/game/${state.gameId}/squad/${state.squadId}/check-in`);
                 const data = await response.json();
                 for (let i = 0; i < data.length; i++) {
                     const res = await fetch(state.baseApiUrl + data[i].squadMember);
                     const squadMember = await res.json();
 
-                    if(!squadMember.human) {
+                    if (!squadMember.human) {
                         data.splice(i, 1)
                         continue;
                     }

@@ -77,7 +77,6 @@ export default {
         );
         const data = await response.json();
         if (data[0].squadMembers.length < 1) {
-          console.log("inne i deleten");
           await fetch(
             this.apiUrl + "/game/" + this.gameId + "/squad/" + this.squad.id,
             {
