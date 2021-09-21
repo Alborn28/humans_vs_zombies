@@ -237,7 +237,7 @@ export default new Vuex.Store({
             await dispatch('fetchSquad')
 
             //Removes the squad from the database if the player leaving is the last squad member remaining.
-            const response = await fetch("https://hvz-experis-api.herokuapp.com/api/v1" + `/game/${state.gameId}/squad`)
+            const response = await fetch(state.apiUrl + `/game/${state.gameId}/squad`)
             const data = await response.json()
             if (data[0].squadMembers.length < 1) {
                 await fetch(state.apiUrl + "/game/" + state.gameId + "/squad/" + localSquadId, {

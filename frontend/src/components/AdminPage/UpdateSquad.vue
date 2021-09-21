@@ -72,7 +72,7 @@ export default {
         );
         //Removes the squad from the database if the player being removed is the last squad member remaining.
         const response = await fetch(
-          "https://hvz-experis-api.herokuapp.com/api/v1" +
+          this.apiUrl +
             `/game/${this.gameId}/squad`
         );
         const data = await response.json();
