@@ -19,7 +19,7 @@ public class GameController {
 
     @Autowired
     private GameRepository gameRepository;
-
+    
     @GetMapping
     public ResponseEntity<List<Game>> getAllGames() {
         List<Game> games = gameRepository.findAll();
@@ -27,9 +27,6 @@ public class GameController {
         return new ResponseEntity<>(games, status);
     }
 
-    /**
-     * Get all games.
-     */
     @GetMapping("/{gameId}")
     public ResponseEntity<Game> getSpecificGame(@PathVariable Long gameId) {
         Game returnGame = new Game();

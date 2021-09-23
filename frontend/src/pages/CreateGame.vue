@@ -20,6 +20,8 @@ export default {
   },
 
   created() {
+    document.title = "Humans VS Zombies";
+    
     if (!this.isAdmin) {
       this.$router.push("/");
     }

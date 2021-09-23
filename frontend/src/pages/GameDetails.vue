@@ -38,7 +38,6 @@ import { mapActions, mapState } from 'vuex'
 import SquadList from '../components/GameDetails/SquadList.vue'
 import Kill from "../components/GameDetails/Kill.vue";
 
-
 export default {
     name: "GameDetails",
     components: {
@@ -63,16 +62,18 @@ export default {
     },
 
     async created() {
+      document.title = "Humans VS Zombies";
+      
         if(!this.authenticated || this.gameId == 0) {
             this.$router.push("/");
         }
 
-        this.fetchGame();
-        this.fetchPlayer();
-        this.fetchPlayers();
-        this.fetchSquad();
-        this.fetchSquads();    
-        this.fetchSquadCheckIns();
+        await this.fetchGame();
+        await this.fetchPlayer();
+        await this.fetchPlayers();
+        await this.fetchSquad();
+        await this.fetchSquads();    
+        await this.fetchSquadCheckIns();
         await this.fetchKills();
         this.contentLoaded = true
     },

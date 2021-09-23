@@ -11,10 +11,15 @@ export default {
 
     created() {
         this.init();
+        document.title = "Humans VS Zombies";
     },
 
     methods: {
         ...mapActions(['init'])
+    },
+
+    metaInfo: {
+        title: 'Humans VS Zombies'
     }
 }
 </script>

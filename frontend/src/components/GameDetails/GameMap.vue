@@ -45,7 +45,8 @@
 import { latLngBounds } from "leaflet";
 import { LMap, LTileLayer, LMarker, LIcon, LPopup } from "vue2-leaflet";
 import "leaflet/dist/leaflet.css";
-import { mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
+import socket from "../../socket/socket";
 
 export default {
   name: "SetBounds",
@@ -67,12 +68,17 @@ export default {
     this.zoom = this.game.zoom
 
     this.mapLoaded = true;
+
+    socket.on("checkIn", async () => {
+      await this.fetchSquadCheckIns();
+    })
   },
   computed: {
     ...mapState(["game", "player", "squad", "checkIns", "location", "kills", 'playerCheckIn']),
   },
   methods: {
     ...mapMutations(["setLocation"]),
+    ...mapActions(["fetchSquadCheckIns"]),
 
     locate(mapObject){
       mapObject.locate();

@@ -16,6 +16,10 @@ export default {
     components: {
         GameList,
         Navbar
+    },
+
+    created() {
+        document.title = "Humans VS Zombies";
     }
 }
 </script>

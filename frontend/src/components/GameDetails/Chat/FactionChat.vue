@@ -16,21 +16,13 @@
 import socket from "../../../socket/socket";
 
 export default {
+  props: {
+    factionChats: Array
+  },
   data() {
     return {
-      factionChats: [],
       msg: "",
     };
-  },
-
-  created() {
-    socket.on("factionMessage", (msg) => {
-      this.factionChats.push(msg);
-      this.$nextTick(() => {
-        const chatWindow = this.$el.querySelector("#faction-chat-window");
-        chatWindow.scrollTop = chatWindow.scrollHeight;
-      });
-    });
   },
 
   methods: {

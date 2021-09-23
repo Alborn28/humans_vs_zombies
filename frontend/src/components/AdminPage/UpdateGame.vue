@@ -66,6 +66,9 @@ export default {
           endDate: this.game.endDate,
         }),
       });
+
+      alert("Game updated!")
+      this.$router.push("/")
     },
   },
 };

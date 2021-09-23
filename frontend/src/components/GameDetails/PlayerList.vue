@@ -10,10 +10,21 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
+import socket from "../../socket/socket"
 export default {
   computed: {
     ...mapState(['players', 'game'])
+  },
+
+  methods: {
+    ...mapActions(["fetchPlayers"])
+  },
+
+  async created() {
+    socket.on("joinedGame", async () => {
+      await this.fetchPlayers();
+    })
   }
 }
 </script>
