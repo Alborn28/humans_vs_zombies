@@ -1,5 +1,5 @@
 <template>
-  <div class="squad-list" v-if="squadId===null && player.id !== null && game.gameState !== 'COMPLETE' && squads.length > 0" >
+  <div class="squad-list" v-if="squadId===null && player.id !== null && game.gameState !== 'COMPLETE' && squads.length > 0 && player.human" >
       <h3 class="title" >squad lists</h3>
       <ul>
           <li class="squad" v-for="(squad,index) in squads" v-bind:key="index" @click="joinSquad({rank: 'MEMBER', squadId: squad.id})">
