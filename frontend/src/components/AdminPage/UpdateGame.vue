@@ -1,6 +1,6 @@
 <template>
   <div class="update-game-container">
-    <form class="update-game-form ">
+    <form class="update-game-form">
       <h3>Edit Game</h3>
       <div>
         <label><strong>Name: </strong></label>
@@ -36,15 +36,16 @@
       </div>
       <button type="button" @click="updateGame">Update Game</button>
     </form>
+    
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 export default {
-    props:{
-        game:Object,
-    },
+  props: {
+    game: Object,
+  },
   computed: {
     ...mapState(["apiUrl", "token"]),
   },
@@ -67,15 +68,14 @@ export default {
         }),
       });
 
-      alert("Game updated!")
-      this.$router.push("/")
+      alert("Game updated!");
+      this.$router.push("/");
     },
   },
 };
 </script>
 
 <style scoped>
-
 .select-component {
   margin-top: 10px;
   background-color: lime;
@@ -110,7 +110,7 @@ export default {
   border: none;
   color: lime;
   background-color: rgba(95, 95, 255, 0.479);
-  transition: .3s;
+  transition: 0.3s;
   font-size: 16px;
 }
 .game-state {
@@ -118,14 +118,13 @@ export default {
 }
 
 .update-game-form button:hover {
-    cursor: pointer;
-    background-color: rgba(132, 132, 253, 0.479);
-    transition: .3s;
+  cursor: pointer;
+  background-color: rgba(132, 132, 253, 0.479);
+  transition: 0.3s;
+}
+@media screen and (max-width: 350px) {
+  .update-game-form {
+    width: 90%;
   }
-  @media screen and (max-width: 350px) {
-    .update-game-form  {
-      width: 90%;
-    }
-  }
-
+}
 </style>

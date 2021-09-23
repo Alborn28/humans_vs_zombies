@@ -2,25 +2,37 @@
   <div class="admin-components-container">
     <Navbar />
     <div class="select-game-components">
-        <SelectGame v-if="!gameSelected" @game-selected="handleGameSelected" />
-        <UpdateGame :game="game" v-if="gameSelected"/> 
-        <SelectPlayer v-if="gameSelected && !playerSelected" :gameId="game.id" @player-selected="handlePlayerSelected"/>
-        <UpdatePlayer v-if="playerSelected" :gameId="game.id" :player="player" />
-        <SelectSquad v-if="gameSelected && !squadSelected" :gameId="game.id" @squad-selected="handleSquadSelected"/>
-        <UpdateSquad v-if="squadSelected" :gameId="game.id" :squad="squad"/>
+      <SelectGame v-if="!gameSelected" @game-selected="handleGameSelected" />
+      <UpdateGame :game="game" v-if="gameSelected" />
+      <SelectPlayer
+        v-if="gameSelected && !playerSelected"
+        :gameId="game.id"
+        @player-selected="handlePlayerSelected"
+      />
+      <UpdatePlayer v-if="playerSelected" :gameId="game.id" :player="player" />
+      <SelectSquad
+        v-if="gameSelected && !squadSelected"
+        :gameId="game.id"
+        @squad-selected="handleSquadSelected"
+      />
+      <UpdateSquad v-if="squadSelected" :gameId="game.id" :squad="squad" />
+    </div>
+    <div class="select-game-components">
+      <DeleteGameButton v-if="gameSelected" :gameId="game.id" />
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import SelectGame from '../components/AdminPage/SelectGame.vue';
-import UpdateGame from '../components/AdminPage/UpdateGame.vue';
-import SelectPlayer from '../components/AdminPage/SelectPlayer.vue';
-import UpdatePlayer from '../components/AdminPage/UpdatePlayer.vue';
+import SelectGame from "../components/AdminPage/SelectGame.vue";
+import UpdateGame from "../components/AdminPage/UpdateGame.vue";
+import SelectPlayer from "../components/AdminPage/SelectPlayer.vue";
+import UpdatePlayer from "../components/AdminPage/UpdatePlayer.vue";
 import Navbar from "../components/Navbar/Navbar.vue";
-import SelectSquad from '../components/AdminPage/SelectSquad.vue';
-import UpdateSquad from '../components/AdminPage/UpdateSquad.vue';
+import SelectSquad from "../components/AdminPage/SelectSquad.vue";
+import UpdateSquad from "../components/AdminPage/UpdateSquad.vue";
+import DeleteGameButton from "../components/AdminPage/DeleteGameButton.vue";
 export default {
   components: {
     Navbar,
@@ -29,42 +41,42 @@ export default {
     SelectPlayer,
     UpdatePlayer,
     SelectSquad,
-    UpdateSquad
+    UpdateSquad,
+    DeleteGameButton,
   },
   data() {
     return {
       game: {},
       gameSelected: false,
-      playerSelected:false,
-      player:{},
-      squad:{},
-      squadSelected:false
+      playerSelected: false,
+      player: {},
+      squad: {},
+      squadSelected: false,
     };
   },
   async created() {
     document.title = "Humans VS Zombies";
-    
+
     if (!this.isAdmin) {
       this.$router.push("/");
     }
   },
   computed: {
     ...mapGetters(["isAdmin"]),
-    
   },
   methods: {
-    handleGameSelected(game){
-        this.game=game;
-        this.gameSelected=true;
+    handleGameSelected(game) {
+      this.game = game;
+      this.gameSelected = true;
     },
-    handlePlayerSelected(player){
-            this.player=player;
-            this.playerSelected=true;
+    handlePlayerSelected(player) {
+      this.player = player;
+      this.playerSelected = true;
     },
-    handleSquadSelected(squad){
-            this.squad=squad;
-            this.squadSelected=true;
-    }
+    handleSquadSelected(squad) {
+      this.squad = squad;
+      this.squadSelected = true;
+    },
   },
 };
 </script>
@@ -90,9 +102,9 @@ export default {
   overflow-y: scroll;
   overflow-x: hidden;
 }
- @media screen and (max-width: 900px) {
-    .select-game-components   {
-      flex-direction: column;
-    }
+@media screen and (max-width: 900px) {
+  .select-game-components {
+    flex-direction: column;
+  }
 }
 </style>
