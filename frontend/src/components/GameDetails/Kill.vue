@@ -66,7 +66,6 @@ export default {
 .killWindow {
   display: flex;
   justify-content: center;
-
 }
 .kill-label {
   width: 50%;
@@ -77,7 +76,7 @@ export default {
   color: lime;
 }
 .kill-label label{
-  margin-bottom: 12px;
+  margin-bottom: 18px;
 
 }
 .kill-button-container{
@@ -108,7 +107,6 @@ export default {
   display: flex;
   flex-direction: column;
   margin-left: 5px;
-  
 }
 .kill-description{
   margin-top: 10px;
@@ -118,6 +116,7 @@ export default {
    background-color: #834fd6;
   padding: 5px;
   color: lime;
+  font-size: 18px;
 }
 .kill-description::placeholder{
 
@@ -130,6 +129,7 @@ export default {
   background-color: #834fd6;
   padding: 5px;
   color: lime;
+  font-size: 18px;
 }
 .kill-description:focus{
   outline: none;

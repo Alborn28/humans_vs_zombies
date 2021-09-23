@@ -31,11 +31,9 @@ export default {
   },
 
   async created() {
-    socket.on("kill", async (biteCode) => {
-      if(this.player.biteCode === biteCode) {
-        this.player.human = false;
-      }
-
+    socket.on("kill", async () => {
+      this.fetchPlayer();
+      this.fetchPlayers();
       await this.fetchKills();
       await this.fetchSquad();
     })

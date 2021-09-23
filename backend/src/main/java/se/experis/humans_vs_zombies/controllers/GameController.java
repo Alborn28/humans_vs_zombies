@@ -19,7 +19,10 @@ public class GameController {
 
     @Autowired
     private GameRepository gameRepository;
-    
+
+    /**
+     * Get a list of all games
+     */
     @GetMapping
     public ResponseEntity<List<Game>> getAllGames() {
         List<Game> games = gameRepository.findAll();

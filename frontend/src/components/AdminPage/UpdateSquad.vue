@@ -138,8 +138,8 @@ export default {
   z-index: 10;
   padding: 8px;
   color: aliceblue;
-  min-height: 260px;
-  max-height: 260px;
+  min-height: 280px;
+  max-height: 280px;
   min-width: 290px;
   max-width: 290px;
 }

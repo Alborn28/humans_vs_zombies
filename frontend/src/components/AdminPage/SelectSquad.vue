@@ -69,8 +69,8 @@ export default {
   border: 5px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
   z-index: 10;
-  min-height: 260px;
-  max-height: 260px;
+  min-height: 280px;
+  max-height: 280px;
   min-width: 290px;
   max-width: 290px;
   padding: 20px;
