@@ -12,14 +12,21 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import socket from '../../socket/socket'
 export default {
 
   computed: {
     ...mapState(['squads', "squadId", "player", "game"])
   },
 
+  async created() {
+    socket.on("createdSquad", async () => {
+      await this.fetchSquads();
+    })
+  },
+
   methods: {
-    ...mapActions(["joinSquad"])
+    ...mapActions(["joinSquad", "fetchSquads"])
   }
 }
 </script>

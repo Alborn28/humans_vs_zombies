@@ -6,8 +6,8 @@
         <label>Bite code:</label>
         <label>Description:</label>
       </div>
-      <div class="kill-input">
-        <input type="text" v-model="biteCode" required/>
+      <div class="kill-input-container">
+        <input class="kill-input" type="text" v-model="biteCode" required/>
         <textarea class="kill-description" rows="3" v-model="story" placeholder="(Optional)"/>
       </div>
     </form>
@@ -102,7 +102,7 @@ export default {
     background-color: rgba(250, 43, 60, 0.616);
     transition: .3s;
   }
-.kill-input {
+.kill-input-container {
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -122,7 +122,7 @@ export default {
 
   color: lime;
 }
-.kill-input input {
+.kill-input {
   border-radius: 8px;
   width: 150px;
   border:none;
@@ -133,10 +133,31 @@ export default {
 .kill-description:focus{
   outline: none;
 }
-.kill-input input:focus{
+.kill-input:focus{
   outline: none;
 }
 .kill-description:focus::placeholder{
   color:transparent;
 }
+
+@media screen and (max-width: 900px) and (min-width: 500px) {
+  .kill-container {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .kill-container {
+    width: 90%;
+  }
+
+  .kill-input {
+    width: 90%;
+  }
+
+  .kill-description {
+    width: 90%;
+  }
+}
+    
 </style>

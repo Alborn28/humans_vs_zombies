@@ -150,7 +150,7 @@ export default new Vuex.Store({
             dispatch('fetchPlayer')
             dispatch('fetchGame')
             dispatch('fetchSquads')
-
+            socket.emit("createdSquad");
         },
 
         /**
@@ -208,6 +208,7 @@ export default new Vuex.Store({
             await dispatch('fetchPlayer')
             await dispatch('fetchSquad')
             commit("setSquadId", squadId)
+            dispatch("fetchSquadCheckIns")
 
             // Reconnect to the socket with the updated squadId, in order to receive squad chats.
             socket.disconnect();
@@ -219,6 +220,7 @@ export default new Vuex.Store({
             };
             socket.connect();
 
+            socket.emit("joinedSquad")
         },
 
         /**
@@ -311,12 +313,13 @@ export default new Vuex.Store({
             });
             dispatch('fetchPlayers');
             dispatch('fetchPlayer');
+            socket.emit("joinedGame")
         },
         /**
          * Fetch the current player.
          */
         async fetchPlayer({ state, commit, getters }) {
-            const response = await fetch(state.apiUrl + `/game/${state.gameId}/player/email/`, {
+            const response = await fetch(state.apiUrl + `/game/${state.gameId}/player/email`, {
                 method: "POST",
                 headers: {
                     "Authorization": "Bearer " + state.token,
@@ -394,6 +397,7 @@ export default new Vuex.Store({
 
             dispatch('fetchGame')
             dispatch('fetchPlayer')
+            socket.emit("gameStarted");
         },
 
         /**
@@ -408,6 +412,7 @@ export default new Vuex.Store({
                 }
             });
             dispatch('fetchGame')
+            socket.emit("gameStarted");
         },
 
         /**
@@ -440,6 +445,7 @@ export default new Vuex.Store({
             dispatch('fetchPlayer')
             dispatch('fetchPlayers')
             dispatch('fetchGame')
+            await dispatch('fetchKills')
         },
 
         /**
@@ -497,6 +503,8 @@ export default new Vuex.Store({
                     }
                 })
             });
+
+            socket.emit("checkIn")
         },
 
         /**

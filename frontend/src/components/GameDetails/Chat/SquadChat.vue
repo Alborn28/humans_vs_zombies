@@ -16,21 +16,13 @@
 import socket from "../../../socket/socket";
 
 export default {
+  props: {
+    squadChats: Array
+  },
   data() {
     return {
-      squadChats: [],
       msg: "",
     };
-  },
-
-  created() {
-    socket.on("squadMessage", (msg) => {
-      this.squadChats.push(msg);
-      this.$nextTick(() => {
-        const chatWindow = this.$el.querySelector("#squad-chat-window");
-        chatWindow.scrollTop = chatWindow.scrollHeight;
-      });
-    });
   },
 
   methods: {

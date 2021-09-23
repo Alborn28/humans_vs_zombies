@@ -51,6 +51,9 @@ export default {
           biteCode: this.player.biteCode
         }),
       });
+
+      alert("Player updated!")
+      this.$router.push("/")
     },
   },
 };

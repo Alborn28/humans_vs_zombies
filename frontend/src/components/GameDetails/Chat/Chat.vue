@@ -21,20 +21,20 @@
 
     <div class="chat-container">
       <div v-if="activetab === 1" class="chat-content">
-        <GlobalChat />
+        <GlobalChat :globalChats="globalChats"/>
       </div>
       <div v-if="activetab === 2" class="chat-content">
-        <FactionChat />
+        <FactionChat :factionChats="factionChats"/>
       </div>
       <div v-if="activetab === 3 && this.squadId !== null" class="chat-content">
-        <SquadChat />
+        <SquadChat :squadChats="squadChats"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import socket from "../../../socket/socket";
 import FactionChat from './FactionChat.vue';
 import GlobalChat from './GlobalChat.vue';
@@ -44,10 +44,55 @@ export default {
   components: { GlobalChat, FactionChat, SquadChat },
   data() {
     return {
+      globalChats: [],
+      factionChats: [],
+      squadChats: [],
       msg: "",
       activetab: 1,
       connected: false
     };
+  },
+  created() {
+    /**
+       * Check if we are registered to the game and not connected to the socket,
+       * in that case connect.
+      */
+      if(this.player.id !== null && !this.connected) {
+        this.connected = true;
+
+        socket.auth = {
+          gameId: this.gameId,
+          username: this.player.username,
+          human: this.player.human,
+          squadId: this.squadId
+        };
+
+        socket.connect();
+        socket.on("globalMessage", (msg) => {
+          this.globalChats.push(msg);
+          this.$nextTick(() => {
+            const chatWindow = this.$el.querySelector("#global-chat-window");
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+          });
+        });
+        socket.on("factionMessage", (msg) => {
+          this.factionChats.push(msg);
+          this.$nextTick(() => {
+            const chatWindow = this.$el.querySelector("#faction-chat-window");
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+          });
+        });
+        socket.on("squadMessage", (msg) => {
+        this.squadChats.push(msg);
+          this.$nextTick(() => {
+            const chatWindow = this.$el.querySelector("#squad-chat-window");
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+          });
+        });
+        socket.on("connect_error", (error) => {
+          console.log(error.message)
+        });
+      }
   },
   watch: {
     player() {
@@ -66,6 +111,27 @@ export default {
         };
 
         socket.connect();
+        socket.on("globalMessage", (msg) => {
+          this.globalChats.push(msg);
+          this.$nextTick(() => {
+            const chatWindow = this.$el.querySelector("#global-chat-window");
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+          });
+        });
+        socket.on("factionMessage", (msg) => {
+          this.factionChats.push(msg);
+          this.$nextTick(() => {
+            const chatWindow = this.$el.querySelector("#faction-chat-window");
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+          });
+        });
+        socket.on("squadMessage", (msg) => {
+        this.squadChats.push(msg);
+          this.$nextTick(() => {
+            const chatWindow = this.$el.querySelector("#squad-chat-window");
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+          });
+        });
         socket.on("connect_error", (error) => {
           console.log(error.message)
         });
@@ -91,6 +157,9 @@ export default {
   },
   computed: {
     ...mapState(["player", "gameId", "squadId"]),
+  },
+  methods: {
+    ...mapActions(["fetchSquadCheckIns"])
   }
 };
 </script>

@@ -22,8 +22,6 @@ import Navbar from "../components/Navbar/Navbar.vue";
 import SelectSquad from '../components/AdminPage/SelectSquad.vue';
 import UpdateSquad from '../components/AdminPage/UpdateSquad.vue';
 export default {
-
-
   components: {
     Navbar,
     SelectGame,
@@ -44,6 +42,8 @@ export default {
     };
   },
   async created() {
+    document.title = "Humans VS Zombies";
+    
     if (!this.isAdmin) {
       this.$router.push("/");
     }

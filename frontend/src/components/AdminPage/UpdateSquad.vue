@@ -107,7 +107,10 @@ export default {
         }
       );
 
-      this.kickPlayer();
+      await this.kickPlayer();
+
+      alert("Squad updated!")
+      this.$router.push("/")
     },
   },
 };

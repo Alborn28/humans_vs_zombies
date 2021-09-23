@@ -3,7 +3,7 @@
     <h3 class="title"> {{ player.username }} </h3>
     <ul>
       <li>
-        <p><strong>Bite code:</strong> {{ player.biteCode }}</p>
+        <p v-if="player.human"><strong>Bite code:</strong> {{ player.biteCode }}</p>
       </li>
       <li>
         <p><strong>Faction:</strong> {{player.human ? "Human" : "Zombie"}}</p>
@@ -19,18 +19,34 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import socket from "../../../socket/socket";
 export default {
    computed: {
     ...mapState(["player", "squad", "squadId"])
   },
 
-  created() {
-    socket.on("kill", (biteCode) => {
+  methods: {
+    ...mapActions(["fetchKills", "fetchGame", "fetchSquad", "fetchPlayer"])
+  },
+
+  async created() {
+    socket.on("kill", async (biteCode) => {
       if(this.player.biteCode === biteCode) {
         this.player.human = false;
       }
+
+      await this.fetchKills();
+      await this.fetchSquad();
+    })
+
+    socket.on("gameStarted", async () => {
+      await this.fetchGame();
+      this.fetchPlayer();
+    })
+
+    socket.on("gameEnded", async () => {
+      await this.fetchGame();
     })
   }
 };

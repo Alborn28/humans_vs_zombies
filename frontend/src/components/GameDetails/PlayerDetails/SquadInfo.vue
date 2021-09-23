@@ -32,6 +32,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import socket from "../../../socket/socket"
 export default {
   data() {
     return {
@@ -43,8 +44,14 @@ export default {
     ...mapState(["squadId", "squad", "squadMembers", "game"]),
   },
 
+  async created() {
+    socket.on("joinedSquad", async () => {
+      await this.fetchSquad();
+    })
+  },
+
   methods: {
-    ...mapActions(["registerSquad", "leaveSquad"]),
+    ...mapActions(["registerSquad", "leaveSquad", "fetchSquad"]),
 
     async registerNewSquad() {
       await this.registerSquad(this.name);

@@ -16,21 +16,13 @@
 import socket from "../../../socket/socket";
 
 export default {
+  props: {
+    globalChats: Array
+  },
   data() {
     return {
-      globalChats: [],
       msg: "",
     };
-  },
-
-  created() {
-    socket.on("globalMessage", (msg) => {
-      this.globalChats.push(msg);
-      this.$nextTick(() => {
-        const chatWindow = this.$el.querySelector("#global-chat-window");
-        chatWindow.scrollTop = chatWindow.scrollHeight;
-      });
-    });
   },
 
   methods: {
