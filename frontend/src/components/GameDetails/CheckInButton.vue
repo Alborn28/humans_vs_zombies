@@ -34,7 +34,6 @@ export default {
     transition: .3s;
     cursor: pointer;
     background-color: rgba(132, 132, 253, 0.479);
-    transition: .3s;
   }
     @media screen and (max-width: 330px) {
       .btn-container {
