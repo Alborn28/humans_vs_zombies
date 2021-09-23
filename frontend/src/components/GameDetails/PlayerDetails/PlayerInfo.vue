@@ -27,7 +27,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["fetchKills", "fetchGame", "fetchSquad", "fetchPlayer"])
+    ...mapActions(["fetchKills", "fetchGame", "fetchSquad", "fetchPlayer", "fetchPlayers"])
   },
 
   async created() {
@@ -39,8 +39,9 @@ export default {
     })
 
     socket.on("gameStarted", async () => {
-      await this.fetchGame();
+      this.fetchGame();
       this.fetchPlayer();
+      await this.fetchPlayers();
     })
 
     socket.on("gameEnded", async () => {
