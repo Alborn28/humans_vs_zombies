@@ -130,10 +130,11 @@ export default {
   display: flex;
   text-align: right;
   flex-direction: column;
-  margin-top: 27px;
+  margin-top: 18px;
+  font-size: 18px;
 }
 .input-label label{
-  margin-bottom: 25px;
+  margin-bottom: 22px;
 }
 .end-date, .name, .start-date, .description {
   background-color: #834fd6;

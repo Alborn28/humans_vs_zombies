@@ -52,7 +52,7 @@ export default {
   border: 5px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
   color: rgba(178, 58, 248, 0.781);
-  font-size: 20px;
+  font-size: 22px;
   display: flex;
 }
 

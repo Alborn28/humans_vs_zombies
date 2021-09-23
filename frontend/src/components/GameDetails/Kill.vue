@@ -50,17 +50,18 @@ export default {
 
 <style scoped>
 .kill-container{
- width:35%;
-    margin:auto;
-    color: lime;
-    text-align: center;
-    backdrop-filter: blur(25px);
-    background-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
-    border: 5px solid rgba(255, 255, 255, 0.3);
-    border-radius: 8px;
-    padding:10px;
-    margin-top: 25px;
+  width:35%;
+  margin:auto;
+  color: lime;
+  text-align: center;
+  backdrop-filter: blur(25px);
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding:10px;
+  margin-top: 25px;
+  font-size: 18px;
 }
 .killWindow {
   display: flex;
@@ -76,7 +77,7 @@ export default {
   color: lime;
 }
 .kill-label label{
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 
 }
 .kill-button-container{
@@ -94,7 +95,7 @@ export default {
     transition: .3s;
     background-color: rgba(255, 0, 21, 0.514);
     color: #fff;
-
+    font-size: 18px;
   }
   .kill-button:hover {
     transition: .3s;

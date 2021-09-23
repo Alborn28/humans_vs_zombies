@@ -152,6 +152,7 @@ export default {
   color: lime;
   background-color: rgba(95, 95, 255, 0.479);
   transition: 0.3s;
+  font-size: 16px;
 }
 
 .update-btn:hover {

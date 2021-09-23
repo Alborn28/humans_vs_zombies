@@ -30,6 +30,7 @@ export default {
     background-color: rgba(211, 30, 45, 0.479);
     color: #fff;
     margin-bottom: 25px;
+    font-size: 18px;
   }
   .end-btn:hover {
     transition: .3s;
