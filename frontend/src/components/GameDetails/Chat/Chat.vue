@@ -175,7 +175,7 @@ export default {
     padding: 8px;
     padding-left: 12px;    
     padding-right: 12px;
-    font-size: 14px;    
+    font-size: 18px;    
   }
   .send-chat-msg:hover {
     transition: .3s;
@@ -223,7 +223,7 @@ export default {
   color: rgba(178, 58, 248, 0.781);
   padding: 10px;
   margin: 10px;
-  font-size: 1.2em;
+  font-size: 1.3em;
   border-radius:8px;
 }
 

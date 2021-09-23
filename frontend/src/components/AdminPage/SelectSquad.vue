@@ -82,7 +82,7 @@ export default {
   width: 150px;
   border: none;
   text-align-last: center;
-
+  font-size: 16px;
   border-radius: 8px;
 }
 .option-component {
@@ -99,6 +99,7 @@ export default {
   color: lime;
   background-color: rgba(95, 95, 255, 0.479);
   transition: .3s;
+  font-size: 16px;
 }
 
 button:hover {

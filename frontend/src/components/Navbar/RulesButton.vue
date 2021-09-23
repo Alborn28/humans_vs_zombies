@@ -23,6 +23,7 @@ export default {
         padding: 8px;
         border: none;
         border-radius: 8px;
+        font-size: 16px;
         font-family: ZombieCarshel;
         transition: .3s;
         background-color: rgba(95, 95, 255, 0.479);

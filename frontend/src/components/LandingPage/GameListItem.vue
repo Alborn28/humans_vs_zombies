@@ -62,6 +62,7 @@ export default {
   border-radius: 8px;
   text-align: center;
   display: flex;
+  font-size: 1.1em;
 }
 
 .game:hover {

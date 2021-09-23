@@ -55,7 +55,7 @@ export default {
 <style>
   .player-info {
     color: rgba(178, 58, 248, 0.781);
-    font-size: 1.4em;
+    font-size: 1.5em;
     margin-bottom: 20px;
   }
 

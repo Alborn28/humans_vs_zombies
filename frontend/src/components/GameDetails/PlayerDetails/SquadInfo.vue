@@ -123,6 +123,7 @@ export default {
   background-color: rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.1);
   z-index: 10;
+  font-size: 1.1em;
 }
 
 .leave-squad {
@@ -134,6 +135,7 @@ export default {
   transition: 0.3s;
   background-color: rgba(211, 30, 45, 0.479);
   color: #fff;
+  font-size: 18px;
 }
 .leave-squad:hover {
   transition: 0.3s;
@@ -158,7 +160,7 @@ export default {
   padding: 8px;
   padding-left: 12px;
   padding-right: 12px;
-  font-size: 14px;
+  font-size: 18px;
 }
 .reg-squad-btn:hover {
   transition: 0.3s;
