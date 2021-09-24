@@ -13,10 +13,9 @@ We used Heroku to deploy our application
 
 ## Documentation
 API documentation - [Swagger](https://hvz-experis-api.herokuapp.com/swagger-ui.html)
-\
-User manual: "link"
 
-
+## Check out our application
+[Humans VS Zombies](https://hvz-experis.herokuapp.com/)
 
 ## Members
 Katalina Palma - [@katalinapalma](https://github.com/katalinapalma)
